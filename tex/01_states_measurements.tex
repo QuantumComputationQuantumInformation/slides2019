@@ -100,6 +100,7 @@ Score
 \end{itemize}
 
 \vfill
+\small
 \url{https://github.com/QuantumComputationQuantumInformation}
 \end{frame}
 
@@ -489,15 +490,15 @@ a_I=\frac1{\sqrt{2}}
 \begin{frame}{Geometry of quantum states and effects}
 \begin{tikzpicture}
     \begin{axis}[height= 0.55\vsize, axis lines=center, axis on top, xmin=-1.0, xmax=1.0, ymin=-1.0, ymax=1.0, z buffer = sort, xtick = \empty, ytick=\empty, ztick=\empty ]
-    \addplot3[surf, samples= 10, samples y=10, domain= 0:1/sqrt(2), domain y= 0:2*pi, colormap = {pinkpink}{color=(pink) color=(pink)}]
+    \addplot3[surf, samples= 10, samples y=50, domain= 0:1/sqrt(2), domain y= 0:2*pi, colormap = {pinkpink}{color=(pink) color=(pink)}]
       ({x*cos(deg(y))}, {x*sin(deg(y))}, {x});
-    \addplot3[surf, samples= 10, samples y=10, domain= 0:1/sqrt(2), domain y= 0:2*pi, color = red ]
+    \addplot3[surf, samples= 10, samples y=50, domain= 0:1/sqrt(2), domain y= 0:2*pi, color = red ]
       ({x*cos(deg(y))}, {x*sin(deg(y))}, {1/sqrt(2)});
     \end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}
     \begin{axis}[height=0.70\vsize, axis lines=center, axis on top, xmin=-1.0, xmax=1.0, ymin=-1.0, ymax=1.0, z buffer = sort, xtick = \empty, ytick=\empty, ztick=\empty ]
-    \addplot3[surf, samples= 40, samples y=10, domain= 0:sqrt(2), domain y= 0:2*pi, mesh/interior colormap = {blueblack}{color=(cyan!50) color=(cyan!50)}, colormap = {blueblack}{color=(blue!60) color=(blue!60)}]
+    \addplot3[surf, samples= 40, samples y=50, domain= 0:sqrt(2), domain y= 0:2*pi, mesh/interior colormap = {blueblack}{color=(cyan!50) color=(cyan!50)}, colormap = {blueblack}{color=(blue!60) color=(blue!60)}]
       ({(sqrt(2)/2-abs(sqrt(2)/2-x))*cos(deg(y))}, {(sqrt(2)/2-abs(sqrt(2)/2-x))*sin(deg(y))}, {x});
     \end{axis}
 \end{tikzpicture}
