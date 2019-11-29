@@ -98,6 +98,9 @@ Score
 \item Assignments: 70\%
 \item Final exam: 30\%
 \end{itemize}
+
+\vfill
+\url{https://github.com/QuantumComputationQuantumInformation}
 \end{frame}
 
 \begin{frame}{Light is wave (1801)}
@@ -733,21 +736,30 @@ position and momentum \emm{cannot \textit{exists}} simultaneously.
 
 \begin{frame}{Summary}
 \begin{itemize}
-\item .
+\item 
+Let $V$ be the linear space spanned by $n\times n$ Hermitian matrices. Let $C_{\succeq0}$ be the set of PSD matrices.
+Let $I$ be the $n\times n$ identity matrix.
+Let $\langle e,\omega\rangle:=\Tr(e\omega)$ for $\omega, e\in V$ (Hilbert-Schmidt inner product).
+\begin{align*}
+\text{Set of states} &= \left\{\omega\in V \mid \omega\in \emm{C_{\succeq 0}}, \langle u,\omega\rangle = 1\right\}.\\
+\text{Set of binary measurements} &= \left\{e\in V \mid e\in \emm{C_{\succeq 0}}, u-e \in \emm{C_{\succeq 0}} \right\}.
+\end{align*}
 \item Classical theory and quantum theory are special cases of generalized probabilistic theories.
+\item Violation of Bell (CHSH) inequality show that quantum theory is essentially different from classical theory
+(Arguments on joint system is needed).
 \end{itemize}
 
 
 
-\begin{itemize}
-\item Joint system, e.g., two qubits.
-\end{itemize}
+%\begin{itemize}
+%\item Joint system, e.g., two qubits.
+%\end{itemize}
 \end{frame}
 
 \begin{frame}{Assignments}
 \begin{enumerate}
 \setlength{\itemsep}{2em}
-\item Show the dimension and one of the basis of real linear space spanned by $n\times n$ Hermitian matrices
+\item Show the dimension and one of the basis of real linear space spanned by $n\times n$ Hermitian matrices.
 \item Show that $XY=-YX$, $YZ=-ZY$ and $ZX=-XZ$.
 \item Show that the Hilbert--Schmidt inner product satisfies the axioms of inner product.
 \item Show that $C_{\succeq 0}$ is a self-dual cone.
