@@ -63,6 +63,28 @@
 \maketitle
 \end{frame}
 
+\begin{frame}{Operation in a system}
+We will manipulate quantum state.
+
+\vspace{2em}
+This operation can be represented by a map $T: \text{Set of states} \to \text{Set of states}$.
+
+\vspace{2em}
+\end{frame}
+
+\begin{frame}{A single bit}
+\begin{itemize}
+\setlength{\itemsep}{3em}
+\item State: \texttt{0},  \texttt{1} and their probabilistic mixture.
+\item Measurement: \texttt{0?}, \texttt{1?} and ther linear combination with coefficients in $[0,1]$.
+\end{itemize}
+
+Operation
+\begin{itemize}
+\item Identity: \texttt{0} $\mapsto$ \texttt{0}, \texttt{1} $\mapsto$ \texttt{1}
+\item Bit flip: \texttt{0} $\mapsto$ \texttt{1}, \texttt{1} $\mapsto$ \texttt{0}
+\end{itemize}
+\end{frame}
 
 \begin{frame}{A single qubit}
 \begin{itemize}
@@ -84,6 +106,44 @@ for $[r_x\, r_y\, r_z]\in\mathbb{R}^3$ satisfying $r_x^2+r_y^2+r_z^2\le 1$.
 \end{frame}
 
 \begin{frame}{Pauli matrices}
+\begin{itemize}
+\setlength{\itemsep}{3em}
+\item 
+\begin{equation*}
+Z=\begin{bmatrix}1&0\\0&-1\end{bmatrix}=
+\begin{bmatrix}1\\0\end{bmatrix}\begin{bmatrix}1&0\end{bmatrix}
+-\begin{bmatrix}0\\1\end{bmatrix}\begin{bmatrix}0&1\end{bmatrix}
+\end{equation*}
+\item 
+\begin{equation*}
+X=\begin{bmatrix}0&1\\1&0\end{bmatrix}=
+\frac12\begin{bmatrix}1\\1\end{bmatrix}\begin{bmatrix}1&1\end{bmatrix}
+-\frac12\begin{bmatrix}1\\-1\end{bmatrix}\begin{bmatrix}1&-1\end{bmatrix}
+\end{equation*}
+\item 
+\begin{equation*}
+Y=\begin{bmatrix}0&-i\\i&0\end{bmatrix}=
+\frac12\begin{bmatrix}1\\i\end{bmatrix}\begin{bmatrix}1&-i\end{bmatrix}
+-\frac12\begin{bmatrix}1\\-i\end{bmatrix}\begin{bmatrix}1&i\end{bmatrix}
+\end{equation*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Braket notation}
+\begin{align*}
+\ket{0} &:= \begin{bmatrix}1\\0\end{bmatrix},&
+\ket{1} &:= \begin{bmatrix}0\\1\end{bmatrix}
+\end{align*}
+\begin{align*}
+\ket{+} &:= \frac1{\sqrt{2}}\begin{bmatrix}1\\1\end{bmatrix},&
+\ket{-} &:= \frac1{\sqrt{2}}\begin{bmatrix}1\\1\end{bmatrix}\\
+&=\frac1{\sqrt{2}}(\ket{0}+\ket{1}),&
+&=\frac1{\sqrt{2}}(\ket{0}0\ket{1})
+\end{align*}
+\begin{align*}
+\ket{\psi} = \alpha\ket{0}+\beta\ket{1}
+\end{align*}
+for $|\alpha|^2+|\beta|^2=1$.
 \end{frame}
 
 \begin{frame}{Special states}
