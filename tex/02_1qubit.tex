@@ -9,6 +9,8 @@
 %\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{braket}
 \usepackage{tikz}
+\usepackage{tikz-3dplot}
+%\usetikzlibrary{tikz-3dplot}
 \usetikzlibrary{graphs}
 \usetikzlibrary{datavisualization}
 \usetikzlibrary{datavisualization.formats.functions}
@@ -73,6 +75,7 @@ This operation can be represented by a map $T: \text{Set of states} \to \text{Se
 \end{frame}
 
 \begin{frame}{A single bit}
+Let $u=\begin{bmatrix}1\\1\end{bmatrix}$.
 \begin{itemize}
 \setlength{\itemsep}{2em}
 %\item State: \texttt{0},  \texttt{1} and their probabilistic mixture.
@@ -83,11 +86,11 @@ $\text{Set of states} = \left\{\omega\in\mathbb{R}^2 \mid \omega\in C_{\ge 0}, \
 %\end{equation*}
 \item 
 %\begin{equation*}
-$\text{\small Set of binary measurements} = \left\{e\in\mathbb{R}^2 \mid e\in C_{\ge 0}, u-e \in C_{\ge 0} \right\}$.
+$\text{Set of binary measurements} = \left\{e\in\mathbb{R}^2 \mid e\in C_{\ge 0}, u-e \in C_{\ge 0} \right\}$.
 %\end{equation*}
 \end{itemize}
 
-\vspace{1em}
+\vspace{3em}
 \centering
 \begin{tikzpicture}
 \draw[pink, fill] (0,0) rectangle +(3,3);
@@ -118,11 +121,28 @@ $\text{\small Set of binary measurements} = \left\{e\in\mathbb{R}^2 \mid e\in C_
 \end{frame}
 
 \begin{frame}{A single qubit}
+Let $u=\begin{bmatrix}1&0\\0&1\end{bmatrix}$.
 \begin{itemize}
-\setlength{\itemsep}{3em}
-\item State: A $2\times 2$ Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $\Tr(\rho)=1$.
-\item Binary measurements: A $2\times 2$ Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $I-\rho\succeq0$.
+\setlength{\itemsep}{2em}
+%\item State: A $2\times 2$ Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $\Tr(\rho)=1$.
+%\item Binary measurements: A $2\times 2$ Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $I-\rho\succeq0$.
+\item $\text{Set of states} = \left\{\omega\in V \mid \omega\in C_{\succeq 0}, \langle u,\omega\rangle = 1\right\}$.
+\item $\text{Set of binary measurements} = \left\{e\in V \mid e\in C_{\succeq 0}, u-e \in C_{\succeq 0} \right\}$.
 \end{itemize}
+\begin{tikzpicture}
+    \begin{axis}[height= 0.55\vsize, axis lines=center, axis on top, xmin=-1.0, xmax=1.0, ymin=-1.0, ymax=1.0, z buffer = sort, xtick = \empty, ytick=\empty, ztick=\empty ]
+    \addplot3[surf, samples= 10, samples y=5, domain= 0:1/sqrt(2), domain y= 0:2*pi, colormap = {pinkpink}{color=(pink) color=(pink)}]
+      ({x*cos(deg(y))}, {x*sin(deg(y))}, {x});
+    \addplot3[surf, samples= 10, samples y=5, domain= 0:1/sqrt(2), domain y= 0:2*pi, color = red ]
+      ({x*cos(deg(y))}, {x*sin(deg(y))}, {1/sqrt(2)});
+    \end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+    \begin{axis}[height=0.70\vsize, axis lines=center, axis on top, xmin=-1.0, xmax=1.0, ymin=-1.0, ymax=1.0, z buffer = sort, xtick = \empty, ytick=\empty, ztick=\empty ]
+    \addplot3[surf, samples= 40, samples y=5, domain= 0:sqrt(2), domain y= 0:2*pi, mesh/interior colormap = {blueblack}{color=(cyan!50) color=(cyan!50)}, colormap = {blueblack}{color=(blue!60) color=(blue!60)}]
+      ({(sqrt(2)/2-abs(sqrt(2)/2-x))*cos(deg(y))}, {(sqrt(2)/2-abs(sqrt(2)/2-x))*sin(deg(y))}, {x});
+    \end{axis}
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}{A single qubit}
@@ -138,10 +158,28 @@ for $[r_x\, r_y\, r_z]\in\mathbb{R}^3$ satisfying $r_x^2+r_y^2+r_z^2\le 1$.
 \end{frame}
 
 \begin{frame}{Bloch sphere}
+\centering
+
+\tdplotsetmaincoords{70}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=2]
+
+%\shade[ball color = lightgray, opacity = 0.5] (0,0,0) circle (1cm);
+
+\tdplotsetrotatedcoords{20}{80}{0}
+\draw[very thick, tdplot_rotated_coords] (0,0,0) circle (1);
+%\begin{scope}[canvas is zx plane at y=0]
+\draw[dashed, thick] (0,0,0) circle (1);
+%\end{scope}
+ 
+\draw[-stealth] (0,0,0) -- (2.00,0,0) node[below left] {$X$};
+\draw[-stealth] (0,0,0) -- (0,1.80,0) node[below right] {$Y$};
+\draw[-stealth] (0,0,0) -- (0,0,1.50) node[above] {$Z$};
+ 
+\end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Spectral decomposition of Hermitian matrix}
-\end{frame}
+%\begin{frame}{Spectral decomposition of Hermitian matrix}
+%\end{frame}
 
 \begin{frame}{Pauli matrices}
 \begin{itemize}
@@ -176,15 +214,129 @@ Y=\begin{bmatrix}0&-i\\i&0\end{bmatrix}=
 \ket{+} &:= \frac1{\sqrt{2}}\begin{bmatrix}1\\1\end{bmatrix},&
 \ket{-} &:= \frac1{\sqrt{2}}\begin{bmatrix}1\\1\end{bmatrix}\\
 &=\frac1{\sqrt{2}}(\ket{0}+\ket{1}),&
-&=\frac1{\sqrt{2}}(\ket{0}0\ket{1})
+&=\frac1{\sqrt{2}}(\ket{0}-\ket{1})
 \end{align*}
 \begin{align*}
-\ket{\psi} = \alpha\ket{0}+\beta\ket{1}
+\ket{\psi} = \alpha\ket{0}+\beta\ket{1}=\begin{bmatrix}\alpha\\\beta\end{bmatrix}
 \end{align*}
 for $|\alpha|^2+|\beta|^2=1$.
+\begin{align*}
+\bra{\psi} = \ket{\psi}^\dagger = \alpha^*\bra{0}+\beta^*\bra{1}=\begin{bmatrix}\alpha^*&\beta^*\end{bmatrix}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Pauli matrices in braket notation}
+\begin{itemize}
+\setlength{\itemsep}{3em}
+\item 
+\begin{equation*}
+Z=\begin{bmatrix}1&0\\0&-1\end{bmatrix}=
+\ket{0}\bra{0}
+-\ket{1}\bra{1}
+\end{equation*}
+\item 
+\begin{equation*}
+X=\begin{bmatrix}0&1\\1&0\end{bmatrix}=
+\ket{+}\bra{+}
+-\ket{-}\bra{-}
+\end{equation*}
+\item 
+\begin{equation*}
+Y=\begin{bmatrix}0&-i\\i&0\end{bmatrix}=
+\frac12\begin{bmatrix}1\\i\end{bmatrix}\begin{bmatrix}1&-i\end{bmatrix}
+-\frac12\begin{bmatrix}1\\-i\end{bmatrix}\begin{bmatrix}1&i\end{bmatrix}
+\end{equation*}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Special states}
+\begin{equation*}
+\rho = \frac12\left(I + r_x X + r_y Y + r_z Z\right)
+\end{equation*}
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|}
+\hline
+Coordinate & State\\
+\hline
+$[0,0,0]$ & $\frac12 I$\\
+$[1,0,0]$ & $\frac12 (I+X)=\ket{+}\bra{+}$\\
+$[-1,0,0]$ & $\frac12 (I-X)=\ket{-}\bra{-}$\\
+$[0,0,1]$ & $\frac12 (I+Z)=\ket{0}\bra{0}$\\
+$[0,0,-1]$ & $\frac12 (I-Z)=\ket{1}\bra{1}$\\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Special states in Bloch sphere}
+\centering
+
+\tdplotsetmaincoords{70}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=2]
+
+%\shade[ball color = lightgray, opacity = 0.5] (0,0,0) circle (1cm);
+
+\tdplotsetrotatedcoords{20}{80}{0}
+\draw[very thick, tdplot_rotated_coords] (0,0,0) circle (1);
+%\begin{scope}[canvas is zx plane at y=0]
+\draw[dashed, thick] (0,0,0) circle (1);
+%\end{scope}
+ 
+\draw[-stealth] (0,0,0) -- (2.00,0,0) node[below left] {$X$};
+\draw[-stealth] (0,0,0) -- (0,1.80,0) node[below right] {$Y$};
+\draw[-stealth] (0,0,0) -- (0,0,1.50) node[above] {$Z$};
+
+\filldraw (0,0,0) circle (1pt) node[right] {$I/2$};
+\filldraw (1,0,0) circle (1pt) node[below] {$\ket{+}\bra{+}$};
+\filldraw (-1,0,0) circle (1pt) node[above] {$\ket{-}\bra{-}$};
+\filldraw (0,0,1) circle (1pt) node[above] {$\ket{0}\bra{0}$};
+\filldraw (0,0,-1) circle (1pt) node[below] {$\ket{1}\bra{1}$};
+ 
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{Pure states and state vector}
+\begin{align*}
+& \text{$\rho$ is a \emm{pure state}}\\
+& \overset{\text{def}}{\iff} \rho\ne p\rho_1+(1-p)\rho_2\quad \forall p\in[0,1] \text{ and states $\rho_1,\rho_2\ne\rho$}\\
+& \iff \text{$\rho$ is at surface of Bloch sphere}\\
+& \iff r_X^2+r_Y^2+r_Z^2=1\\
+& \iff \lambda_1\lambda_2=0 \,\wedge\, \lambda_1+\lambda_2=1\\
+& \iff \text{$\rho$ is rank-1 Hermitian with $\Tr(\rho)=1$}\\
+& \iff \rho = \ket{\psi}\bra{\psi} \text{ for some $\ket{\psi}\in\mathbb{C}^2$ with $\braket{\psi|\psi}=1$}
+\end{align*}
+
+\vspace{1.5em}
+Pure state can be represented by a \emm{state vector} $\ket{\psi}\in\mathbb{C}^2$ with $\braket{\psi|\psi}=1$.
+
+\vspace{1em}
+$\ket{\psi}$ and $\ket{\phi}:=\mathsf{e}^{i\theta}\ket{\psi}$ represent the same state since $\ket{\psi}\bra{\psi}=\ket{\phi}\bra{\phi}$.
+\end{frame}
+
+\begin{frame}{Inner product of pure states}
+\begin{itemize}
+\item $\rho$ is a qubit pure state with a coordinate $(r_x,r_y,r_z)$.
+\item $\sigma$ is a qubit pure state with a coordinate $(-r_x,-r_y,-r_z)$.
+\end{itemize}
+\begin{align*}
+\Tr(\rho\sigma) =
+\Tr(\rho(I-\rho)) =
+\Tr(\rho)-\Tr(\rho^2) =1-1=0
+\end{align*}
+
+\vspace{1em}
+\begin{itemize}
+\item $\rho=\ket{\psi}\bra{\psi}$.
+\item $\sigma=\ket{\phi}\bra{\phi}$.
+\end{itemize}
+\begin{align*}
+\Tr(\rho\sigma) &=
+\Tr(\ket{\psi}\bra{\psi}\ket{\phi}\bra{\phi}) =
+\braket{\psi|\phi}\Tr(\ket{\psi}\bra{\phi})\\
+ &= \braket{\psi|\phi}\braket{\phi|\psi}
+ = |\braket{\psi|\phi}|^2
+\end{align*}
 \end{frame}
 
 \begin{frame}{State vector and unitary transform}
