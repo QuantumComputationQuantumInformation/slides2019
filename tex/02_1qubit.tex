@@ -74,22 +74,60 @@ This operation can be represented by a map $T: \text{Set of states} \to \text{Se
 
 \begin{frame}{A single bit}
 \begin{itemize}
-\setlength{\itemsep}{3em}
-\item State: \texttt{0},  \texttt{1} and their probabilistic mixture.
-\item Measurement: \texttt{0?}, \texttt{1?} and ther linear combination with coefficients in $[0,1]$.
+\setlength{\itemsep}{2em}
+%\item State: \texttt{0},  \texttt{1} and their probabilistic mixture.
+%\item Binary measurement: \texttt{0?}, \texttt{1?} and ther linear combination with coefficients in $[0,1]$.
+\item 
+%\begin{equation*}
+$\text{Set of states} = \left\{\omega\in\mathbb{R}^2 \mid \omega\in C_{\ge 0}, \langle u, \omega\rangle = 1\right\}$.
+%\end{equation*}
+\item 
+%\begin{equation*}
+$\text{\small Set of binary measurements} = \left\{e\in\mathbb{R}^2 \mid e\in C_{\ge 0}, u-e \in C_{\ge 0} \right\}$.
+%\end{equation*}
 \end{itemize}
 
-Operation
+\vspace{1em}
+\centering
+\begin{tikzpicture}
+\draw[pink, fill] (0,0) rectangle +(3,3);
+\draw[->] (-0.5,0) -- (3,0);
+\draw[->] (0,-0.5) -- (0,3);
+\draw[very thick, red] (2,0) -- (0,2);
+\draw[->, thick] (0,0) -- node[anchor=north, very near end] {$\omega_{\underbar{0}}$} (2,0);
+\draw[->, thick] (0,0) -- node[anchor=east, very near end] {$\omega_{\underbar{1}}$} (0,2);
+\draw[->, thick] (0,0) -- (2,0);
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\draw[cyan!50, fill] (0,0) rectangle +(3,3);
+\draw[blue!60, fill] (0,0) rectangle +(2,2);
+\draw[->] (-0.5,0) -- (3,0);
+\draw[->] (0,-0.5) -- (0,3);
+%\draw (0,0) -- (2,2);
+\draw[->, thick] (0,0) -- node[anchor=north, very near end] {$e_{\underbar{0}}$} (2,0);
+\draw[->, thick] (0,0) -- node[anchor=east, very near end] {$e_{\underbar{1}}$} (0,2);
+\draw[->, thick] (0,0) -- node[anchor=west, very near end] {$u$} (2,2);
+\end{tikzpicture}
+
+%Operation
+%\begin{itemize}
+%\item Identity: \texttt{0} $\mapsto$ \texttt{0}, \texttt{1} $\mapsto$ \texttt{1}
+%\item Bit flip: \texttt{0} $\mapsto$ \texttt{1}, \texttt{1} $\mapsto$ \texttt{0}
+%\end{itemize}
+\end{frame}
+
+\begin{frame}{A single qubit}
 \begin{itemize}
-\item Identity: \texttt{0} $\mapsto$ \texttt{0}, \texttt{1} $\mapsto$ \texttt{1}
-\item Bit flip: \texttt{0} $\mapsto$ \texttt{1}, \texttt{1} $\mapsto$ \texttt{0}
+\setlength{\itemsep}{3em}
+\item State: A $2\times 2$ Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $\Tr(\rho)=1$.
+\item Binary measurements: A $2\times 2$ Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $I-\rho\succeq0$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}{A single qubit}
 \begin{itemize}
 \setlength{\itemsep}{3em}
-\item A quantum state (density operator) is a Hermitian matrix $\rho$ satisfying $\rho\succeq0$ and $\Tr(\rho)=1$
 \item A qubit can be represented by
 \begin{equation*}
 \rho = \frac12\left(I + r_x X + r_y Y + r_z Z\right)
