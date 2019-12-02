@@ -65,14 +65,14 @@
 \maketitle
 \end{frame}
 
-\begin{frame}{Operation in a system}
-We will manipulate quantum state.
-
-\vspace{2em}
-This operation can be represented by a map $T: \text{Set of states} \to \text{Set of states}$.
-
-\vspace{2em}
-\end{frame}
+%\begin{frame}{Operation in a system}
+%We will manipulate quantum state.
+%
+%\vspace{2em}
+%This operation can be represented by a map $T: \text{Set of states} \to \text{Set of states}$.
+%
+%\vspace{2em}
+%\end{frame}
 
 \begin{frame}{A single bit}
 Let $u=\begin{bmatrix}1\\1\end{bmatrix}$.
@@ -150,14 +150,14 @@ Let $u=\begin{bmatrix}1&0\\0&1\end{bmatrix}$.
 \setlength{\itemsep}{3em}
 \item A qubit can be represented by
 \begin{equation*}
-\rho = \frac12\left(I + r_x X + r_y Y + r_z Z\right)
+\rho = \frac12\left(I + r_X X + r_Y Y + r_Z Z\right)
 \end{equation*}
-for $[r_x\, r_y\, r_z]\in\mathbb{R}^3$ satisfying $r_x^2+r_y^2+r_z^2\le 1$.
-\item A qubit can be represented by a point $[r_x\,r_y\,r_z]$ in a three-dimensional sphere of radius 1.
+for $[r_X\, r_Y\, r_Z]\in\mathbb{R}^3$ satisfying $r_X^2+r_Y^2+r_Z^2\le 1$.
+\item A qubit can be represented by a point $[r_X\,r_Y\,r_Z]$ in a three-dimensional sphere of radius 1.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Bloch sphere}
+\begin{frame}{The Bloch sphere}
 \centering
 
 \tdplotsetmaincoords{70}{120}
@@ -251,7 +251,7 @@ Y=\begin{bmatrix}0&-i\\i&0\end{bmatrix}=
 
 \begin{frame}{Special states}
 \begin{equation*}
-\rho = \frac12\left(I + r_x X + r_y Y + r_z Z\right)
+\rho = \frac12\left(I + r_X X + r_Y Y + r_Z Z\right)
 \end{equation*}
 \centering
 \renewcommand{\arraystretch}{1.5}
@@ -268,7 +268,7 @@ $[0,0,-1]$ & $\frac12 (I-Z)=\ket{1}\bra{1}$\\
 \end{tabular}
 \end{frame}
 
-\begin{frame}{Special states in Bloch sphere}
+\begin{frame}{Special states in the Bloch sphere}
 \centering
 
 \tdplotsetmaincoords{70}{120}
@@ -300,7 +300,7 @@ $[0,0,-1]$ & $\frac12 (I-Z)=\ket{1}\bra{1}$\\
 \begin{align*}
 & \text{$\rho$ is a \emm{pure state}}\\
 & \overset{\text{def}}{\iff} \rho\ne p\rho_1+(1-p)\rho_2\quad \forall p\in[0,1] \text{ and states $\rho_1,\rho_2\ne\rho$}\\
-& \iff \text{$\rho$ is at surface of Bloch sphere}\\
+& \iff \text{$\rho$ is at surface of the Bloch sphere}\\
 & \iff r_X^2+r_Y^2+r_Z^2=1\\
 & \iff \lambda_1\lambda_2=0 \,\wedge\, \lambda_1+\lambda_2=1\\
 & \iff \text{$\rho$ is rank-1 Hermitian with $\Tr(\rho)=1$}\\
@@ -311,13 +311,13 @@ $[0,0,-1]$ & $\frac12 (I-Z)=\ket{1}\bra{1}$\\
 Pure state can be represented by a \emm{state vector} $\ket{\psi}\in\mathbb{C}^2$ with $\braket{\psi|\psi}=1$.
 
 \vspace{1em}
-$\ket{\psi}$ and $\ket{\phi}:=\mathsf{e}^{i\theta}\ket{\psi}$ represent the same state since $\ket{\psi}\bra{\psi}=\ket{\phi}\bra{\phi}$.
+$\ket{\psi}$ and $\ket{\varphi}:=\mathsf{e}^{i\theta}\ket{\psi}$ represent the same state since $\ket{\psi}\bra{\psi}=\ket{\varphi}\bra{\varphi}$.
 \end{frame}
 
 \begin{frame}{Inner product of pure states}
 \begin{itemize}
-\item $\rho$ is a qubit pure state with a coordinate $(r_x,r_y,r_z)$.
-\item $\sigma$ is a qubit pure state with a coordinate $(-r_x,-r_y,-r_z)$.
+\item $\rho$ is a qubit pure state with a coordinate $(r_X,r_Y,r_Z)$.
+\item $\sigma$ is a qubit pure state with a coordinate $(-r_X,-r_Y,-r_Z)$.
 \end{itemize}
 \begin{align*}
 \Tr(\rho\sigma) =
@@ -325,21 +325,127 @@ $\ket{\psi}$ and $\ket{\phi}:=\mathsf{e}^{i\theta}\ket{\psi}$ represent the same
 \Tr(\rho)-\Tr(\rho^2) =1-1=0
 \end{align*}
 
-\vspace{1em}
+\vspace{2em}
 \begin{itemize}
 \item $\rho=\ket{\psi}\bra{\psi}$.
-\item $\sigma=\ket{\phi}\bra{\phi}$.
+\item $\sigma=\ket{\varphi}\bra{\varphi}$.
 \end{itemize}
 \begin{align*}
 \Tr(\rho\sigma) &=
-\Tr(\ket{\psi}\bra{\psi}\ket{\phi}\bra{\phi}) =
-\braket{\psi|\phi}\Tr(\ket{\psi}\bra{\phi})\\
- &= \braket{\psi|\phi}\braket{\phi|\psi}
- = |\braket{\psi|\phi}|^2
+\Tr(\ket{\psi}\bra{\psi}\ket{\varphi}\bra{\varphi}) =
+\braket{\psi|\varphi}\Tr(\ket{\psi}\bra{\varphi})\\
+ &= \braket{\psi|\varphi}\braket{\varphi|\psi}
+ = |\braket{\psi|\varphi}|^2
 \end{align*}
 \end{frame}
 
-\begin{frame}{State vector and unitary transform}
+%\begin{frame}{Classical pure states and operations}
+%\end{frame}
+\begin{frame}{Unitary operation}
+Unitary operation
+\begin{equation*}
+\rho\mapsto U\rho U^\dagger
+\end{equation*}
+
+\vspace{2em}
+It is easy to see that
+\begin{itemize}
+\item $\Tr(U\rho U^\dagger)=1$
+\item $U\rho U^\dagger\succeq 0$
+\end{itemize}
+
+\vspace{3em}
+A pure state $\ket{\psi}$ is mapped to a pure state $U\ket{\psi}$.
+\end{frame}
+
+\begin{frame}{Examples of unitary operation}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item The identity matrix $I$.
+\item Pauli matrices $X$, $Y$ and $Z$.
+\item Hadamard matrix $H:=\frac1{\sqrt{2}}\begin{bmatrix}1&1\\1&-1\end{bmatrix}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pauli matrices $X$ on the Bloch sphere}
+\begin{equation*}
+\rho = \frac12\left(I + r_X X + r_Y Y + r_Z Z\right)
+\end{equation*}
+\begin{align*}
+X\rho X^\dagger &= X\rho X =  \frac12\left(X^2 + r_X X^3 + r_Y XYX + r_Z XZX\right)\\
+&=  \frac12\left(I + r_X X - r_Y Y - r_Z Z\right)
+\end{align*}
+\begin{align*}
+[r_X,r_Y,r_Z]\overset{X}{\longmapsto} [r_X,-r_Y,-r_Z]
+\end{align*}
+$\pi$-rotation with respect to $X$ axis.
+
+\vspace{1em}
+Similarly, $Y$ and $Z$ corresponds to $\pi$-rotation with respect to $Y$ and $Z$ axes, respectively.
+\end{frame}
+
+\begin{frame}{Hadamard matrix}
+Hadamard matrix $H$ is unitary and Hermitian.
+\begin{align*}
+H:=\frac1{\sqrt{2}}\begin{bmatrix}1&1\\1&-1\end{bmatrix}
+&=\ket{+}\bra{0}+\ket{-}\bra{1}\\
+&=\ket{0}\bra{+}+\ket{1}\bra{-}
+\end{align*}
+\begin{align*}
+\ket{0},\,\ket{1} \overset{H}{\longleftrightarrow} \ket{+},\,\ket{-}
+\end{align*}
+\begin{align*}
+HXH &= H(\ket{+}\bra{+}-\ket{-}\bra{-})H\\
+&= \ket{0}\bra{0}-\ket{1}\bra{1} = Z
+\end{align*}
+
+Similarly, $HZH=X$.
+\end{frame}
+
+\begin{frame}{Hadamard matrix on the Bloch sphere}
+\begin{equation*}
+\rho = \frac12\left(I + r_X X + r_Y Y + r_Z Z\right)
+\end{equation*}
+\begin{align*}
+H\rho H^\dagger &= H\rho H =  \frac12\left(H^2 + r_X HXH + r_Y HYH + r_Z HZH\right)\\
+&=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
+\end{align*}
+\begin{align*}
+[r_X,r_Y,r_Z]\overset{H}{\longmapsto} [r_Z,-r_Y,r_X]
+\end{align*}
+Hadamard operation can be decomposed to $\pi/2$-rotation with respect to $Y$ axis
+\begin{align*}
+[r_X,r_Y,r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [-r_Z,r_Y,r_X]
+\end{align*}
+and $X$.
+\end{frame}
+
+\begin{frame}{Rotation matrices}
+\begin{equation*}
+R_X(\theta) := \cos\theta I + i \sin\theta X
+\end{equation*}
+\begin{equation*}
+R_X(\theta)^\dagger = R_X(-\theta)
+\end{equation*}
+\begin{align*}
+R_X(\theta)R_X(\theta)^\dagger &= (\cos\theta I + i \sin\theta X)(\cos\theta I - i \sin\theta X)\\
+&= \cos^2\theta I + \sin^2\theta X^2=I
+\end{align*}
+\begin{align*}
+R_X(\theta)X&=X R_X(\theta)\\
+R_X(\theta)Y&=Y R_X(-\theta)\\
+R_X(\theta)Z&=Z R_X(-\theta)
+\end{align*}
+\begin{align*}
+R_X(\theta)\rho R_X(\theta)^\dagger &= \frac12\left(I + r_X X + r_Y R_X(\theta)YR_X(\theta)^\dagger + r_Z R_X(\theta)ZR_X(\theta)^\dagger\right)\\
+&=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Decomposition of $2\times 2$ unitary matrix}
+\end{frame}
+
+\begin{frame}{Universal gate set}
 \end{frame}
 
 \end{document}
