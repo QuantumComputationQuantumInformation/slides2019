@@ -422,14 +422,14 @@ and $X$.
 
 \begin{frame}{Rotation matrices}
 \begin{equation*}
-R_X(\theta) := \cos\theta I + i \sin\theta X
+R_X(\theta) := \cos\frac{\theta}2 I + i \sin\frac{\theta}2 X
 \end{equation*}
 \begin{equation*}
 R_X(\theta)^\dagger = R_X(-\theta)
 \end{equation*}
 \begin{align*}
-R_X(\theta)R_X(\theta)^\dagger &= (\cos\theta I + i \sin\theta X)(\cos\theta I - i \sin\theta X)\\
-&= \cos^2\theta I + \sin^2\theta X^2=I
+R_X(\theta)R_X(\theta)^\dagger &= (\cos\frac{\theta}2 I + i \sin\frac{\theta}2 X)(\cos\frac{\theta}2 I - i \sin\frac{\theta}2 X)\\
+&= \cos^2\frac{\theta}2 I + \sin^2\frac{\theta}2 X^2=I
 \end{align*}
 \begin{align*}
 R_X(\theta)X&=X R_X(\theta)\\
@@ -440,6 +440,9 @@ R_X(\theta)Z&=Z R_X(-\theta)
 R_X(\theta)\rho R_X(\theta)^\dagger &= \frac12\left(I + r_X X + r_Y R_X(\theta)YR_X(\theta)^\dagger + r_Z R_X(\theta)ZR_X(\theta)^\dagger\right)\\
 &=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
 \end{align*}
+\end{frame}
+
+\begin{frame}{General $2\times 2$ unitary matrices}
 \end{frame}
 
 \begin{frame}{Decomposition of $2\times 2$ unitary matrix}
