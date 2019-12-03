@@ -316,8 +316,8 @@ $\ket{\psi}$ and $\ket{\varphi}:=\mathsf{e}^{i\theta}\ket{\psi}$ represent the s
 
 \begin{frame}{Inner product of pure states}
 \begin{itemize}
-\item $\rho$ is a qubit pure state with a coordinate $(r_X,r_Y,r_Z)$.
-\item $\sigma$ is a qubit pure state with a coordinate $(-r_X,-r_Y,-r_Z)$.
+\item $\rho$ is a qubit pure state with a coordinate $[r_X\,r_Y\,r_Z]$.
+\item $\sigma$ is a qubit pure state with a coordinate $[-r_X\,-r_Y\,-r_Z]$.
 \end{itemize}
 \begin{align*}
 \Tr(\rho\sigma) =
@@ -379,7 +379,7 @@ X\rho X^\dagger &= X\rho X =  \frac12\left(X^2 + r_X X^3 + r_Y XYX + r_Z XZX\rig
 &=  \frac12\left(I + r_X X - r_Y Y - r_Z Z\right)
 \end{align*}
 \begin{align*}
-[r_X\,r_Y\,r_Z]\overset{X}{\longmapsto} [r_X,-r_Y,-r_Z]
+[r_X\,r_Y\,r_Z]\overset{X}{\longmapsto} [r_X\,-r_Y\,-r_Z]
 \end{align*}
 $\pi$-rotation with respect to $X$ axis.
 
@@ -414,11 +414,11 @@ H\rho H^\dagger &= H\rho H =  \frac12\left(H^2 + r_X HXH + r_Y HYH + r_Z HZH\rig
 &=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
 \end{align*}
 \begin{align*}
-[r_X\,r_Y\,r_Z]\overset{H}{\longmapsto} [r_Z,-r_Y,r_X]
+[r_X\,r_Y\,r_Z]\overset{H}{\longmapsto} [r_Z\,-r_Y\,r_X]
 \end{align*}
 Hadamard operation can be decomposed to $\pi/2$-rotation with respect to $Y$ axis
 \begin{align*}
-[r_X\,r_Y\,r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [-r_Z,r_Y,r_X]
+[r_X\,r_Y\,r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [-r_Z\,r_Y\,r_X]
 \end{align*}
 and $X$.
 \end{frame}
@@ -517,7 +517,7 @@ Assume $\alpha_I$ is real.
 \alpha_I\mathsf{Re}(\alpha_Y) &= \mathsf{Im}(\alpha_Z\alpha_X^*)\\
 \alpha_I\mathsf{Re}(\alpha_Z) &= \mathsf{Im}(\alpha_X\alpha_Y^*)
 \end{align*}
-With the direct calculation, we obtain $\alpha_I^2(\mathsf{Re}(\alpha_X)^2+\mathsf{Re}(\alpha_Y)^2+\mathsf{Re}(\alpha_Z)^2)=0$.
+With the direct calculation, we obtain $\alpha_I(\mathsf{Re}(\alpha_X)^2+\mathsf{Re}(\alpha_Y)^2+\mathsf{Re}(\alpha_Z)^2)=0$.
 \end{frame}
 
 
