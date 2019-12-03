@@ -356,6 +356,9 @@ It is easy to see that
 
 \vspace{3em}
 A pure state $\ket{\psi}$ is mapped to a pure state $U\ket{\psi}$.
+
+\vspace{2em}
+$U$ and $\mathsf{e}^{i\theta}U$ play the same role.
 \end{frame}
 
 \begin{frame}{Examples of unitary operation}
@@ -376,7 +379,7 @@ X\rho X^\dagger &= X\rho X =  \frac12\left(X^2 + r_X X^3 + r_Y XYX + r_Z XZX\rig
 &=  \frac12\left(I + r_X X - r_Y Y - r_Z Z\right)
 \end{align*}
 \begin{align*}
-[r_X,r_Y,r_Z]\overset{X}{\longmapsto} [r_X,-r_Y,-r_Z]
+[r_X\,r_Y\,r_Z]\overset{X}{\longmapsto} [r_X,-r_Y,-r_Z]
 \end{align*}
 $\pi$-rotation with respect to $X$ axis.
 
@@ -411,44 +414,112 @@ H\rho H^\dagger &= H\rho H =  \frac12\left(H^2 + r_X HXH + r_Y HYH + r_Z HZH\rig
 &=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
 \end{align*}
 \begin{align*}
-[r_X,r_Y,r_Z]\overset{H}{\longmapsto} [r_Z,-r_Y,r_X]
+[r_X\,r_Y\,r_Z]\overset{H}{\longmapsto} [r_Z,-r_Y,r_X]
 \end{align*}
 Hadamard operation can be decomposed to $\pi/2$-rotation with respect to $Y$ axis
 \begin{align*}
-[r_X,r_Y,r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [-r_Z,r_Y,r_X]
+[r_X\,r_Y\,r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [-r_Z,r_Y,r_X]
 \end{align*}
 and $X$.
 \end{frame}
 
+\begin{frame}{Multiplications of Pauli matrices}
+For any unitary matrices $U$ and $V$, $UV$ is also unitary matrix.
+
+\vspace{2em}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item $XY=iZ$
+\item $YZ=iX$
+\item $ZX=iY$
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Rotation matrices}
 \begin{equation*}
-R_X(\theta) := \cos\frac{\theta}2 I + i \sin\frac{\theta}2 X
+R_X(\theta) := \cos\frac{\theta}2 I - i \sin\frac{\theta}2 X
 \end{equation*}
 \begin{equation*}
 R_X(\theta)^\dagger = R_X(-\theta)
 \end{equation*}
 \begin{align*}
-R_X(\theta)R_X(\theta)^\dagger &= (\cos\frac{\theta}2 I + i \sin\frac{\theta}2 X)(\cos\frac{\theta}2 I - i \sin\frac{\theta}2 X)\\
+R_X(\theta)R_X(\theta)^\dagger &= (\cos\frac{\theta}2 I - i \sin\frac{\theta}2 X)(\cos\frac{\theta}2 I + i \sin\frac{\theta}2 X)\\
 &= \cos^2\frac{\theta}2 I + \sin^2\frac{\theta}2 X^2=I
 \end{align*}
 \begin{align*}
-R_X(\theta)X&=X R_X(\theta)\\
-R_X(\theta)Y&=Y R_X(-\theta)\\
+R_X(\theta)X&=X R_X(\theta),&
+R_X(\theta)Y&=Y R_X(-\theta),&
 R_X(\theta)Z&=Z R_X(-\theta)
 \end{align*}
 \begin{align*}
-R_X(\theta)\rho R_X(\theta)^\dagger &= \frac12\left(I + r_X X + r_Y R_X(\theta)YR_X(\theta)^\dagger + r_Z R_X(\theta)ZR_X(\theta)^\dagger\right)\\
-&=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
+R_X(\theta)R_X(\tau)=R_X(\theta+\tau)
 \end{align*}
+\begin{align*}
+[1\, 0\, 0]&\overset{R_X(\theta)}{\longmapsto} [1\,0\,0]\\
+[0\, 1\, 0]&\overset{R_X(\theta)}{\longmapsto} [0\,\cos\theta\,\sin\theta]\\
+[0\, 0\, 1]&\overset{R_X(\theta)}{\longmapsto} [0\,-\sin\theta\,\cos\theta]
+\end{align*}
+%\begin{align*}
+%R_X(\theta)\rho R_X(\theta)^\dagger &= \frac12\left(I + r_X X + r_Y R_X(\theta)YR_X(\theta)^\dagger + r_Z R_X(\theta)ZR_X(\theta)^\dagger\right)\\
+%&= ...
+%\end{align*}
+\end{frame}
+
+\begin{frame}{Assignments \small[Deadline is the next of next friday]}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item Show that $R_Y(\theta)=\begin{bmatrix}\cos\frac{\theta}2 & -i\sin\frac{\theta}2\\ \sin\frac{\theta}2 & \cos\frac{\theta}2\end{bmatrix}$
+and $R_Z(\theta)=\begin{bmatrix}\mathsf{e}^{-i\theta/2}&0\\0&\mathsf{e}^{i\theta/2}\end{bmatrix}$.
+\item Show that for any $2\times 2$ unitary matrix, there exist $\alpha,\,\beta,\,\gamma,\,\delta\in\mathbb{R}$ such that
+\begin{equation*}
+U=\mathsf{e}^{i\alpha}R_Z(\beta)R_Y(\gamma)R_Z(\delta)
+\end{equation*}
+\item {[Advanced]} For a real unit vector $\hat{n}=[n_X\,n_Y\,n_Z]$, let
+\begin{equation*}
+R_{\hat{n}}(\theta):=\cos\frac{\theta}2I -i\sin\frac{\theta}2(n_XX+n_YY+n_ZZ).
+\end{equation*}
+\end{itemize}
+Show that for any $2\times 2$ unitary matrix, there exist $\alpha,\,\theta\in\mathbb{R}$ and a real unit 3d vector $\hat{n}$ such that
+$U=\mathsf{e}^{i\alpha}R_{\hat{n}}(\theta)$.
 \end{frame}
 
 \begin{frame}{General $2\times 2$ unitary matrices}
+$\{I,\,X,\,Y,\,Z\}$ is a orthogonal basis of $2\times 2$ complex matrices.
+\begin{equation*}
+U=\alpha_I I + \alpha_X X + \alpha_Y Y + \alpha_Z Z 
+\end{equation*}
+for some $\alpha_I,\alpha_X,\alpha_Y,\alpha_Z\in\mathbb{C}$.
+\begin{align*}
+UU^\dagger&=(|\alpha_I|^2+|\alpha_X|^2+|\alpha_Y|^2+|\alpha_Z^2|)I\\
+&+(\alpha_I\alpha_X^*+\alpha_I^*\alpha_X+i(\alpha_Y\alpha_Z^*-\alpha_Z\alpha_Y^*))X\\
+&+(\alpha_I\alpha_Y^*+\alpha_I^*\alpha_Y+i(\alpha_Z\alpha_X^*-\alpha_X\alpha_Z^*))Y\\
+&+(\alpha_I\alpha_Z^*+\alpha_I^*\alpha_Z+i(\alpha_X\alpha_Y^*-\alpha_Y\alpha_X^*))Z
+\end{align*}
+\begin{align*}
+\mathsf{Re}(\alpha_I\alpha_X^*) &= \mathsf{Im}(\alpha_Y\alpha_Z^*)\\
+\mathsf{Re}(\alpha_I\alpha_Y^*) &= \mathsf{Im}(\alpha_Z\alpha_X^*)\\
+\mathsf{Re}(\alpha_I\alpha_Z^*) &= \mathsf{Im}(\alpha_X\alpha_Y^*)
+\end{align*}
 \end{frame}
 
-\begin{frame}{Decomposition of $2\times 2$ unitary matrix}
+\begin{frame}{General rotation matrices}
+\begin{align*}
+|\alpha_I|^2+|\alpha_X|^2+|\alpha_Y|^2+|\alpha_Z^2|=1
+\end{align*}
+%\begin{align*}
+%\mathsf{Re}(\alpha_I\alpha_X^*) &= \mathsf{Im}(\alpha_Y\alpha_Z^*)\\
+%\mathsf{Re}(\alpha_I\alpha_Y^*) &= \mathsf{Im}(\alpha_Z\alpha_X^*)\\
+%\mathsf{Re}(\alpha_I\alpha_Z^*) &= \mathsf{Im}(\alpha_X\alpha_Y^*)
+%\end{align*}
+Assume $\alpha_I$ is real.
+\begin{align*}
+\alpha_I\mathsf{Re}(\alpha_X) &= \mathsf{Im}(\alpha_Y\alpha_Z^*)\\
+\alpha_I\mathsf{Re}(\alpha_Y) &= \mathsf{Im}(\alpha_Z\alpha_X^*)\\
+\alpha_I\mathsf{Re}(\alpha_Z) &= \mathsf{Im}(\alpha_X\alpha_Y^*)
+\end{align*}
+With the direct calculation, we obtain $\alpha_I^2(\mathsf{Re}(\alpha_X)^2+\mathsf{Re}(\alpha_Y)^2+\mathsf{Re}(\alpha_Z)^2)=0$.
 \end{frame}
 
-\begin{frame}{Universal gate set}
-\end{frame}
+
 
 \end{document}
