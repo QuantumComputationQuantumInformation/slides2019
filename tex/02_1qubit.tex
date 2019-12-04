@@ -152,8 +152,8 @@ Let $u=\begin{bmatrix}1&0\\0&1\end{bmatrix}$.
 \begin{equation*}
 \rho = \frac12\left(I + r_X X + r_Y Y + r_Z Z\right)
 \end{equation*}
-for $[r_X\, r_Y\, r_Z]\in\mathbb{R}^3$ satisfying $r_X^2+r_Y^2+r_Z^2\le 1$.
-\item A qubit can be represented by a point $[r_X\,r_Y\,r_Z]$ in a three-dimensional sphere of radius 1.
+for $[r_X\  r_Y\  r_Z]\in\mathbb{R}^3$ satisfying $r_X^2+r_Y^2+r_Z^2\le 1$.
+\item A qubit can be represented by a point $[r_X\ r_Y\ r_Z]$ in a three-dimensional sphere of radius 1.
 \end{itemize}
 \end{frame}
 
@@ -259,11 +259,11 @@ Y=\begin{bmatrix}0&-i\\i&0\end{bmatrix}=
 \hline
 Coordinate & State\\
 \hline
-$[0,0,0]$ & $\frac12 I$\\
-$[1,0,0]$ & $\frac12 (I+X)=\ket{+}\bra{+}$\\
-$[-1,0,0]$ & $\frac12 (I-X)=\ket{-}\bra{-}$\\
-$[0,0,1]$ & $\frac12 (I+Z)=\ket{0}\bra{0}$\\
-$[0,0,-1]$ & $\frac12 (I-Z)=\ket{1}\bra{1}$\\
+$[0\ 0\ 0]$ & $\frac12 I$\\
+$[1\ 0\ 0]$ & $\frac12 (I+X)=\ket{+}\bra{+}$\\
+$[-1\ 0\ 0]$ & $\frac12 (I-X)=\ket{-}\bra{-}$\\
+$[0\ 0\ 1]$ & $\frac12 (I+Z)=\ket{0}\bra{0}$\\
+$[0\ 0\ -1]$ & $\frac12 (I-Z)=\ket{1}\bra{1}$\\
 \hline
 \end{tabular}
 \end{frame}
@@ -316,8 +316,8 @@ $\ket{\psi}$ and $\ket{\varphi}:=\mathsf{e}^{i\theta}\ket{\psi}$ represent the s
 
 \begin{frame}{Inner product of pure states}
 \begin{itemize}
-\item $\rho$ is a qubit pure state with a coordinate $[r_X\,r_Y\,r_Z]$.
-\item $\sigma$ is a qubit pure state with a coordinate $[-r_X\,-r_Y\,-r_Z]$.
+\item $\rho$ is a qubit pure state with a coordinate $[r_X\ r_Y\ r_Z]$.
+\item $\sigma$ is a qubit pure state with a coordinate $[-r_X\ -r_Y\ -r_Z]$.
 \end{itemize}
 \begin{align*}
 \Tr(\rho\sigma) =
@@ -379,7 +379,7 @@ X\rho X^\dagger &= X\rho X =  \frac12\left(X^2 + r_X X^3 + r_Y XYX + r_Z XZX\rig
 &=  \frac12\left(I + r_X X - r_Y Y - r_Z Z\right)
 \end{align*}
 \begin{align*}
-[r_X\,r_Y\,r_Z]\overset{X}{\longmapsto} [r_X\,-r_Y\,-r_Z]
+[r_X\ r_Y\ r_Z]\overset{X}{\longmapsto} [r_X\ -r_Y\ -r_Z]
 \end{align*}
 $\pi$-rotation with respect to $X$ axis.
 
@@ -414,11 +414,11 @@ H\rho H^\dagger &= H\rho H =  \frac12\left(H^2 + r_X HXH + r_Y HYH + r_Z HZH\rig
 &=  \frac12\left(I + r_X Z - r_Y Y + r_Z X\right)
 \end{align*}
 \begin{align*}
-[r_X\,r_Y\,r_Z]\overset{H}{\longmapsto} [r_Z\,-r_Y\,r_X]
+[r_X\ r_Y\ r_Z]\overset{H}{\longmapsto} [r_Z\ -r_Y\ r_X]
 \end{align*}
 Hadamard operation can be decomposed to $\pi/2$-rotation with respect to $Y$ axis
 \begin{align*}
-[r_X\,r_Y\,r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [-r_Z\,r_Y\,r_X]
+[r_X\ r_Y\ r_Z]\overset{R_Y(\pi/2)}{\longmapsto} [r_Z\ r_Y\ -r_X]
 \end{align*}
 and $X$.
 \end{frame}
@@ -455,9 +455,9 @@ R_X(\theta)Z&=Z R_X(-\theta)
 R_X(\theta)R_X(\tau)=R_X(\theta+\tau)
 \end{align*}
 \begin{align*}
-[1\, 0\, 0]&\overset{R_X(\theta)}{\longmapsto} [1\,0\,0]\\
-[0\, 1\, 0]&\overset{R_X(\theta)}{\longmapsto} [0\,\cos\theta\,\sin\theta]\\
-[0\, 0\, 1]&\overset{R_X(\theta)}{\longmapsto} [0\,-\sin\theta\,\cos\theta]
+[1\  0\  0]&\overset{R_X(\theta)}{\longmapsto} [1\ 0\ 0]\\
+[0\  1\  0]&\overset{R_X(\theta)}{\longmapsto} [0\ \cos\theta\ \sin\theta]\\
+[0\  0\  1]&\overset{R_X(\theta)}{\longmapsto} [0\ -\sin\theta\ \cos\theta]
 \end{align*}
 %\begin{align*}
 %R_X(\theta)\rho R_X(\theta)^\dagger &= \frac12\left(I + r_X X + r_Y R_X(\theta)YR_X(\theta)^\dagger + r_Z R_X(\theta)ZR_X(\theta)^\dagger\right)\\
@@ -474,7 +474,7 @@ and $R_Z(\theta)=\begin{bmatrix}\mathsf{e}^{-i\theta/2}&0\\0&\mathsf{e}^{i\theta
 \begin{equation*}
 U=\mathsf{e}^{i\alpha}R_Z(\beta)R_Y(\gamma)R_Z(\delta)
 \end{equation*}
-\item {[Advanced]} For a real unit vector $\hat{n}=[n_X\,n_Y\,n_Z]$, let
+\item {[Advanced]} For a real unit vector $\hat{n}=[n_X\ n_Y\ n_Z]$, let
 \begin{equation*}
 R_{\hat{n}}(\theta):=\cos\frac{\theta}2I -i\sin\frac{\theta}2(n_XX+n_YY+n_ZZ).
 \end{equation*}
