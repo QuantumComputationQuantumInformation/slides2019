@@ -1,0 +1,188 @@
+\documentclass{beamer}
+%\usepackage{xspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+%\usepackage{svg}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\usepackage{psfrag}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{blkarray}
+\usepackage{braket}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+%\usetikzlibrary{tikz-3dplot}
+\usetikzlibrary{graphs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{patchplots}
+
+\setbeamercovered{transparent}
+
+\usetheme{Pittsburgh}
+%\usetheme{default}
+
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}[frame number]
+%\usefonttheme{professionalfonts}
+
+%\usepackage{sansmathaccent}
+%\usepackage{bm}
+
+%\usepackage{unicode-math}
+%%\setmainfont[SlantedFont={Latin Modern Roman Slanted},SlantedFeatures={Color=000000},
+%%  SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]{XITS}
+%\setmathfont[math-style=ISO,sans-style=upright]{XITS Math}
+%\setmathfont[range={\mathcal,\mathbfcal}]{Latin Modern Math}
+
+\usepackage{sfmath}
+
+%\mathversion{sans}
+
+\newcommand{\Tr}{\mathsf{Tr}}
+
+\definecolor{redorange}{rgb}{1.0, .25, .25}
+\definecolor{citation}{rgb}{.1, 0.8, .35}
+\newcommand\emm[1]{\textcolor{redorange}{{#1}}}
+\newcommand\numc[1]{\textcolor{citation}{{\bf #1}}}
+
+%\newcommand\bm[1]{{\mbox{\boldmath $#1$}}}
+\newcommand\bm[1]{{\mathbf{#1}}}
+%\newcommand\bm[1]{{\bf #1}}
+%\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
+%\newcommand\bm[1]{{\textbf{\it #1}}}
+
+\title{Joint system}
+\author{Ryuhei Mori}
+%\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
+\institute{Tokyo Institute of Technology}
+%\date{21, Feb, 2019}
+
+
+
+\begin{document}
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+
+\begin{frame}{Joint system}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item System = Set of states \& set of measurements
+\item Joint system = ``Product'' of systems.
+\item Joint system of a system of a coin (two-dimentional classical system) and a system of a dice (six-dimentional classical system) is twelve-dimentional classical system.
+\item What is a joint system of quantum systems ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tensor product of linear spaces}
+For linear product spaces $V$ and $W$ over a field $F$ (usually $\mathbb{R}$ or $\mathbb{C}$),
+a tensor space $V\otimes W$ is a linear space spanned by $v\otimes w$ for all $v\in V,\, w\in W$.
+
+\vspace{1em}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+%\item $\forall v\in V,\, \forall w\in W,\, v\otimes w\in V\otimes W$.
+\item $\forall c\in F,\,\forall v\in V,\, \forall w\in W,\, c(v\otimes w) = (cv)\otimes w = v\otimes (cw) $.
+\item $\forall u,v\in V,\, \forall w\in W,\, (u+v)\otimes w = u\otimes w + v\otimes w $.
+\item $\forall v\in V,\, \forall w,y\in W,\, v\otimes (w+y) = v\otimes w + v\otimes y $.
+\end{itemize}
+
+\vspace{1em}
+$\dim(V\otimes W) =\dim(V)\dim(W)$.
+
+\vspace{1em}
+If $V$ and $W$ are inner product spaces, $V\otimes W$ is also a inner product space defined by
+\begin{equation*}
+\langle v\otimes w, u\otimes y\rangle =
+\langle v, u\rangle\langle w, y\rangle.
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Vector representation in tensor product}
+Let $V:=\mathbb{R}^n,\,W:=\mathbb{R}^m$.
+\small
+\begin{align*}
+e_i&:=\begin{blockarray}{[c]c}0&1\\\vdots\\0&i-1\\1&i\\0&i+1\\\vdots\\0&n\end{blockarray}\in\mathbb{R}^n,&
+f_j&:=\begin{blockarray}{[c]c}0&1\\\vdots\\0&j-1\\1&j\\0&j+1\\\vdots\\0&m\end{blockarray}\in\mathbb{R}^m&
+\end{align*}
+\begin{align*}
+e_i\otimes f_j&=\begin{blockarray}{[c]c}0&(1,1)\\\vdots\\0&(i,j-1)\\1&(i,j)\\0&(i,j+1)\\\vdots\\0&(n,m)\end{blockarray}\in\mathbb{R}^n\otimes\mathbb{R}^m
+\end{align*}
+\end{frame}
+
+\begin{frame}{Vector representation in tensor product}
+Let $V:=\mathbb{R}^n,\,W:=\mathbb{R}^m$.
+\small
+\begin{align*}
+e_i\otimes f_j&=\begin{blockarray}{[c]c}0&(1,1)\\\vdots\\0&(i,j-1)\\1&(i,j)\\0&(i,j+1)\\\vdots\\0&(n,m)\end{blockarray}\in\mathbb{R}^n\otimes\mathbb{R}^m
+\end{align*}
+\begin{align*}
+v\otimes w&=\begin{blockarray}{[c]c}\vdots\\v_iw_j&(i,j)\\\vdots\end{blockarray}=\begin{blockarray}{[c]}v_1 w\\v_2 w\\\vdots\\v_nw\end{blockarray}\in\mathbb{R}^n\otimes\mathbb{R}^m
+\end{align*}
+\end{frame}
+
+\begin{frame}{Tensor product of linear maps}
+\end{frame}
+
+\begin{frame}{Linear spaces}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item $L(V,W)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Joint system}
+Linear space of joint system is regarded as a \emm{tensor product} of linear spaces for the single systems
+(justified by two postulates, no-signaling and tomographic locality [Barrett 2007 \numc{275}]).
+\begin{align*}
+C_1 \otimes_{\min} C_2
+&:=\Bigg\{\omega \in V_1\otimes V_2 \mid \omega = \sum_i \lambda_i \omega^{(1)}_i\otimes \omega^{(2)}_i,\\
+&\qquad \lambda_i \ge 0,\, \omega^{(1)}_i \in C_1,\, \omega^{(2)}_i \in C_2\Bigg\}\\
+C_1 \otimes_{\max} C_2
+&:=(C^*_1 \otimes_{\min} C^*_2 )^*
+\end{align*}
+
+\vspace{2em}
+\begin{equation*}
+(C_1 \otimes_{\max} C_2)
+\supseteq
+C_{1,2}\supseteq
+(C_1 \otimes_{\min} C_2)
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Tomography}
+\end{frame}
+
+\begin{frame}{Local tomography}
+\end{frame}
+
+\begin{frame}{Entanglements}
+\end{frame}
+
+\begin{frame}{Partial trace and reduced density matrix}
+\end{frame}
+
+\begin{frame}{Reduced state of pure state is not nessecarily pure}
+\end{frame}
+
+\begin{frame}{No-cloning theorem}
+\end{frame}
+
+\begin{frame}{Scmidt decomposition}
+\end{frame}
+
+\begin{frame}{Purification}
+\end{frame}
+
+\begin{frame}{Superdense coding}
+\end{frame}
+
+\begin{frame}{Quantum teleportation}
+\end{frame}
+
+
+\end{document}
