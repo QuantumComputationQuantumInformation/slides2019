@@ -124,16 +124,86 @@ v\otimes w&=\begin{blockarray}{[c]c}\vdots\\v_iw_j&(i,j)\\\vdots\end{blockarray}
 \end{align*}
 \end{frame}
 
-\begin{frame}{Tensor product of linear maps}
-\end{frame}
 
 \begin{frame}{Linear spaces}
 \begin{itemize}
 \setlength{\itemsep}{2em}
-\item $L(V,W)$
+\item $L(V,W)$: A linear space spanned by linear maps from a linear space $V$ to a linear space $W$.
+\item $L(V) := L(V,V)$.
+\item $H(V)$: A real linear space spanned by Hermitian operators acting on a complex linear space $V$.
+\item $J(V,W) := L(H(V),H(W))$.
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Tensor product of linear maps}
+\begin{equation*}
+L(V, X)\otimes L(W, Y)\cong
+L(V\otimes W, X\otimes Y)
+\end{equation*}
+since the both the linear spaces have dimension
+\begin{equation*}
+\dim(V)\dim(W)\dim(X)\dim(Y).
+\end{equation*}
+%For $A\in L(V,X),\,B\in L(W,Y)$,\\
+% $A\otimes B\in L(V, X)\otimes L(W, Y)$  can be regarded as an element of $L(V\otimes W, X\otimes Y)$.
+% $A\otimes B\in L(V\otimes W, X\otimes Y)$ is defined by
+A natural choice of an isomorphism is 
+\begin{align*}
+\Phi:\,& L(V, X)\otimes L(W, Y)\to L(V\otimes W, X\otimes Y)\\
+& A\otimes B \longmapsto (v\otimes w \mapsto A(v)\otimes B(w)).
+\end{align*}
+
+\begin{equation*}
+A\otimes B=
+\begin{bmatrix}
+A_{11}B & A_{12} B &\dotsc & A_{1m}B\\
+A_{21}B & A_{22} B &\dotsc & A_{2m}B\\
+\vdots & \vdots & \vdots & \vdots\\
+A_{n1}B & A_{n2} B &\dotsc & A_{nm}B\\
+\end{bmatrix}
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}{Tensor product of Hermitian maps}
+\begin{equation*}
+H(V)\otimes H(W)\cong
+H(V\otimes W)
+\end{equation*}
+since the both the linear spaces have dimension
+\begin{equation*}
+\dim(V)^2\dim(W)^2.
+\end{equation*}
+A natural choice of an isomorphism is 
+\begin{align*}
+\Phi:\,& H(V)\otimes H(W)\to H(V\otimes W)\\
+& A\otimes B \longmapsto (v\otimes w \mapsto A(v)\otimes B(w)).
+\end{align*}
+\end{frame}
+
+
+\begin{frame}{Joint quantum system}
+A quantum system on a complex linear space $V$: A states and a measurements are elements of $H(V)$ and ...
+
+\vspace{3em}
+For a quantum systems on $V$ and $W$, 
+a joint system is a quantum system on $V\otimes W$.
+\end{frame}
+
+\begin{frame}{Examples: two-qubit system}
+Examples of states
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item $\ket{0}\bra{0}\otimes \ket{1}\bra{1} = \ket{01}\bra{01}$
+\item $\frac12 (\ket{0}\bra{0}\otimes \ket{0}\bra{0} + \ket{0}\bra{0}\otimes \ket{1}\bra{1}) =
+ \ket{0}\bra{0}\otimes \frac12(\ket{0}\bra{0} + \ket{1}\bra{1}) = \ket{0}\bra{0}\otimes \frac12 I$.
+\item $\frac12 (\ket{1}\bra{1}\otimes \ket{0}\bra{0} + \ket{0}\bra{0}\otimes \ket{1}\bra{1})$.
+\item $\frac12(\ket{0}\bra{0}\otimes \ket{0}\bra{0} + \ket{0}\bra{1}\otimes \ket{0}\bra{1}  + \ket{1}\bra{0}\otimes \ket{1}\bra{0} + \ket{1}\bra{1}\otimes \ket{1}\bra{1} )
+= \ket{\varphi}\bra{\varphi}$ for $\ket{\varphi}:=\frac1{\sqrt{2}}(\ket{0}\otimes\ket{0}+\ket{1}\otimes\ket{1})$.
+\end{itemize}
+\end{frame}
+
+\if0
 \begin{frame}{Joint system}
 Linear space of joint system is regarded as a \emm{tensor product} of linear spaces for the single systems
 (justified by two postulates, no-signaling and tomographic locality [Barrett 2007 \numc{275}]).
@@ -153,36 +223,138 @@ C_{1,2}\supseteq
 (C_1 \otimes_{\min} C_2)
 \end{equation*}
 \end{frame}
+\fi
 
-\begin{frame}{Tomography}
-\end{frame}
+%\begin{frame}{Tomography}
+%For given density operator $\rho\in D()$.
+%\end{frame}
 
 \begin{frame}{Local tomography}
+For measurements $\{P_a\}_a$ of quantum system on $V$
+and $\{Q_b\}_b$ of quantum system on $W$,
+a measurement $\{P_a\otimes Q_b\}_{a,b}$ in the joint system is said to be \emm{local}.
+
+\vspace{3em}
+A useful formula.
+\begin{align*}
+\Tr(A\otimes B) &= \sum_{i,j}\bra{i}\otimes\bra{j}A\otimes B \ket{i}\otimes\ket{j}\\
+ &= \sum_{i,j}\bra{i}A\ket{i}\bra{j}B\ket{j}\\
+&= \Tr(A)\Tr(B)
+\end{align*}
 \end{frame}
 
-\begin{frame}{Entanglements}
+\begin{frame}{Separable states \& entangled states}
+A quantum state $\rho$ in a joint system is said to be \emm{separable} if
+\begin{align*}
+\rho = \sum_{i}p_i \rho_1^i \otimes \rho_2^i
+\end{align*}
+for some probability distribution $p$ and quantum states $\{\rho_1^i\}$ and $\{\rho_2^i\}$ for subsystems.
+
+\vspace{2em}
+If a quantum state is not separable, the state is said to be \emm{entangled} state.
 \end{frame}
 
 \begin{frame}{Partial trace and reduced density matrix}
+A probability of outcome of local measurement in a joint system is
+\begin{align*}
+P(a, b) = \Tr(\rho (P_a \otimes Q_b)).
+\end{align*}
+\begin{align*}
+\sum_b P(a, b) &= \sum_b \Tr(\rho (P_a \otimes Q_b))\\
+ &=  \Tr\left(\rho \left(P_a \otimes \sum_b Q_b\right)\right)\\
+ &=  \Tr\left(\rho \left(P_a \otimes I\right)\right)\\
+ &=  \Tr(\Tr_W(\rho) P_a).
+\end{align*}
+\begin{equation*}
+\end{equation*}
 \end{frame}
 
-\begin{frame}{Reduced state of pure state is not nessecarily pure}
+\begin{frame}{Reduced state of a pure state is not necessarily pure}
+A two-qubit pure state (called Bell state, Bell pair or EPR pair)
+\begin{align*}
+\ket{\varphi} := \frac1{\sqrt{2}}(\ket{00}+\ket{11})
+\end{align*}
+\begin{align*}
+\ket{\varphi}\bra{\varphi}&=\frac12(\ket{0}\bra{0}\otimes \ket{0}\bra{0} + \ket{0}\bra{1}\otimes \ket{0}\bra{1} \\
+&\qquad + \ket{1}\bra{0}\otimes \ket{1}\bra{0} + \ket{1}\bra{1}\otimes \ket{1}\bra{1} )
+\end{align*}
+By taking the partial trace for the second qubit, we obtain a reduced density matrix $I/2$.
 \end{frame}
 
-\begin{frame}{No-cloning theorem}
-\end{frame}
+%\begin{frame}{No-cloning theorem}
+%\end{frame}
 
 \begin{frame}{Scmidt decomposition}
+\begin{theorem}[Schmidt decomposition]
+For any pure state $\ket{\psi}\in V\otimes W$, there exist orthonormal basis $\{\ket{v_i}\}$ of $V$ and $\{\ket{w_i}\}$ of $W$ such that
+\begin{equation*}
+\ket{\psi}=\sum_i\lambda_i \ket{v_i}\ket{w_i}.
+\end{equation*}
+\end{theorem}
+\begin{proof}[Sketch of a proof]
+By a natural isomorphism
+\begin{align*}
+\Phi:& V\otimes W \to L(W,V)\\
+%& v\otimes w \mapsto (u\mapsto \langle w, u\rangle v)
+&\ket{v}\ket{w}\mapsto \ket{v}\bra{w}
+\end{align*}
+the Schmidt decomposition for $V\otimes W$ corresponds to the singular value decomposition for $L(W, V)$.
+\end{proof}
+\end{frame}
+
+\if0
+\begin{frame}{Spectral decomposition of Hermitian operator}
+For any $H\in H(\mathbb{C}^n)$ and $v\in \mathbb{C}^n$,
+\begin{equation*}
+v,\, Hv,\, H^2v,\,\dotsc,H^nv
+\end{equation*}
+are linearly dependent.
+\begin{align*}
+0 &= a_0v+a_1 Tv+\dotsb+a_nT^nv\\
+ &= c(T-\lambda_0 I)(T-\lambda_1 I)\dotsm(T-\lambda_n I)v
+\end{align*}
+which means at least one $T-\lambda_i I$ is not injective.
+\begin{equation*}
+\lambda \langle v, v\rangle
+=\langle \lambda v, v\rangle
+=\langle H v, v\rangle
+=\langle v, H v\rangle
+=\langle v, \lambda v\rangle
+=\lambda^* \langle v, v\rangle
+\end{equation*}
+\begin{equation*}
+\lambda \langle v, w\rangle
+=\langle \lambda v, w\rangle
+\end{equation*}
+
 \end{frame}
 
 \begin{frame}{Purification}
+\begin{theorem}
+For any density matrix $\rho$ on $V$, there exists a pure state $\ket{\psi}$ of a joint system on $V\otimes W$ for some $W$ such that $\Tr_W(\ket{\psi}\bra{\psi})=\rho$.
+\end{theorem}
 \end{frame}
+\fi
 
 \begin{frame}{Superdense coding}
+Alice can send \emm{two} bits to Bob by sending a single qubit and using a shared Bell state.
+\begin{align*}
+\ket{\varphi_{00}} &= \frac1{\sqrt{2}}(\ket{00}+\ket{11})\\
+\ket{\varphi_{01}} &= \frac1{\sqrt{2}}(\ket{10}+\ket{01}),& \text{by $X$}\\
+\ket{\varphi_{10}} &= \frac1{\sqrt{2}}(\ket{00}-\ket{11}),& \text{by $Z$}\\
+\ket{\varphi_{11}} &= \frac1{\sqrt{2}}(\ket{10}-\ket{01}),& \text{by $XZ$}\\
+\end{align*}
+These are \emm{orthogonal}.
 \end{frame}
+
 
 \begin{frame}{Quantum teleportation}
 \end{frame}
 
+\begin{frame}{Assignments}
+\begin{itemize}
+\item Show reduced density matrices (both sides) of your three favorite quantum states (not necessarily pure state) in any joint system.
+\end{itemize}
+\end{frame}
 
 \end{document}
