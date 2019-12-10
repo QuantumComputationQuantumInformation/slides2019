@@ -245,14 +245,22 @@ For example, $X$ and $Z$ are observables for POVMs $\{\ket{+}\bra{+},\ket{-}\bra
 %\end{frame}
 
 \begin{frame}{Decoherence}
+For orthonormal basis $\{\ket{\psi_i}\}$, POVM $\{\ket{\psi_i}\bra{\psi_i}\}$ is performed to a quantum state $\rho$.
+If outcome is $i$, the quantum state $\rho$ is \emm{transformed} into $\ket{\psi_i}\bra{\psi_i}$.
+If we \emm{don't see} the measurement outcome, the state after the measurement is
 \begin{align*}
 \sum_i \Tr(\rho \ket{\psi_i}\bra{\psi_i})\ket{\psi_i}\bra{\psi_i}
 =
 \sum_i \bra{\psi_i}\rho\ket{\psi_i}\ket{\psi_i}\bra{\psi_i}
 \end{align*}
 \begin{align*}
-\rho=\sum_{i,j}\rho_{i,j}\ket{i}\bra{j}
+\rho=\sum_{i,j}\rho_{i,j}\ket{\psi_i}\bra{\psi_j}
+\longmapsto
+\sum_{i}\rho_{i,i}\ket{\psi_i}\bra{\psi_i}
 \end{align*}
+
+\vspace{2em}
+This phenomenon is called \emm{decoherence}.
 \end{frame}
 
 \if0
@@ -346,7 +354,7 @@ $\ket{\psi}$ is called a \emm{purification} of $\rho$.
 
 \begin{frame}{Quantum states discrimination}
 Alice encodes her classical information $\{1,2,\dotsc,n\}$ into quantum states $\rho_1,\rho_2,\dotsc,\rho_n\in H(\mathbb{C}^{\emm{m}})$, and send it to Bob.
-Bob performs a measurement $\{P_1,\dotsc,P_n\}$ for estimating $i\in\{1,\dotsc,n\}$ that Alice encoded.
+Bob performs a POVM $\{P_1,\dotsc,P_n\}$ for estimating $i\in\{1,\dotsc,n\}$ that Alice encoded.
 Assume Bob could estimate $i$  without error. Then,
 \begin{equation*}
 \Tr(\rho_i P_j) = \sigma_{i,j}.
