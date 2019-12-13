@@ -69,12 +69,22 @@
 
 \begin{frame}{Time evolution of a system}
 Time evolution of a system is represented by a map from a state to a state.
+
+\vspace{2em}
 \begin{equation*}
 T: \text{The set of states} \to \text{the set of states}.
 \end{equation*}
+
+\vspace{2em}
 \begin{equation*}
 p T(\rho_1) + (1-p) T(\rho_2) = T(p\rho_1 + (1-p)\rho_2)
 \end{equation*}
+for any density matrices $\rho_1,\,\rho_2$ and $p\in[0,1]$.
+
+\vspace{2em}
+\begin{center}
+$T$ must be \emm{linear} (a proof is needed).
+\end{center}
 \end{frame}
 
 
@@ -82,10 +92,24 @@ p T(\rho_1) + (1-p) T(\rho_2) = T(p\rho_1 + (1-p)\rho_2)
 
 \begin{frame}{Schr\"odinger picture and Heisenberg picture}
 \begin{equation*}
+\emm{T^\dagger}: \text{The set of binary measurements} \to \text{the set of binary measurements}.
+\end{equation*}
+
+\vspace{1em}
+\begin{equation*}
 \langle T(\rho), P\rangle
 =
-\langle \rho, T^\dagger(P)\rangle
+\langle \rho, \emm{T^\dagger}(P)\rangle
 \end{equation*}
+$\emm{T^\dagger}$ is an \emm{adjoint} map of $T$.
+\begin{align*}
+&\langle T_3(T_2(T_1(\rho))), P\rangle
+=
+\langle T_2(T_1(\rho)), T_3^\dagger(P)\rangle\\
+=&
+\langle T_1(\rho), T_2^\dagger(T_3^\dagger(P))\rangle
+= \langle \rho, T_1^\dagger(T_2^\dagger(T_3^\dagger(P)))\rangle
+\end{align*}
 \end{frame}
 
 \begin{frame}{No-cloning theorem}
@@ -104,63 +128,135 @@ This is not equal to
 \end{frame}
 
 \begin{frame}{Axioms for operations}
+$T\colon H(V) \to H(W)$.
+
+\vspace{1em}
 \begin{enumerate}
 \setlength{\itemsep}{2em}
-\item Trace preserving:
-\onslide<1>{\item Positive}
-\onslide<2>{\item Completely positive}
+\item Trace preserving: $\Tr(T(\rho)) = \Tr(\rho)$.
+\onslide<1>{\item Positive : $T(\rho)\succeq 0$ for any $\rho\succeq 0$.}
+\onslide<2>{\item Completely positive: $\mathsf{id}\otimes T$ is positive.}
 \end{enumerate}
+
+%\vspace{3em}
+%In the following, we only consider $T\colon \rho \longmapsto U\rho U^\dagger$.
 \end{frame}
 
-\begin{frame}{Unitary operation}
+\begin{frame}{Unitary operations}
+\begin{equation*}
+\rho \longmapsto U\rho U^\dagger.
+\end{equation*}
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item Trace preserving: $\Tr(U\rho U^\dagger) = \Tr(\rho)$.
+\item Completely positive: 
+$(\mathsf{id}\otimes T)(\rho) = (I\otimes U)\rho (I\otimes U^\dagger)$.
+%$\mathsf{id}\otimes T$ is positive.
+\end{enumerate}
+
+\vspace{2em}
+\begin{center}
+In the most of quantum computing, only \emm{pure} states and \emm{unitary} operations are considered.
+\end{center}
+\end{frame}
+
+\begin{frame}{Controlled not}
+\begin{center}
+\mbox{
+\Qcircuit @C=1em @R=2.0em {
+  \lstick{\ket{x}} &  \ctrl{1} & \rstick{\ket{x}} \qw\\
+  \lstick{\ket{y}} &  \targ    & \rstick{\ket{y\oplus x}} \qw
+}
+}
+\end{center}
+\begin{align*}
+\mathsf{CNOT} \ket{x}\ket{y} \longmapsto \ket{x}\ket{y\oplus x}
+\end{align*}
+\begin{align*}
+\mathsf{CNOT}=
+\begin{bmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&0&1\\
+0&0&1&0
+\end{bmatrix}.
+\end{align*}
 \end{frame}
 
 \begin{frame}{Bell states and quantum circuit}
 
+\vspace{1em}
 \centering
+\mbox{
 \Qcircuit @C=1em @R=.7em {
   \lstick{\ket{0}} & \gate{H} & \ctrl{1} &  \qw & \qw \\
   \lstick{\ket{0}} & \qw      & \targ    &  \qw & \qw 
 }
+}
 
+\vspace{2em}
 \begin{align*}
 \ket{0}\ket{0} &\longmapsto
 \frac1{\sqrt{2}}(\ket{0}+\ket{1})\ket{0}
 =
 \frac1{\sqrt{2}}(\ket{0}\ket{0}+\ket{1}\ket{0})\\
  &\longmapsto
-\frac1{\sqrt{2}}(\ket{0}\ket{0}+\ket{1}\ket{1})\\
+\frac1{\sqrt{2}}(\ket{0}\ket{0}+\ket{1}\ket{1})
 \end{align*}
 
+\vspace{1em}
 \begin{align*}
 \ket{x}\ket{y} &\longmapsto
 \frac1{\sqrt{2}}(\ket{0}+(-1)^x\ket{1})\ket{y}
 =
 \frac1{\sqrt{2}}(\ket{0}\ket{y}+(-1)^x\ket{1}\ket{y})\\
  &\longmapsto
-\frac1{\sqrt{2}}(\ket{0}\ket{y}+(-1)^x\ket{1}\ket{\bar{y}})\\
+\frac1{\sqrt{2}}(\ket{0}\ket{y}+(-1)^x\ket{1}\ket{\bar{y}}).
 \end{align*}
 
 \end{frame}
 
-\begin{frame}{Quantum teleportation}
-\Qcircuit @C=1em @R=.7em {
-  \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \qw          & \qw      & \meter \\
-  \lstick{\ket{0}} & \qw      & \targ    & \ctrl{1}     & \qw      & \meter \\
-  \lstick{\ket{0}} & \qw      & \gate{H} & \control \qw & \gate{H} & \meter
-}
+\begin{frame}{Conditional probability}
+A probability of outcome of local measurement in a joint system is
+\begin{align*}
+P(a, b) = \Tr(\rho (P_a \otimes Q_b)).
+\end{align*}
+\begin{align*}
+P(a\mid b) &= \frac1{P(b)} \Tr(\rho (P_a \otimes Q_b))\\
+ &=  \frac1{P(b)}\Tr(\emm{\Tr_W(\rho (I\otimes Q_b))} P_a).
+\end{align*}
+For $Q_b=\ket{\psi_b}\bra{\psi_b}$,
+\begin{equation*}
+\emm{\Tr_W(\rho (I\otimes Q_b))}
+=
+\Tr_W(\rho (I\otimes \ket{\psi_b}\bra{\psi_b}))
+\end{equation*}
 \end{frame}
 
-\begin{frame}{Assignments \small[Deadline is the next next Friday]}
+
+\begin{frame}{Quantum teleportation}
+
+\[
+\Qcircuit @C=1.8em @R=0.8em @!R {
+\lstick{\ket{\psi}}& \qw & \qw & \ctrl{1} & \gate{H} & \meter & \cctrl{2}\\
+\lstick{\ket{0}} & \qw     & \targ & \targ & \qw & \meter \cwx[1] &\\
+\lstick{\ket{0}} & \gate{H}     & \ctrl{-1}   & \qw & \qw   & \gate{X} & \gate{Z} & \rstick{\ket{\psi}} \qw
+}
+\]
+\end{frame}
+
+\begin{frame}{Assignments \small[Deadline is the next Friday]}
 \begin{enumerate}
-\item Show the reduced density matrix $\rho_V\in H(V)$ of
+\setlength{\itemsep}{2em}
+\item Show the density matrix $\rho\in H(\mathbb{C}^2)$ of the Bell state
 \begin{equation*}
-\sum_{i,j}\rho_{i,j}\ket{i}\bra{j}\otimes \ket{i}\bra{j}
-\in H(V\otimes W)
+\frac1{\sqrt{2}}(\ket{00}+\ket{11}) \in \mathbb{C}^2\otimes \mathbb{C}^2
 \end{equation*}
-where $\{\ket{i}\}$ is a orthonormal basis of $V$ and $W$.
-\item For a density matrix $\begin{bmatrix}\rho_{1,1}&\rho_{1,2}\\\rho_{2,1}&\rho_{2,2}\end{bmatrix}\in H(\mathbb{C}^2)$,
-show the density matrix for a ensemble of quantum states $\rho$ and $Z\rho Z$ with probabilities 1/2.
+when $\ket{0}\bra{0}$ is measured at the second system.
+\item Show the density matrix $\rho\in H(\mathbb{C}^2)$ of the Bell state
+when $\ket{+}\bra{+}$ is measured at the second system.
+\item Show the density matrix $\rho\in H(\mathbb{C}^2)$ of the Bell state
+when $\ket{\psi}\bra{\psi}$ is measured at the second system where $\ket{\psi}:=\alpha\ket{0}+\beta\ket{1}$.
 \end{enumerate}
 \end{frame}
 
