@@ -130,6 +130,8 @@ if and only if
 P(a, b\mid x,y) = \sum_{a_x = a,\, b_y = b} q(a_0, a_1, b_0, b_1).
 \end{equation*}
 \end{lemma}
+
+\vspace{-2em}
 \begin{proof}
 $(\Rightarrow)$
 \begin{align*}
@@ -137,7 +139,13 @@ q(a_0,a_1,b_0,b_1) &:= \sum_{\lambda}P(\lambda) P(a_0\mid x=0, \lambda) P(a_1\mi
 &\cdot P(b_0\mid y=0, \lambda) P(b_1\mid y=1, \lambda)
 \end{align*}
 $(\Leftarrow)$
+\begin{equation*}
+P(a, b\mid x,y) = \sum_{\lambda} P(\lambda) P(a\mid x, \lambda) P(b\mid y,\lambda).
+\end{equation*}
 \end{proof}
+\end{frame}
+
+\begin{frame}{Randomness doesn't help}
 \end{frame}
 
 \begin{frame}{Einstein--Podolsky--Rosen (EPR) paradox (1935)}
@@ -169,7 +177,195 @@ position and momentum \emm{cannot \textit{exists}} simultaneously.
 %[Einstein, Podolsky, Rosen 1935, \numc{15771}]
 \end{frame}
 
+\if0
+\begin{frame}{Bell state}
+\small
+\begin{lemma}
+For any orthonormal basis $\{\ket{\psi_0},\,\ket{\psi_1}\}$ of $\mathbb{C}^2$,
+\begin{equation*}
+\frac1{\sqrt{2}}(\ket{0}\ket{0} + \ket{1}\ket{1})
+=
+\frac1{\sqrt{2}}(\ket{\psi_0}\ket{\psi_0}^* + \ket{\psi_1}\ket{\psi_1}^*).
+\end{equation*}
+\end{lemma}
+
+\vspace{-1em}
+\begin{proof}
+There exist $\theta,\,\eta\in\mathbb{R}$ and $\alpha,\,\beta\in\mathbb{C}$ satisfying $|\alpha|^2+|\beta|^2=1$ such that
+\begin{align*}
+\ket{\psi_0} &:= \mathsf{e}^{i\theta}(\alpha \ket{0} + \beta \ket{1})\\
+\ket{\psi_1} &:= \mathsf{e}^{i\eta}(\beta^* \ket{0} - \alpha^* \ket{1}).
+\end{align*}
+
+\vspace{-2.5em}
+\begin{align*}
+&\frac1{\sqrt{2}}(\ket{\psi_0}\ket{\psi_0}^* + \ket{\psi_1}\ket{\psi_1}^*)\\
+&= \frac1{\sqrt{2}}(|\alpha|^2\ket{0}\ket{0} + \alpha\beta^*\ket{0}\ket{1} + \beta\alpha^*\ket{1}\ket{0} + |\beta|^2\ket{1}\ket{1}\\
+&\qquad + |\beta|^2\ket{0}\ket{0} - \beta^*\alpha\ket{0}\ket{1} - \alpha^*\beta\ket{1}\ket{0} + |\alpha|^2\ket{1}\ket{1})\\
+&= \frac1{\sqrt{2}}(\ket{0}\ket{0} + \ket{1}\ket{1}).
+\end{align*}
+\end{proof}
+\end{frame}
+\fi
 
 
+\begin{frame}{Bell state}
+\small
+
+%For $\ket{\psi_\theta} := \cos\theta\ket{0}+\sin\theta\ket{1}$.
+Bell state
+\begin{equation*}
+\ket{\Psi}:=
+\frac1{\sqrt{2}}(\ket{0}\ket{0} + \ket{1}\ket{1})
+%=
+%\frac1{\sqrt{2}}(\ket{\psi_\theta}\ket{\psi_\theta} + \ket{\psi_{\theta+\pi/2}}\ket{\psi_{\theta+\pi/2}}).
+\end{equation*}
+
+\vspace{2em}
+Let $\ket{\psi_\theta} := \cos\theta\ket{0}+\sin\theta\ket{1}$.
+
+Alice measure this state by $\{\ket{\psi_{\theta_A}}, \ket{\psi_{\theta_A+\pi/2}}\}$.
+
+Bob measure this state by $\{\ket{\psi_{\theta_B}}, \ket{\psi_{\theta_B+\pi/2}}\}$.
+
+\vspace{2em}
+A outcome corresponding to $\ket{\psi_\theta}\ket{\psi_\tau}$ is obtained with probability
+\begin{align*}
+|\bra{\psi_{\theta}}\bra{\psi_{\tau}}\ket{\Psi}|^2
+&=\Bigl|\bra{\psi_{\theta}}\bra{\psi_{\tau}}
+\frac1{\sqrt{2}}(\ket{0}\ket{0} + \ket{1}\ket{1})\Bigr|^2\\
+%&=\frac12 |\braket{\psi_\tau\mid \psi_\theta}|^2\\
+&=\frac12 |\cos\tau\cos\theta + \sin\tau\sin\theta|^2\\
+&=\frac12 \cos^2(\tau-\theta).
+\end{align*}
+\end{frame}
+
+\begin{frame}{Quantum strategy}
+\begin{center}
+\begin{tikzpicture}
+\draw[->,thick] (0,0) to (2,0);
+\draw[->,thick] (0,0) to (0,2);
+\draw[->,dashed,thick] (0,0) to ({2*cos(45)},{2*sin(45)});
+\draw[->,dashed,thick] (0,0) to ({2*cos(135)},{2*sin(135)});;
+\draw[->,thick] (5,0) to ({5+2*cos(22.5)},{2*sin(22.5)});
+\draw[->,thick] (5,0) to ({5+2*cos(112.5)},{2*sin(112.5)});
+\draw[->,dashed,thick] (5,0) to ({5+2*cos(-22.5)},{2*sin(-22.5)});
+\draw[->,dashed,thick] (5,0) to ({5+2*cos(67.5)},{2*sin(67.5)});;
+\end{tikzpicture}
+\end{center}
+\begin{align*}
+\theta_A^{x=0} &= 0, & \theta_A^{x=1} &= \pi/4, &
+\theta_B^{y=0} &= \pi/8, & \theta_B^{y=1} &= -\pi/8
+\end{align*}
+For any $x\in\{0,1\}, y\in\{0,1\}$, the winning probability is
+\begin{equation*}
+\cos^2\left(\frac{\pi}8\right)
+=
+\frac{2+\sqrt{2}}4
+\approx 0.854.
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}{Tsirelson's theorem}
+The maximum quantum winning probability is
+\begin{align*}
+\max\colon\qquad& \frac14\sum_{x,y}\sum_{\substack{a,b\\ a\oplus b = x\wedge y}} \Tr(\rho P_a^{(x)} Q_b^{(y)})\\
+\text{subject to}\colon\qquad&
+n\in\mathbb{N}\\
+&\rho \in H(\mathbb{C}^n\otimes\mathbb{C}^n)\\
+&\rho\succeq 0\\
+&\Tr(\rho) = 1\\
+&P_a^{(x)},\, Q_b^{(y)} \in H(\mathbb{C}^n)\qquad  \forall x,y,a,b\in\{0,1\}\\
+&P_a^{(x)} \succeq 0\qquad \forall x, a \in\{0,1\}\\
+&Q_b^{(y)} \succeq 0\qquad \forall y, b \in\{0,1\}\\
+&P_0^{(x)} + P_1^{(x)} = I\qquad \forall x\in\{0,1\}\\
+&Q_0^{(y)} + Q_1^{(y)} = I\qquad \forall y\in\{0,1\}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Tsirelson's theorem}
+The maximum quantum winning probability is
+\begin{align*}
+\max\colon\qquad& \frac14\sum_{x,y}\sum_{\substack{a,b\\ a\oplus b = x\wedge y}} \bra{\psi}P_a^{(x)} Q_b^{(y)}\ket{\psi}\\
+\text{subject to}\colon\qquad&
+n\in\mathbb{N}\\
+&\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
+&P_a^{(x)},\, Q_b^{(y)} \in H(\mathbb{C}^n)\qquad  \forall x,y,a,b\in\{0,1\}\\
+&P_a^{(x)} \succeq 0\qquad \forall x, a \in\{0,1\}\\
+&Q_b^{(y)} \succeq 0\qquad \forall y, b \in\{0,1\}\\
+&P_0^{(x)} + P_1^{(x)} = I\qquad \forall x\in\{0,1\}\\
+&Q_0^{(y)} + Q_1^{(y)} = I\qquad \forall y\in\{0,1\}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Tsirelson's theorem}
+By letting $P^{(x)} := P_0^{(x)} - P_1^{(x)}$ and $Q^{(y)} := Q_0^{(y)} - Q_1^{(y)}$,
+the maximum quantum winning probability is
+\begin{align*}
+\max\colon\qquad& \frac14\sum_{x,y}\sum_{\substack{a,b\\ a\oplus b = x\wedge y}} \bra{\psi}\frac{I+(-1)^aP^{(x)}}2\frac{I+(-1)^b Q^{(y)}}2\ket{\psi}\\
+\text{subject to}\colon\qquad&
+n\in\mathbb{N}\\
+&\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
+&P^{(x)},\, Q^{(y)} \in H(\mathbb{C}^n)\qquad  \forall x,y\in\{0,1\}\\
+&I-(P^{(x)})^2\succeq 0\qquad \forall x\in\{0,1\}\\
+&I-(P^{(x)})^2\succeq 0\qquad \forall x\in\{0,1\}\\
+%&P_a^x \succeq 0\qquad \forall x, a \in\{0,1\}\\
+%&Q_b^{(y)} \succeq 0\qquad \forall y, b \in\{0,1\}\\
+%&P_0^x + P_1^x = I\qquad \forall x\in\{0,1\}\\
+%&Q_0^y + Q_1^y = I\qquad \forall y\in\{0,1\}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Tsirelson's theorem}
+\small
+The maximum quantum winning probability is
+\begin{align*}
+\max\colon\qquad& \frac14\sum_{x,y,a,b} \bra{\psi}\frac{I+(-1)^aP^{(x)}}2\frac{I+(-1)^b Q^{(y)}}2\ket{\psi}\frac{1+(-1)^{a+b+(x\wedge y)}}2\\
+\text{subject to}\colon\qquad&
+n\in\mathbb{N}\\
+&\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
+&P^{(x)},\, Q^{(y)} \in H(\mathbb{C}^n)\qquad  \forall x,y\in\{0,1\}\\
+&I-(P^{(x)})^2\succeq 0\qquad \forall x\in\{0,1\}\\
+&I-(P^{(x)})^2\succeq 0\qquad \forall x\in\{0,1\}\\
+%&P_a^x \succeq 0\qquad \forall x, a \in\{0,1\}\\
+%&Q_b^{(y)} \succeq 0\qquad \forall y, b \in\{0,1\}\\
+%&P_0^x + P_1^x = I\qquad \forall x\in\{0,1\}\\
+%&Q_0^y + Q_1^y = I\qquad \forall y\in\{0,1\}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Tsirelson's theorem}
+\small
+The maximum quantum winning probability is
+\begin{align*}
+\max\colon\qquad& \frac12\left(1 + \frac14\sum_{x,y} \bra{\psi}P^{(x)}Q^{(y)}\ket{\psi}(-1)^{(x\wedge y)}\right)\\
+\text{subject to}\colon\qquad&
+n\in\mathbb{N}\\
+&\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
+&P^{(x)},\, Q^{(y)} \in H(\mathbb{C}^n)\qquad  \forall x,y\in\{0,1\}\\
+&I-(P^{(x)})^2\succeq 0\qquad \forall x\in\{0,1\}\\
+&I-(P^{(x)})^2\succeq 0\qquad \forall x\in\{0,1\}\\
+%&P_a^x \succeq 0\qquad \forall x, a \in\{0,1\}\\
+%&Q_b^{(y)} \succeq 0\qquad \forall y, b \in\{0,1\}\\
+%&P_0^x + P_1^x = I\qquad \forall x\in\{0,1\}\\
+%&Q_0^y + Q_1^y = I\qquad \forall y\in\{0,1\}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Convex}
+\begin{lemma}
+A set
+\begin{align*}
+\left\{P\in H(\mathbb{C}^n)\mid I-P^2 \succeq 0\right\}
+\end{align*}
+is convex.
+\end{lemma}
+\begin{proof}
+\end{proof}
+\end{frame}
+
+\begin{frame}{No-signaling theory}
+\end{frame}
 
 \end{document}
