@@ -128,7 +128,7 @@ P(a, b\mid x,y) = \sum_{\lambda} P(\lambda) P(a\mid x, \lambda) P(b\mid y,\lambd
 \end{equation*}
 if and only if there exists probability distribution $q(a_0,a_1,b_0,b_1)$ such that
 \begin{equation*}
-P(a, b\mid x,y) = \sum_{a_x = a,\, b_y = b} q(a_0, a_1, b_0, b_1).
+P(a, b\mid x,y) = \sum_{\substack{a_0,a_1,b_0,b_1\\a_x = a,\, b_y = b}} q(a_0, a_1, b_0, b_1).
 \end{equation*}
 \end{lemma}
 
