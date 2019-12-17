@@ -250,8 +250,8 @@ A outcome corresponding to $\ket{\psi_\theta}\ket{\psi_\tau}$ is obtained with p
 &=\Bigl|\bra{\psi_{\theta}}\bra{\psi_{\tau}}
 \frac1{\sqrt{2}}(\ket{0}\ket{0} + \ket{1}\ket{1})\Bigr|^2\\
 %&=\frac12 |\braket{\psi_\tau\mid \psi_\theta}|^2\\
-&=\frac12 |\cos\tau\cos\theta + \sin\tau\sin\theta|^2\\
-&=\frac12 \cos^2(\tau-\theta).
+&=\frac12 |\cos\theta\cos\tau + \sin\theta\sin\tau|^2\\
+&=\frac12 \cos^2(\theta-\tau).
 \end{align*}
 \end{frame}
 
@@ -304,7 +304,7 @@ Alice and Bob win iff $\emm{a\oplus b = f(x, y)}$.
 \begin{frame}{Tsirelson's theorem}
 The maximum quantum winning probability is
 \begin{align*}
-\max\colon\qquad& \frac14\sum_{x,y}\sum_{\substack{a,b\\ a\oplus b = f(x,y)}} \Tr(\rho (P_a^{(x)} \otimes Q_b^{(y)}))\\
+\max\colon\qquad& \sum_{x,y}p(x,y)\sum_{\substack{a,b\\ a\oplus b = f(x,y)}} \Tr(\rho (P_a^{(x)} \otimes Q_b^{(y)}))\\
 \text{subject to}\colon\qquad&
 n\in\mathbb{N}\\
 &\rho \in H(\mathbb{C}^n\otimes\mathbb{C}^n)\\
@@ -321,7 +321,7 @@ n\in\mathbb{N}\\
 \begin{frame}{Tsirelson's theorem}
 The maximum quantum winning probability is
 \begin{align*}
-\max\colon\qquad& \frac14\sum_{x,y}\sum_{\substack{a,b\\ a\oplus b = f(x,y)}} \bra{\psi}P_a^{(x)} \otimes Q_b^{(y)}\ket{\psi}\\
+\max\colon\qquad& \sum_{x,y}p(x,y)\sum_{\substack{a,b\\ a\oplus b = f(x,y)}} \bra{\psi}P_a^{(x)} \otimes Q_b^{(y)}\ket{\psi}\\
 \text{subject to}\colon\qquad&
 n\in\mathbb{N}\\
 &\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
@@ -355,10 +355,11 @@ $(\Leftarrow)$
 \end{frame}
 
 \begin{frame}{Tsirelson's theorem}
+\small
 By letting $P^{(x)} := P_0^{(x)} - P_1^{(x)}$ and $Q^{(y)} := Q_0^{(y)} - Q_1^{(y)}$,
 the maximum quantum winning probability is
 \begin{align*}
-\max\colon\qquad& \frac14\sum_{x,y}\sum_{\substack{a,b\\ a\oplus b = f(x,y)}} \bra{\psi}\frac{I+(-1)^aP^{(x)}}2\otimes \frac{I+(-1)^b Q^{(y)}}2\ket{\psi}\\
+\max\colon\qquad& \sum_{x,y}p(x,y)\sum_{\substack{a,b\\ a\oplus b = f(x,y)}} \bra{\psi}\frac{I+(-1)^aP^{(x)}}2\otimes \frac{I+(-1)^b Q^{(y)}}2\ket{\psi}\\
 \text{subject to}\colon\qquad&
 n\in\mathbb{N}\\
 &\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
@@ -376,8 +377,8 @@ n\in\mathbb{N}\\
 \small
 The maximum quantum winning probability is
 \begin{align*}
-\max\colon\qquad& \frac14\sum_{x,y,a,b} \bra{\psi}\frac{I+(-1)^aP^{(x)}}2\otimes\frac{I+(-1)^b Q^{(y)}}2\ket{\psi}\frac{1+(-1)^{a+b+f(x,y)}}2\\
-\text{s.t.}\colon\qquad&
+\max\colon\,& \sum_{x,y,a,b}p(x,y) \bra{\psi}\frac{I+(-1)^aP^{(x)}}2\otimes\frac{I+(-1)^b Q^{(y)}}2\ket{\psi}\frac{1+(-1)^{a+b+f(x,y)}}2\\
+\text{s.t.}\colon\,&
 n\in\mathbb{N}\\
 &\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
 &P^{(x)},\, Q^{(y)} \in H(\mathbb{C}^n)\qquad  \forall x,y\\
@@ -394,7 +395,7 @@ n\in\mathbb{N}\\
 \small
 The maximum quantum winning probability is
 \begin{align*}
-\max\colon\qquad& \frac12\left(1 + \frac14\sum_{x,y} \bra{\psi}P^{(x)}\otimes Q^{(y)}\ket{\psi}(-1)^{f(x,y)}\right)\\
+\max\colon\qquad& \frac12\left(1 + \sum_{x,y}p(x,y) \bra{\psi}P^{(x)}\otimes Q^{(y)}\ket{\psi}(-1)^{f(x,y)}\right)\\
 \text{subject to}\colon\qquad&
 n\in\mathbb{N}\\
 &\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
@@ -424,7 +425,7 @@ is a convex set. $P\in C$ is extremal if and only if $P^2=I$.
 \small
 The maximum quantum winning probability is
 \begin{align*}
-\max\colon\qquad& \frac12\left(1 + \frac14\sum_{x,y} \bra{\psi}P^{(x)}\otimes Q^{(y)}\ket{\psi}(-1)^{f(x,y)}\right)\\
+\max\colon\qquad& \frac12\left(1 + \sum_{x,y}p(x,y) \bra{\psi}P^{(x)}\otimes Q^{(y)}\ket{\psi}(-1)^{f(x,y)}\right)\\
 \text{subject to}\colon\qquad&
 n\in\mathbb{N}\\
 &\ket{\psi} \in \mathbb{C}^n\otimes\mathbb{C}^n\\
@@ -455,11 +456,11 @@ w_y &:= \begin{bmatrix}\mathsf{Re}(\beta_1)& \mathsf{Im}(\beta_1) &\mathsf{Re}(\
 Then, $\langle v_x, v_x\rangle = \braket{A_x|A_x}$, $\langle v_x, w_y\rangle = \mathsf{Re}(\braket{A_x|B_y})$.
 \end{frame}
 
-\begin{frame}{Tsirelson's theorem}
+\begin{frame}{Tsirelson's theorem [Tsirelson 1980]}
 \small
-The maximum quantum winning probability is \emm{at most}
+The maximum quantum winning probability is \emm{at most (in fact, equal to)}
 \begin{align*}
-\max\colon\qquad& \frac12\left(1 + \frac14\sum_{x,y} \langle v_x, w_y\rangle(-1)^{f(x,y)}\right)\\
+\max\colon\qquad& \frac12\left(1 + \sum_{x,y}p(x,y) \langle v_x, w_y\rangle(-1)^{f(x,y)}\right)\\
 \text{subject to}\colon\qquad&
 n\in\mathbb{N}\\
 &v_x \in \mathbb{R}^{2n^2}\qquad \forall x\\
@@ -472,7 +473,7 @@ n\in\mathbb{N}\\
 \end{align*}
 \end{frame}
 
-\begin{frame}{Tsirelson's bound}
+\begin{frame}{Tsirelson's bound [Tsirelson 1980]}
 \small
 \begin{align*}
 \max\colon\qquad& \frac12\left(1 + \frac14\sum_{x,y} \langle v_x, w_y\rangle(-1)^{(x\wedge y)}\right)\\
