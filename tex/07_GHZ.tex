@@ -1,0 +1,344 @@
+\documentclass{beamer}
+%\usepackage{xspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+%\usepackage{svg}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\usepackage{psfrag}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{braket}
+\usepackage{tikz}
+\usetikzlibrary{graphs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{patchplots}
+
+\setbeamercovered{transparent}
+
+\usetheme{Pittsburgh}
+%\usetheme{default}
+
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}[frame number]
+%\usefonttheme{professionalfonts}
+
+%\usepackage{sansmathaccent}
+%\usepackage{bm}
+
+%\usepackage{unicode-math}
+%%\setmainfont[SlantedFont={Latin Modern Roman Slanted},SlantedFeatures={Color=000000},
+%%  SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]{XITS}
+%\setmathfont[math-style=ISO,sans-style=upright]{XITS Math}
+%\setmathfont[range={\mathcal,\mathbfcal}]{Latin Modern Math}
+
+\usepackage{sfmath}
+
+%\mathversion{sans}
+
+\newcommand{\Tr}{\mathsf{Tr}}
+
+\definecolor{redorange}{rgb}{1.0, .25, .25}
+\definecolor{citation}{rgb}{.1, 0.8, .35}
+\newcommand\emm[1]{\textcolor{redorange}{{#1}}}
+\newcommand\numc[1]{\textcolor{citation}{{\bf #1}}}
+
+%\newcommand\bm[1]{{\mbox{\boldmath $#1$}}}
+\newcommand\bm[1]{{\mathbf{#1}}}
+%\newcommand\bm[1]{{\bf #1}}
+%\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
+%\newcommand\bm[1]{{\textbf{\it #1}}}
+
+\title{Nonlocality}
+\author{Ryuhei Mori}
+%\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
+\institute{Tokyo Institute of Technology}
+%\date{21, Feb, 2019}
+
+
+
+\begin{document}
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+
+
+\begin{frame}{Bell test: CHSH game (1964, 1969)}
+\begin{tikzpicture}
+\node at (5,5) (R) {Referee};
+\node at (0,0) (A) {Alice};
+\node at (10,0) (B) {Bob};
+\node at (0,-1)[circle,thick,draw] (As) {};
+\node at (10,-1)[circle,thick,draw] (Bs) {};
+\draw[->,thick] (R) edge[bend right] node[anchor=west, midway]{$x\in\{0,1\}$} (A);
+\draw[->,thick] (R) edge[bend left] node[anchor=east, midway]{$y\in\{0,1\}$} (B);
+\draw[->,thick] (A) edge[bend right] node[anchor=east, midway]{$a\in\{0,1\}$} (R);
+\draw[->,thick] (B) edge[bend left] node[anchor=west, midway]{$b\in\{0,1\}$} (R);
+\draw[thick,decorate,decoration=snake] (As) -- (Bs);
+\end{tikzpicture}
+%\includegraphics[width=30pt]{Alice_in_Wonderland.png}
+\begin{center}
+Alice and Bob win iff $\emm{a\oplus b = x\wedge y}$.
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Two-party statistics}
+\begin{tikzpicture}
+\node at (5,5) (R) {Referee};
+\node at (0,0) (A) {Alice};
+\node at (10,0) (B) {Bob};
+\node at (0,-1)[circle,thick,draw] (As) {};
+\node at (10,-1)[circle,thick,draw] (Bs) {};
+\draw[->,thick] (R) edge[bend right] node[anchor=west, midway]{$x\in\{0,1\}$} (A);
+\draw[->,thick] (R) edge[bend left] node[anchor=east, midway]{$y\in\{0,1\}$} (B);
+\draw[->,thick] (A) edge[bend right] node[anchor=east, midway]{$a\in\{0,1\}$} (R);
+\draw[->,thick] (B) edge[bend left] node[anchor=west, midway]{$b\in\{0,1\}$} (R);
+%\draw[->,thick] (R) edge[bend right] node[anchor=south, midway]{$x$} (A);
+%\draw[->,thick] (R) edge[bend left] node[anchor=south, midway]{$y$} (B);
+%\draw[->,thick] (A) edge[bend right] node[anchor=north, midway]{$a$} (R);
+%\draw[->,thick] (B) edge[bend left] node[anchor=north, midway]{$b$} (R);
+\draw[thick,decorate,decoration=snake] (As) -- (Bs);
+\end{tikzpicture}
+%\includegraphics[width=30pt]{Alice_in_Wonderland.png}
+\begin{equation*}
+P(a,b\mid x,y), \hspace{2em} \forall a,b\in\{0,1\}, x,y\in\{0,1\}
+\end{equation*}
+\end{frame}
+
+\begin{frame}{No-signaling condition}
+The marginal distribution of $a$ ($b$) \emm{cannot depend on} $y$ ($x$), respectively.
+\begin{align*}
+\sum_{b\in\{0,1\}} P(a,b\mid x,0) &= \sum_{b\in\{0,1\}} P(a,b\mid x,1),\qquad\forall a,\,x\in\{0,1\}\\
+\sum_{a\in\{0,1\}} P(a,b\mid 0,y) &= \sum_{a\in\{0,1\}} P(a,b\mid 1,y),\qquad\forall b,\,y\in\{0,1\}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{The 8-dimensional linear space and no-signaling polytope}
+\small
+\begin{align*}
+\sum_{a\in\{0,1\},\,b\in\{0,1\}} P(a,b\mid x,y) = 1,\qquad x\in\{0,1\},\, y\in\{0,1\}.
+\end{align*}
+\begin{align*}
+\sum_{b\in\{0,1\}} P(0,b\mid 0,0) &= \sum_{b\in\{0,1\}} P(0,b\mid 0,1)\\
+\sum_{b\in\{0,1\}} P(0,b\mid 1,0) &= \sum_{b\in\{0,1\}} P(0,b\mid 1,1)\\
+\sum_{a\in\{0,1\}} P(a,0\mid 0,0) &= \sum_{a\in\{0,1\}} P(a,0\mid 1,0)\\
+\sum_{a\in\{0,1\}} P(a,0\mid 0,1) &= \sum_{a\in\{0,1\}} P(a,0\mid 1,1).
+\end{align*}
+
+\vspace{.5em}
+\begin{center}
+$16-8=\emm{8}$-dimensional linear space.
+\end{center}
+\end{frame}
+
+\begin{frame}{No-signaling polytope}
+\centering
+\begin{tikzpicture}
+\draw [rotate=45, thick, red!40, fill, draw=black] (-1.5,-1.5) rectangle  (1.5,1.5);
+%\draw [thick, green!40, fill] (-1.061,-1.061) rectangle  (1.061,1.061);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Local polytope}
+\emm{Deterministic} choice
+\begin{align*}
+a&=A(x),& b&=B(y).
+\end{align*}
+
+Local polytope
+\begin{align*}
+\mathsf{conv}\left(\left\{\left\{P(a,b\mid x,y)=\delta_{(a,b),(A(x),B(y))}\right\}_{a,b,x,y}\mid A, B\in\{0,1\}^{\{0,1\}}\right\}\right).
+\end{align*}
+
+\end{frame}
+
+\begin{frame}{No-signaling polytope and local polytope}
+\centering
+\begin{tikzpicture}
+%\draw [fill, black!50] (0,0) circle [radius=1.5cm];
+%\draw (-1.061,-1.061) rectangle (1.061,1.061);
+\draw [rotate=45, thick, red!40, fill, draw=black] (-1.5,-1.5) rectangle  (1.5,1.5);
+\draw [thick, green!40, fill, draw=black] (-1.061,-1.061) rectangle  (1.061,1.061);
+%\draw [dashed,thick] (-1.061*2, 1.5) to (1.061*2, 1.5) node[right] {CHSH probability $ \approx 0.854$};
+%\draw [dashed,thick] (-1.061*2, 1.061*2) to (1.061*2, 1.061*2) node[right] {CHSH probability $ = 1$};
+%\draw (5.5,-0.5) node [align=left, text width = 5.9cm ] (T) {ESC$BNL;RNO3X$K$h$C$F@8@.$5$l$kAj4X$N=89g!#ESC(B\\ \textbf{ESC$B$3$N=89g$r!VA`:nE*0UL#$N$"$k>r7o$G!WFCD'IU$1$?$$ESC(B}};
+%\draw [->,thick] (2.5,-0.2) node [right, align=left, text width = 5.9cm ] {ESC$BNL;RNO3X$K$h$C$F@8@.$5$l$kAj4X$N=89g!#ESC(B\\ \textbf{ESC$B$3$N=89g$r!VA`:nE*0UL#$N$"$k>r7o$G!WFCD'IU$1$?$$ESC(B}} to (1.5,0.2);
+%\draw [-{Stealth[length=2.5mm]},thick] (T.west) to (1.5,-0.2);
+%\draw [-{Stealth[length=2.5mm]},thick] (-2.5,0.5) node [left, align=left, text width = 5.2cm ] {No-signaling ESC$B>r7o$N$_$rK~$?$9Aj4X$N=89gESC(B} to (-1.85,0.3);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{CHSH inequality: Facets of the local polytope}
+\begin{align*}
+\emm{\sum_{a\oplus b=x\wedge y} P(a,b\mid x,y) }\ &\emm{\le 3},&
+\sum_{a\oplus b\ne x\wedge y} P(a,b\mid x,y) &\le 3\\
+\sum_{a\oplus b=\overline{x}\wedge y} P(a,b\mid x,y) &\le 3,&
+\sum_{a\oplus b\ne \overline{x}\wedge y} P(a,b\mid x,y) &\le 3\\
+\sum_{a\oplus b=x\wedge \overline{y}} P(a,b\mid x,y) &\le 3,&
+\sum_{a\oplus b\ne x\wedge \overline{y}} P(a,b\mid x,y) &\le 3\\
+\sum_{a\oplus b=\overline{x}\wedge \overline{y}} P(a,b\mid x,y) &\le 3,&
+\sum_{a\oplus b\ne \overline{x}\wedge \overline{y}} P(a,b\mid x,y) &\le 3
+\end{align*}
+ CHSH inequality [{Clauser, Horne, Shimony, Holt} 1969].
+
+CHSH inequality is the only non-trivial facets [Froissard 1981], [Fine 1982].
+\end{frame}
+
+
+
+\begin{frame}{No-signaling condition admits CHSH probability 1}
+%\begin{align*}
+%P(a = 0, b = 0\mid x=0, y = 0) &=
+%P(a = 1, b = 1\mid x=0, y = 0) = 1/2\\
+%P(a = 0, b = 0\mid x=0, y = 1) &=
+%P(a = 1, b = 1\mid x=0, y = 1) = 1/2\\
+%P(a = 0, b = 0\mid x=1, y = 0) &=
+%P(a = 1, b = 1\mid x=1, y = 0) = 1/2\\
+%P(a = 0, b = 1\mid x=1, y = 1) &=
+%P(a = 1, b = 0\mid x=1, y = 1) = 1/2
+%\end{align*}
+
+\begin{align*}
+P(0, 0\mid 0, 0) &=
+P(1, 1\mid 0, 0) = 1/2\\
+P(0, 0\mid 0, 1) &=
+P(1, 1\mid 0, 1) = 1/2\\
+P(0, 0\mid 1, 0) &=
+P(1, 1\mid 1, 0) = 1/2\\
+P(0, 1\mid 1, 1) &=
+P(1, 0\mid 1, 1) = 1/2
+\end{align*}
+
+\vspace{1em}
+\begin{center}
+[Popescu and  Rohrlich 1994]
+\end{center}
+\end{frame}
+
+\begin{frame}{No-signaling polytope, local polytope and quantum correlation}
+\centering
+\begin{tikzpicture}
+%\draw (-1.061,-1.061) rectangle (1.061,1.061);
+\draw [rotate=45, thick, red!40, fill, draw=black] (-1.5,-1.5) rectangle  (1.5,1.5);
+\draw [blue!50, fill, thick, draw=black] (0,0) circle [radius=1.5cm];
+\draw [thick, green!40, fill, draw=black] (-1.061,-1.061) rectangle  (1.061,1.061);
+\draw [dashed,thick] (-1.061*2, 1.5) to (1.061*2, 1.5) node[right] {CHSH probability $ \approx 0.854$};
+\draw [dashed,thick] (-1.061*2, 1.061*2) to (1.061*2, 1.061*2) node[right] {CHSH probability $ = 1$};
+\draw [dashed,thick] (-1.061*2, 1.061) to (1.061*2, 1.061) node[right] {CHSH probability $ = 0.75$};
+%\draw (5.5,-0.5) node [align=left, text width = 5.9cm ] (T) {ESC$BNL;RNO3X$K$h$C$F@8@.$5$l$kAj4X$N=89g!#ESC(B\\ \textbf{ESC$B$3$N=89g$r!VA`:nE*0UL#$N$"$k>r7o$G!WFCD'IU$1$?$$ESC(B}};
+%\draw [->,thick] (2.5,-0.2) node [right, align=left, text width = 5.9cm ] {ESC$BNL;RNO3X$K$h$C$F@8@.$5$l$kAj4X$N=89g!#ESC(B\\ \textbf{ESC$B$3$N=89g$r!VA`:nE*0UL#$N$"$k>r7o$G!WFCD'IU$1$?$$ESC(B}} to (1.5,0.2);
+%\draw [-{Stealth[length=2.5mm]},thick] (T.west) to (1.5,-0.2);
+%\draw [-{Stealth[length=2.5mm]},thick] (-2.5,0.5) node [left, align=left, text width = 5.2cm ] {No-signaling ESC$B>r7o$N$_$rK~$?$9Aj4X$N=89gESC(B} to (-1.85,0.3);
+\end{tikzpicture}
+
+\vspace{1em}
+\centering
+Question:
+
+\vspace{.5em}
+\bfseries
+Why does quantum physics prohibits CHSH probability greater than $\mathbf{(2+\sqrt{2})/4\approx0.854}$ ?
+\end{frame}
+
+\begin{frame}{Principles}
+\end{frame}
+
+\begin{frame}{Multiparty XOR game}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item $n$ players.
+\item $i$-th player are given $x_i\in\mathcal{X}$ according to a probability distribution $p(x_1,\dotsc,x_n)$.
+\item $i$-th player outputs $a^{(i)}$.
+\item Players win iff $\bigoplus_{i=1}^n a^{(i)} = f(x_1,\dotsc,x_n)$.
+\end{itemize}
+
+\vspace{1em}
+Example: GHZ game
+\begin{itemize}
+\setlength{\itemsep}{1em}
+\item 3 players.
+\item $\mathcal{X}=\{0,1\}$. $p(x_1,x_2,x_3) = 1/4$ for $x_1\oplus x_2\oplus x_3=0$.
+\item $f(x_1,x_2,x_3) = x_1\vee x_2\vee x_3$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The winning codition for GHZ game}
+\begin{align*}
+a_0\oplus b_0 \oplus c_0 &= 0\\
+a_1\oplus b_0 \oplus c_1 &= 1\\
+a_0\oplus b_1 \oplus c_1 &= 1\\
+a_1\oplus b_1 \oplus c_0 &= 1
+\end{align*}
+\end{frame}
+
+\begin{frame}{The quantum strategy for GHZ game}
+\begin{itemize}
+\setlength{\itemsep}{1em}
+\item The GHZ state is shared.
+\begin{equation*}
+\frac1{\sqrt{2}}(\ket{000}+\ket{111}).
+\end{equation*}
+\item Alice, Bob and Charlie measure their state by $\{\ket{0}, \ket{1}\}$ if the input is 0, and by $\{\ket{+}, \ket{-}\}$ if the input is 1.
+\item If $x_1=x_2=x_3=0$, $a^{(1)}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The optimal strategy for multiparty XOR game with binary inptus}
+\begin{itemize}
+\setlength{\itemsep}{1em}
+\item The generalized GHZ state is shared.
+\begin{equation*}
+\ket{\mathsf{GHZ}_n}:=\frac1{\sqrt{2}}(\ket{0\dotsm 0}+\ket{1\dotsm 1}).
+\end{equation*}
+\item $i$-th player measures his or her state by $X$ if the input is 0, and by $\emm{\cos\theta X + \sin\theta Y}$ if the input is 1.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Observable for XOR game}
+\end{frame}
+
+
+\begin{frame}{The winning probability {\small [Werner \& Wolf 2001]}}
+\small
+\begin{align*}
+&\Tr\left(\ket{\mathsf{GHZ}_n}\bra{\mathsf{GHZ}_n}\bigotimes_{j=1}^n(\cos \theta_j X + \sin \theta_j Y)\right)\\
+&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \left(\cos\theta_j \bra{z}X\ket{\bar{z}} + \sin\theta_j\bra{z}Y\ket{\bar{z}}\right)\\
+&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \left(\cos\theta_j + \sin\theta_j (-1)^{z}i\right)\\
+&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \exp\{(-1)^z\theta_j\}\\
+&= \frac12\left(\exp\left\{i\sum_{j=1}^n\theta_j\right\} + \exp\left\{-i\sum_{j=1}^n\theta_j\right\}\right)\\
+&= \cos\left\{\sum_{j=1}^n\theta_j\right\}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Matrix norm}
+\end{frame}
+
+\begin{frame}{The lower bound {\small [Werner \& Wolf 2001]}}
+\small
+Let $\beta(x_1,\dotsc,x_n):=p(x_1,\dotsc,x_n)(-1)^{f(x_1,\dotsc,x_n)}$ and $U_j = A_j^{(0)}A_j^{(1)}$.
+\begin{align*}
+&\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\Tr\left(\rho\bigotimes_{j=1}^n A_j^{(x_j)}\right)
+=\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\bra{\psi}\bigotimes_{j=1}^n A_j^{(x_j)}\ket{\psi}\\
+&=\bra{\psi}\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\bigotimes_{j=1}^n A_j^{(x_j)}\ket{\psi}
+\le\left\|\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\bigotimes_{j=1}^n A_j^{(x_j)}\right\|\\
+&=\left\|\bigotimes_{j=1}^nA_j^{(0)}\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\bigotimes_{j=1}^n U_j^{x_j}\right\|
+%&=\left\|\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\bigotimes_{j=1}^nA_j^{(0)}\bigotimes_{j=1}^n U_j^{x_j}\right\|\\
+=\left\|\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\bigotimes_{j=1}^n U_j^{x_j}\right\|\\
+&\le\max_{\theta}\left|\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\exp\left\{i\sum_{j=1}^n x_j\theta_j\right\}\right|\\
+&=\max_{\theta}\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\cos\left\{i\left(\theta_0 + \sum_{j=1}^n x_j\theta_j\right)\right\}.
+%&=\left\|\sum_{x_1,\dotsc,x_n}p(x_1,\dotsc,x_n)\bigotimes_{j=1}^n \begin{bmatrix}1&0&\dotsm\\0&\mathsf{e}&\dotsm\end{bmatrix}\right\|\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{Assignments}
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item Show that the PR-box satisfies the no-signaling condition.
+\item Show the optimal strategy for the Mermin-GHZ game.
+\end{enumerate}
+\end{frame}
+
+\end{document}
