@@ -250,9 +250,9 @@ Why does quantum physics prohibits CHSH probability greater than $\mathbf{(2+\sq
 \begin{itemize}
 \setlength{\itemsep}{2em}
 \item $n$ players.
-\item $i$-th player are given $x_i\in\mathcal{X}$ according to a probability distribution $p(x_1,\dotsc,x_n)$.
-\item $i$-th player outputs $a^{(i)}$.
-\item Players win iff $\bigoplus_{i=1}^n a^{(i)} = f(x_1,\dotsc,x_n)$.
+\item $j$-th player are given $x_j\in\mathcal{X}$ according to a probability distribution $p(x_1,\dotsc,x_n)$.
+\item $j$-th player outputs $a^{(j)}$.
+\item Players win iff $\bigoplus_{j=1}^n a^{(j)} = f(x_1,\dotsc,x_n)$.
 \end{itemize}
 
 \vspace{1em}
@@ -265,13 +265,37 @@ Example: GHZ game
 \end{itemize}
 \end{frame}
 
-\begin{frame}{The winning codition for GHZ game}
+\begin{frame}{The winning condition for GHZ game}
 \begin{align*}
 a_0\oplus b_0 \oplus c_0 &= 0\\
 a_1\oplus b_0 \oplus c_1 &= 1\\
 a_0\oplus b_1 \oplus c_1 &= 1\\
 a_1\oplus b_1 \oplus c_0 &= 1
 \end{align*}
+The sum is $0=1$ which means that there is no solution in the above system of linear equations.
+The largest classical winning probability is 3/4.
+
+\vspace{2em}
+\centering
+Quantum theory allows the winning probability \emm{1}\\
+(Mermin--GHZ paradox).
+\end{frame}
+
+\begin{frame}{Observables for XOR game}
+For a single qubit projective measurement $\{\ket{\psi_0}\bra{\psi_0}, \ket{\psi_1}\bra{\psi_1}\}$,
+we can define an observable $\emm{A := \ket{\psi_0}\bra{\psi_0} - \ket{\psi_1}\bra{\psi_1}}$.
+Then, $\Tr(\rho \ket{\psi_x}\bra{\psi_x}) = (1+(-1)^x\Tr(\rho \emm{A}))/2$. Especially,
+\begin{align*}
+\Tr(\rho \emm{A}) = 1 &\iff \Tr(\rho \ket{\psi_0}\bra{\psi_0}) = 1\\
+\Tr(\rho \emm{A}) = -1 &\iff \Tr(\rho \ket{\psi_1}\bra{\psi_1}) = 1.
+\end{align*}
+
+For multiple qubits,
+\begin{align*}
+\Tr\left(\rho \bigotimes_{j=1}^n\emm{A_j}\right) = 1 &\iff \sum_{x:\,|x|\text{ is even}}\Tr\left(\rho \bigotimes_{j=1}^n\ket{\psi_{x_j}}\bra{\psi_{x_j}}\right) = 1\\
+\Tr\left(\rho \bigotimes_{j=1}^n\emm{A_j}\right) = -1 &\iff \sum_{x:\,|x|\text{ is odd}}\Tr\left(\rho \bigotimes_{j=1}^n\ket{\psi_{x_j}}\bra{\psi_{x_j}}\right) = 1
+\end{align*}
+since the eigenvectors of $\bigotimes_{j=1}^n \emm{A_j}$ is $\ket{\psi^{(1)}_{x_1}}\ket{\psi^{(2)}_{x_2}}\dotsm \ket{\psi^{(n)}_{x_n}}$ with eigenvalue $(-1)^{x_1+\dotsb+x_n}$ for $x_1\dotsm x_n\in\{0,1\}^n$.
 \end{frame}
 
 \begin{frame}{The quantum strategy for GHZ game}
@@ -279,10 +303,14 @@ a_1\oplus b_1 \oplus c_0 &= 1
 \setlength{\itemsep}{1em}
 \item The GHZ state is shared.
 \begin{equation*}
-\frac1{\sqrt{2}}(\ket{000}+\ket{111}).
+\ket{\mathsf{GHZ}}:=\frac1{\sqrt{2}}(\ket{000}+\ket{111}).
 \end{equation*}
-\item Alice, Bob and Charlie measure their state by $\{\ket{0}, \ket{1}\}$ if the input is 0, and by $\{\ket{+}, \ket{-}\}$ if the input is 1.
-\item If $x_1=x_2=x_3=0$, $a^{(1)}$
+%\item Alice, Bob and Charlie measure their state by $\{\ket{+}, \ket{-}\}$ if the input is 0, and by $\{\ket{0}+i\ket{1}, \ket{0}-i\ket{1}\}$ if the input is 1.
+\item Alice, Bob and Charlie measure their state by $\emm{X}$ if the input is 0, and by $\emm{Y}$ if the input is 1.
+\item If $x_1=x_2=x_3=0$, $\bra{\mathsf{GHZ}} \emm{X}^{\otimes 3}\ket{\mathsf{GHZ}}=1$.
+\item If $x_1=x_2=1,\,x_3=0$, $\bra{\mathsf{GHZ}} \emm{Y}^{\otimes 2}\otimes \emm{X}\ket{\mathsf{GHZ}}=-1$.
+%$a=(a^{(1)})$ is measured with probability $|\bra{a^{(1)}a^{(2)}a^{(3)}}H^{\otimes 3}\ket{\mathsf{GHZ}}|^2 = \frac12 (\frac1{2\sqrt{2}}(1 + (-1)^{a^{(1)}+a^{(2)}+a^{(3)}}))^2$.
+\item This means that the winning probability of the GHZ game is 1.
 \end{itemize}
 \end{frame}
 
@@ -293,12 +321,10 @@ a_1\oplus b_1 \oplus c_0 &= 1
 \begin{equation*}
 \ket{\mathsf{GHZ}_n}:=\frac1{\sqrt{2}}(\ket{0\dotsm 0}+\ket{1\dotsm 1}).
 \end{equation*}
-\item $i$-th player measures his or her state by $X$ if the input is 0, and by $\emm{\cos\theta X + \sin\theta Y}$ if the input is 1.
+\item $j$-th player measures his or her state by $X$ if the input is 0, and by $\emm{\cos\theta_j X + \sin\theta_j Y}$ if the input is 1.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Observable for XOR game}
-\end{frame}
 
 
 \begin{frame}{The winning probability {\small [Werner \& Wolf 2001]}}
