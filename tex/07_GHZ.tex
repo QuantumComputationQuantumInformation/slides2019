@@ -50,7 +50,7 @@
 %\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
 %\newcommand\bm[1]{{\textbf{\it #1}}}
 
-\title{Nonlocality}
+\title{No-signaling polytope and multiplayer XOR games}
 \author{Ryuhei Mori}
 %\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
 \institute{Tokyo Institute of Technology}
@@ -326,7 +326,7 @@ In the following, we consider general multiplayer XOR games with binary inptus (
 \begin{equation*}
 \ket{\mathsf{GHZ}_n}:=\frac1{\sqrt{2}}(\ket{0\dotsm 0}+\ket{1\dotsm 1}).
 \end{equation*}
-\item $j$-th player measures his or her qubit by $\emm{\cos\theta_j^{(0)} X + \sin\theta_j^{(0)} Y}$ if the input is 0, and by $\emm{\cos\theta_j^{(1)} X + \sin\theta_j^{(1)} Y}$ if the input is 1.
+\item $j$-th player measures his or her qubit by $\emm{\cos\theta_0^{(j)} X + \sin\theta_0^{(j)} Y}$ if the input is 0, and by $\emm{\cos\theta_1^{(j)} X + \sin\theta_1^{(j)} Y}$ if the input is 1.
 \end{itemize}
 \end{frame}
 
@@ -335,12 +335,12 @@ In the following, we consider general multiplayer XOR games with binary inptus (
 \begin{frame}{The winning probability {\small [Werner \& Wolf 2001]}}
 \small
 \begin{align*}
-&\Tr\left(\ket{\mathsf{GHZ}_n}\bra{\mathsf{GHZ}_n}\bigotimes_{j=1}^n(\cos \theta_j^{(x_j)} X + \sin \theta_j^{(x_j)} Y)\right)\\
-&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \left(\cos \theta_j^{(x_j)} \bra{z}X\ket{\bar{z}} + \sin \theta_j^{(x_j)}\bra{z}Y\ket{\bar{z}}\right)\\
-&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \left(\cos \theta_j^{(x_j)} + \sin \theta_j^{(x_j)} (-1)^{z}i\right)\\
-&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \exp\left\{(-1)^z \theta_j^{(x_j)}\right\}\\
-&= \frac12\left(\exp\left\{i\sum_{j=1}^n \theta_j^{(x_j)}\right\} + \exp\left\{-i\sum_{j=1}^n \theta_j^{(x_j)}\right\}\right)\\
-&= \cos\left\{\sum_{j=1}^n \theta_j^{(x_j)}\right\}
+&\Tr\left(\ket{\mathsf{GHZ}_n}\bra{\mathsf{GHZ}_n}\bigotimes_{j=1}^n(\cos \theta_{x_j}^{(j)} X + \sin \theta_{x_j}^{(j)} Y)\right)\\
+&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \left(\cos \theta_{x_j}^{(j)} \bra{z}X\ket{\bar{z}} + \sin \theta_{x_j}^{(j)}\bra{z}Y\ket{\bar{z}}\right)\\
+&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \left(\cos \theta_{x_j}^{(j)} + \sin \theta_{x_j}^{(j)} (-1)^{z}i\right)\\
+&= \frac12\sum_{z\in\{0,1\}}\prod_{j=1}^n \exp\left\{(-1)^z \theta_{x_j}^{(j)}\right\}\\
+&= \frac12\left(\exp\left\{i\sum_{j=1}^n \theta_{x_j}^{(j)}\right\} + \exp\left\{-i\sum_{j=1}^n \theta_{x_j}^{(j)}\right\}\right)\\
+&= \cos\left\{\sum_{j=1}^n \theta_{x_j}^{(j)}\right\}
 \end{align*}
 \end{frame}
 
@@ -352,7 +352,7 @@ For $A\in L(\mathbb{C}^n, \mathbb{C}^m)$,
 $\|A\|$ is the largest singular value of $A$.
 
 \vspace{2em}
-For any unitary matrices $\emm{U}\in L(\mathbb{C}^n)$ and $\emm{V}\in L(\mathbb{C}^n)$,
+For any unitary matrices $\emm{U}\in L(\mathbb{C}^m)$ and $\emm{V}\in L(\mathbb{C}^n)$,
 \begin{align*}
 \|\emm{U}A\emm{V}\| = \|A\|.
 \end{align*}
@@ -373,18 +373,38 @@ Let $\beta(x_1,\dotsc,x_n):=p(x_1,\dotsc,x_n)(-1)^{f(x_1,\dotsc,x_n)}$ and $U_j 
 &=\max_{\theta_0,\dotsc,\theta_n}\sum_{x_1,\dotsc,x_n}\beta(x_1,\dotsc,x_n)\cos\left\{\theta_0 + \sum_{j=1}^n x_j\theta_j\right\}.
 %&=\left\|\sum_{x_1,\dotsc,x_n}p(x_1,\dotsc,x_n)\bigotimes_{j=1}^n \begin{bmatrix}1&0&\dotsm\\0&\mathsf{e}&\dotsm\end{bmatrix}\right\|\\
 \end{align*}
-The strategy with $\theta_j^{(x)}:= \theta_0/n + x\theta_j$ achieves this bound.
+The strategy with $\theta_{x}^{(j)}:= \theta_0/n + x\theta_j$ achieves this bound.
+\end{frame}
+
+\begin{frame}{Existence of winning strategies of multiplayer XOR game}
+A classical winning strategy exists iff
+there exists $(a_x^{(j)}\in\emm{\mathbb{F}_2})_{j=1,\dotsc,n,\,x\in\mathcal{X}}$
+such that
+\begin{align*}
+\sum_{j=1}^n a^{(j)}_{x_j} = f(x_1,\dotsc,x_n) \mod 2
+\end{align*}
+for all $x\in\mathsf{supp}(p)$.
+
+\vspace{2em}
+When \emm{$\mathcal{X}=\{0,1\}$},\\
+a quantum winning strategy exists iff
+there exists $(\theta_x^{(j)}\in\emm{\mathbb{Q}})_{j=1,\dotsc,n,\,x\in\mathcal{X}}$
+such that
+\begin{align*}
+\sum_{j=1}^n \theta^{(j)}_{x_j} = f(x_1,\dotsc,x_n) \mod 2
+\end{align*}
+for all $x\in\mathsf{supp}(p)$.
 \end{frame}
 
 \begin{frame}{Assignments}
 \begin{enumerate}
 \setlength{\itemsep}{2em}
 \item Show that the PR-box satisfies the no-signaling condition.
-\item Show the optimal strategy for the generalized Mermin--GHZ game, defined by
+\item Show an optimal strategy for the generalized Mermin--GHZ game, defined by
 \small
 \begin{align*}
 p(x_1,\dotsc,x_n) &:= \frac{\mathbb{I}\left\{\sum_{j=1}^n x_j\text{ is divisible by } 2^\ell\right\}}{\left|\left\{z\in\{0,1\}^n\mid \sum_{j=1}^n z_j \equiv 0 \mod 2^\ell\right\}\right|},\\
-f(x_1,\dotsc,x_n) &:= \frac{\sum_{j=1}^n x_j}{2^\ell}.
+f(x_1,\dotsc,x_n) &:= \frac{\sum_{j=1}^n x_j}{2^\ell}\mod 2.
 \end{align*}
 \end{enumerate}
 \end{frame}
