@@ -71,7 +71,7 @@
 \begin{itemize}
 \setlength{\itemsep}{2em}
 \item Boolean function $f\colon \{0,1\}^n\to\{0,1\}$.
-\item \emm{Boolean circuit} is a model of computation which consists of \emm{gates}.
+\item \emm{Boolean circuit} is a model of computation of a Boolean functions which consists of logic \emm{gates}.
 \item AND gate:
 \begin{tikzpicture}[circuit logic US, baseline]
 \node[and gate] (A) {};
@@ -97,19 +97,19 @@
 
 \begin{frame}{Universality of $\{\mathsf{AND}, \mathsf{OR},\mathsf{NOT}\}$}
 \begin{theorem}
-For any Boolean function $f\colon \{0,1\}^n\to\{0,1\}$, there is a Boolean circuit with AND, OR and NOT gates computing $f$.
+For \emm{any} Boolean function $f\colon \{0,1\}^n\to\{0,1\}$, there is a Boolean circuit with AND, OR and NOT gates computing $f$.
 \end{theorem}
 \begin{proof}
-The proof is induction on $n$. Theorem is trivial for $n=1$.
+The proof is an induction on $n$. Theorem is trivial for $n=1$.
 Assume that Theorem holds for Boolean functions $n \le k-1$.
 \begin{align*}
-f(x_1,\dotsc,x_n) = (x_n \wedge f(x_1,\dotsc,x_{n-1}, 1)) \vee (\overline{x_n} \wedge f(x_1,\dotsc,x_{n-1}, 0))
+f(x_1,\dotsc,x_k) = (x_k \wedge f(x_1,\dotsc,x_{k-1}, 1)) \vee (\overline{x_k} \wedge f(x_1,\dotsc,x_{k-1}, 0)).
 \end{align*}
 \end{proof}
 \end{frame}
 
-\begin{frame}{Size of Boolean circuit}
-Size of Boolean circuit $:=$ \# of gates in the Boolean circuit.
+\begin{frame}{Size of Boolean circuits}
+Size of Boolean circuit $:=$ \# of \emm{gates} in the Boolean circuit.
 
 Let $C(f)$ be a smallest size of Boolean circuit computing $f\colon\{0,1\}^n\to\{0,1\}$.
 
@@ -125,34 +125,37 @@ s(n) &\le c + 2 s(n-1)\\
 \end{align*}
 \begin{center}
 \begin{equation*}
-s(n) = O(2^n)
+s(n) = O(\emm{2^n}).
 \end{equation*}
 \end{center}
 \end{frame}
 
-\begin{frame}{Lower bound of size of Boolean circuit}
-The number of Boolean functions with $n$ variables is $2^{2^n}$.
+\begin{frame}{Lower bound of size of Boolean circuits}
+\emm{The number of Boolean functions} with $n$ variables is $2^{2^n}$.
 
 \vspace{1em}
-The number of Boolean circuits of size $s$ is at most
+\emm{The number of Boolean circuits} of size $s$ is at most
 \begin{equation*}
 \left(8\binom{n+s}{2}\right)^s
-\le (8(n+s)^2)^{s}.
+\le (4(n+s)^2)^{s}.
 \end{equation*}
 
 This means
 \begin{align*}
-& (8(n+s(n))^2)^{s(n)}\ge 2^{2^n} \\
-\iff& {s(n)}\log(8(n+s(n))^2)\ge 2^n\\
-\Longrightarrow& s(n)\ge \frac{2^n}{n}
+& (4(n+s(n))^2)^{s(n)}\ge 2^{2^n} \\
+\iff& {s(n)}\log(4(n+s(n))^2)\ge 2^n\\
+\Longrightarrow&\, s(n)\ge \frac{2^n}{3n} \quad \text{ for sufficiently large } n.
 \end{align*}
+
+\small
+In fact, $s(n) = \frac{2^n}{n}(1+o(1))$.
 \end{frame}
 
 \begin{frame}{Quantum circuit}
 \begin{itemize}
 \setlength{\itemsep}{1.5em}
-\item Unitary operator $U\in L(\mathbb{C}^{2^n})$.
-\item \emm{Quantum circuit} is a model of computation which consists of \emm{quantum gates}.
+%\item Unitary operator $U\in L(\mathbb{C}^{2^n})$.
+\item \emm{Quantum circuit} is a model of computation of Boolean functions which consists of \emm{quantum gates}.
 \item Single qubit gate: $X$ gate, $Y$ gate, $Z$ gate, $H$ gate, $S:=\begin{bmatrix}1&0\\0&i\end{bmatrix}$ gate
 %\[
 \Qcircuit @C=2em @R=.7em {
@@ -177,17 +180,18 @@ This means
 
 \begin{frame}{``Classical computation'' by a quantum circuit}
 \begin{lemma}
-For any function $F\colon \{0,1\}^n\to\{0,1\}^m$,
+For any function $f\colon \{0,1\}^n\to\{0,1\}$,
 %With sufficiently large number of working qubits (ancilla),
-there is a quantum circuit on $n+m+w$ qubits which consists of \emm{$X$} and \emm{Toffoli} gates for $U$ satisfying
+there is a quantum circuit on $n+1+w$ qubits which consists of \emm{$X$}, \emm{CNOT} and \emm{Toffoli} gates for $U$ satisfying
 \begin{equation*}
 U\ket{x}\ket{y}\ket{0}^{\otimes w} = \ket{x}\ket{y\oplus f(x)}\ket{0}^{\otimes w}
 \end{equation*}
-for all $x\in\{0,1\}^n$, $y\in\{0,1\}^m$.
-The number $w$ of ancillary qubits and the number $g$ of quantum gates are at most $C(f)$.
+for all $x\in\{0,1\}^n$, $y\in\{0,1\}$.
+Here, the number $w$ of working qubits (ancilla) is at most $C(f)+1$ and the number $g$ of quantum gates is at most $2C(f)+1$.
 \end{lemma}
 \begin{proof}[A sketch of a proof]
-Induction on the number of gates.
+%Induction on the number of gates.
+Translate a Boolean circuit to a quantum circuit.
 \end{proof}
 \end{frame}
 
@@ -208,7 +212,7 @@ In the next class.
 \setlength{\itemsep}{2em}
 \item Input is given by an oracle.
 \item Classical oracle: oracle gate $i\mapsto x_i$.
-\item Quantum oracle: quantum oracle gate $O\ket{i}\ket{y} = \ket{i}\ket{y\oplus x_i}$.
+\item Quantum oracle: quantum oracle gate $U\ket{i}\ket{y} = \ket{i}\ket{y\oplus x_i}$.
 \item Query complexity: the number of oracle calls.
 \item Circuit size: the number of total quantum gates.
 \end{itemize}
@@ -217,42 +221,60 @@ In the next class.
 \begin{frame}{Deutsch--Josza problem}
 \begin{itemize}
 \setlength{\itemsep}{2em}
-\item There is a hidden Boolean function $f\colon\{0,1\}^n\to\{0,1\}$ that is a constant or balanced.
-\item Quantum oracle $U\ket{x}\ket{y} = \ket{x}\ket{y\oplus f(x)}$.
+\item There is a hidden Boolean function $f\colon\{0,1\}^n\to\{0,1\}$ that is a \emm{constant or balanced}.
+\item Quantum oracle $U_f\ket{x}\ket{y} = \ket{x}\ket{y\oplus f(x)}$.
 \item Goal is to determine whether $f$ is constant or balanced.
 \item Classical deterministic algorithm needs $2^{n-1}+1$ oracle calls.
-\item Deutsch--Josza algorithm solves this problems by \emm{single} oracle call.
+\item Deutsch--Josza algorithm solves this problem by \emm{single} oracle call (and $O(n)$ gates).
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Deutsch--Josza problem}
 \[
 \Qcircuit @C=2em @R=1em {
-\lstick{\ket{0}} & \gate{H} & \multigate{3}{U} & \gate{H} & \meter\\
-\lstick{\ket{0}} & \gate{H} & \ghost{U} & \gate{H} & \meter\\
-\lstick{\ket{0}} & \gate{H} & \ghost{U} & \gate{H} & \meter\\
-\lstick{\ket{1}} & \gate{H} & \ghost{U} & \gate{H} & \meter\\
+\lstick{\ket{0}} & \gate{H} & \multigate{3}{U_f} & \gate{H} & \meter\\
+\lstick{\ket{0}} & \gate{H} & \ghost{U_f} & \gate{H} & \meter\\
+\lstick{\ket{0}} & \gate{H} & \ghost{U_f} & \gate{H} & \meter\\
+\lstick{\ket{1}} & \gate{H} & \ghost{U_f} & \gate{H} & \meter\\
 }
 \]
 \begin{align*}
 &\ket{0}^{\otimes n}\ket{1}
 \stackrel{H^{\otimes (n+1)}}{\longmapsto} \ket{+}^{\otimes n}\ket{-}
 = \frac1{2^{n/2}}\sum_{x\in\{0,1\}^n}\ket{x}\ket{-}\\
-&\stackrel{U}{\longmapsto} \frac1{2^{n/2}}\sum_{x\in\{0,1\}^n}(-1)^{f(x)}\ket{x}\ket{-}\\
+&\stackrel{U_f}{\longmapsto} \frac1{2^{n/2}}\sum_{x\in\{0,1\}^n}(-1)^{f(x)}\ket{x}\ket{-}\\
 &\stackrel{H^{\otimes (n+1)}}{\longmapsto} \frac1{2^{n}}\sum_{x\in\{0,1\}^n}\sum_{y\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, y\rangle}\ket{y}\ket{1}\\
 \end{align*}
+
+\end{frame}
+\begin{frame}{Deutsch--Josza problem}
+\begin{align*}
+&\frac1{2^{n}}\sum_{x\in\{0,1\}^n}\sum_{y\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, y\rangle}\ket{y}\ket{1}\\
+&= \frac1{2^{n}}\sum_{y\in\{0,1\}^n}\left(\sum_{x\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, y\rangle}\right)\ket{y}\ket{1}\\
+\end{align*}
+The coefficient of $\ket{0}^{\otimes n}\ket{1}$ is $S:=\frac1{2^n}\sum_{x} (-1)^{f(x)}$.
+Here, $S^2 = 1$ if $f(x)$ is constant, and $S^2 = 0$ if $f(x)$ is balanced.
+
+\vspace{1em}
+In the Deutsch--Josza algorithm, the first $n$ qubits are measured and output ``constant'' \emm{if all-zero is measured}, and output ``balanced'', otherwise.
 \end{frame}
 
-\begin{frame}{Assignments}
+\begin{frame}{Assignments (Deadline is Jan.\ 10)}
 \begin{enumerate}
 \setlength{\itemsep}{2em}
-\item Show that the PR-box satisfies the no-signaling condition.
-\item Show an optimal strategy for the generalized Mermin--GHZ game, defined by
-\small
-\begin{align*}
-p(x_1,\dotsc,x_n) &:= \frac{\mathbb{I}\left\{\sum_{j=1}^n x_j\text{ is divisible by } 2^\ell\right\}}{\left|\left\{z\in\{0,1\}^n\mid \sum_{j=1}^n z_j \equiv 0 \mod 2^\ell\right\}\right|},\\
-f(x_1,\dotsc,x_n) &:= \frac{\sum_{j=1}^n x_j}{2^\ell}\mod 2.
-\end{align*}
+\item Describe quantum circuits computing the following Boolean functions, i.e., quantum circuit $U$ satisfies
+\begin{equation*}
+U\ket{x}\ket{y}\ket{0}^{\otimes w} = \ket{x}\ket{y\oplus f(x)}\ket{0}^{\otimes w}
+\end{equation*}
+for some $w$.
+\begin{enumerate}[(A)]
+\item $f(x_1,x_2,x_3,x_4):= x_1\oplus x_2\oplus x_3\oplus x_4$.
+\item $f(x_1,x_2,x_3,x_4):= x_1\wedge x_2\wedge x_3\wedge x_4$.
+\item $f(x_1,x_2,x_3,x_4):= (x_1\vee x_2)\wedge (x_3\vee x_4)$.
+\item $f(x_1,x_2,x_3):= \text{Majority of } x_1, x_2 \text{ and } x_3$.
+\end{enumerate}
+\item (Advanced) For fixed $S\subseteq [1,2,\dotsc,n]$, a Boolean function $f$ is either $g_a(x)=a+\sum_{i\in S} x_i \mod 2$ for $a\in\{0,1\}$ or $h(x)$ satisfying $\sum_{x} (-1)^{g_0(x)+h(x)} = 0$.
+Show quantum algorithm that distinguishes the two cases $f(x)=g_0(x) \text{ or } g_1(x)$ and $f(x)=h(x)$ for $h(x)$ satsifying the above condition.
 \end{enumerate}
 \end{frame}
 
