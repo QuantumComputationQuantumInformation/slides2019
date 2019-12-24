@@ -218,18 +218,18 @@ In the next class.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Deutsch--Josza problem}
+\begin{frame}{Deutsch--Jozsa problem}
 \begin{itemize}
 \setlength{\itemsep}{2em}
 \item There is a hidden Boolean function $f\colon\{0,1\}^n\to\{0,1\}$ that is a \emm{constant or balanced}.
 \item Quantum oracle $U_f\ket{x}\ket{y} = \ket{x}\ket{y\oplus f(x)}$.
 \item Goal is to determine whether $f$ is constant or balanced.
 \item Classical deterministic algorithm needs $2^{n-1}+1$ oracle calls.
-\item Deutsch--Josza algorithm solves this problem by \emm{single} oracle call (and $O(n)$ gates).
+\item Deutsch--Jozsa algorithm solves this problem by \emm{single} oracle call (and $O(n)$ gates).
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Deutsch--Josza algoritnm}
+\begin{frame}{Deutsch--Jozsa algoritnm}
 \[
 \Qcircuit @C=2em @R=1em {
 \lstick{\ket{0}} & \gate{H} & \multigate{3}{U_f} & \gate{H} & \meter\\
@@ -256,7 +256,7 @@ The coefficient of $\ket{0}^{\otimes n}\ket{1}$ is $S:=\frac1{2^n}\sum_{x} (-1)^
 Here, $S^2 = 1$ if $f(x)$ is constant, and $S^2 = 0$ if $f(x)$ is balanced.
 
 \vspace{1em}
-In the Deutsch--Josza algorithm, the first $n$ qubits are measured and output ``constant'' \emm{if all-zero is measured}, and output ``balanced'', otherwise.
+In the Deutsch--Jozsa algorithm, the first $n$ qubits are measured and output ``constant'' \emm{if all-zero is measured}, and output ``balanced'', otherwise.
 \end{frame}
 
 \begin{frame}{Assignments (Deadline is Jan.\ 10)}
