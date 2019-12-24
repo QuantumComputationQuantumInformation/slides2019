@@ -229,7 +229,7 @@ In the next class.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Deutsch--Josza problem}
+\begin{frame}{Deutsch--Josza algoritnm}
 \[
 \Qcircuit @C=2em @R=1em {
 \lstick{\ket{0}} & \gate{H} & \multigate{3}{U_f} & \gate{H} & \meter\\
@@ -243,14 +243,14 @@ In the next class.
 \stackrel{H^{\otimes (n+1)}}{\longmapsto} \ket{+}^{\otimes n}\ket{-}
 = \frac1{2^{n/2}}\sum_{x\in\{0,1\}^n}\ket{x}\ket{-}\\
 &\stackrel{U_f}{\longmapsto} \frac1{2^{n/2}}\sum_{x\in\{0,1\}^n}(-1)^{f(x)}\ket{x}\ket{-}\\
-&\stackrel{H^{\otimes (n+1)}}{\longmapsto} \frac1{2^{n}}\sum_{x\in\{0,1\}^n}\sum_{y\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, y\rangle}\ket{y}\ket{1}\\
+&\stackrel{H^{\otimes (n+1)}}{\longmapsto} \frac1{2^{n}}\sum_{x\in\{0,1\}^n}\sum_{z\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, z\rangle}\ket{z}\ket{1}\\
 \end{align*}
 
 \end{frame}
-\begin{frame}{Deutsch--Josza problem}
+\begin{frame}{The probability of outcome}
 \begin{align*}
-&\frac1{2^{n}}\sum_{x\in\{0,1\}^n}\sum_{y\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, y\rangle}\ket{y}\ket{1}\\
-&= \frac1{2^{n}}\sum_{y\in\{0,1\}^n}\left(\sum_{x\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, y\rangle}\right)\ket{y}\ket{1}\\
+&\frac1{2^{n}}\sum_{x\in\{0,1\}^n}\sum_{z\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, z\rangle}\ket{z}\ket{1}\\
+&= \sum_{z\in\{0,1\}^n}\left(\frac1{2^{n}}\sum_{x\in\{0,1\}^n}(-1)^{f(x)}(-1)^{\langle x, z\rangle}\right)\ket{z}\ket{1}\\
 \end{align*}
 The coefficient of $\ket{0}^{\otimes n}\ket{1}$ is $S:=\frac1{2^n}\sum_{x} (-1)^{f(x)}$.
 Here, $S^2 = 1$ if $f(x)$ is constant, and $S^2 = 0$ if $f(x)$ is balanced.
@@ -273,7 +273,7 @@ for some $w$.
 \item $f(x_1,x_2,x_3,x_4):= (x_1\vee x_2)\wedge (x_3\vee x_4)$.
 \item $f(x_1,x_2,x_3):= \text{Majority of } x_1, x_2 \text{ and } x_3$.
 \end{enumerate}
-\item (Advanced) For fixed $S\subseteq [1,2,\dotsc,n]$, a Boolean function $f$ is either $g_a(x)=a+\sum_{i\in S} x_i \mod 2$ for $a\in\{0,1\}$ or $h(x)$ satisfying $\sum_{x} (-1)^{g_0(x)+h(x)} = 0$.
+\item (Advanced) For fixed $S\subseteq \{1,2,\dotsc,n\}$, a Boolean function $f$ is either $g_a(x)=a+\sum_{i\in S} x_i \mod 2$ for $a\in\{0,1\}$ or $h(x)$ satisfying $\sum_{x} (-1)^{g_0(x)+h(x)} = 0$.
 Show quantum algorithm that distinguishes the two cases $f(x)=g_0(x) \text{ or } g_1(x)$ and $f(x)=h(x)$ for $h(x)$ satsifying the above condition.
 \end{enumerate}
 \end{frame}
