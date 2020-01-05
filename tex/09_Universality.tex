@@ -66,34 +66,33 @@
 \end{frame}
 
 
-
-\begin{frame}{Boolean circuit}
+\begin{frame}{Quantum circuit}
 \begin{itemize}
-\setlength{\itemsep}{2em}
-\item Boolean function $f\colon \{0,1\}^n\to\{0,1\}$.
-\item \emm{Boolean circuit} is a model of computation of a Boolean functions which consists of logic \emm{gates}.
-\item AND gate:
-\begin{tikzpicture}[circuit logic US, baseline]
-\node[and gate] (A) {};
-\foreach \a in {1, 2}
-  \draw (A.input \a -| -1,0) -- (A.input \a);
-\draw (A.output) -- ([xshift=0.5cm]A.output);
-\end{tikzpicture}
-\item OR gate:
-\begin{tikzpicture}[circuit logic US, baseline]
-\node[or gate] (A) {};
-\foreach \a in {1, 2}
-  \draw (A.input \a -| -1,0) -- (A.input \a);
-\draw (A.output) -- ([xshift=0.5cm]A.output);
-\end{tikzpicture}
-\item NOT gate:
-\begin{tikzpicture}[circuit logic US, baseline]
-\node[not gate] (A) {};
-\draw (A.input) -- ([xshift=-0.5cm]A.input);
-\draw (A.output) -- ([xshift=0.5cm]A.output);
-\end{tikzpicture}
+\setlength{\itemsep}{1.5em}
+%\item Unitary operator $U\in L(\mathbb{C}^{2^n})$.
+\item \emm{Quantum circuit} is a model of computation of Boolean functions which consists of \emm{quantum gates}.
+\item Single qubit gate: $X$ gate, $Y$ gate, $Z$ gate, $H$ gate, $S:=\begin{bmatrix}1&0\\0&i\end{bmatrix}$ gate
+%\[
+\Qcircuit @C=2em @R=.7em {
+& \gate{X} & \qw
+}
+%\]
+\item Two qubit gate: CNOT gate
+\Qcircuit @C=2em @R=1em {
+& \ctrl{1} & \qw\\
+& \targ & \qw
+}
+\item Three qubit gate: Toffoli gate
+\mbox{
+\Qcircuit @C=2em @R=1em {
+& \ctrl{1} & \qw\\
+& \ctrl{1} & \qw\\
+& \targ & \qw
+}
+}
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}{Universality of a quantum circuit}
 \begin{theorem}[Universality of finite gate set]
@@ -364,8 +363,8 @@ Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
 }
 \]
 \begin{align*}
-\ket{00101}&\longmapsto \ket{11\emm{1}00}\\
-\ket{11000}&\longmapsto \ket{11\emm{0}00}
+\ket{00101}&\longmapsto \ket{11\emm{1}00}\longmapsto \ket{00101}\\
+\ket{11000}&\longmapsto \ket{11\emm{0}00}\longmapsto \ket{11000}
 \end{align*}
 \end{frame}
 
