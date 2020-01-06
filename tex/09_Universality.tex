@@ -72,6 +72,7 @@
 %\item Unitary operator $U\in L(\mathbb{C}^{2^n})$.
 \item \emm{Quantum circuit} is a model of computation of Boolean functions which consists of \emm{quantum gates}.
 \item Single qubit gate: $X$ gate, $Y$ gate, $Z$ gate, $H$ gate, $S:=\begin{bmatrix}1&0\\0&i\end{bmatrix}$ gate
+$\emm{T}:=\begin{bmatrix}1&0\\0&\frac{1+i}{\sqrt{2}}\end{bmatrix}$ gate
 %\[
 \Qcircuit @C=2em @R=.7em {
 & \gate{X} & \qw
@@ -97,14 +98,14 @@
 \begin{frame}{Universality of a quantum circuit}
 \begin{theorem}[Universality of finite gate set]
 For any unitary matrix $U\in L(\mathbb{C}^{2^n})$ and $\emm{\epsilon} >0$,
-there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,\mathsf{CNOT},\,\mathsf{Toffoli}$} gates computing $\widetilde{U}$
+there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,T,\,\mathsf{CNOT}$} gates computing $\widetilde{U}$
 satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
 \end{theorem}
 \begin{proof}
 \begin{enumerate}
 \setlength{\itemsep}{1em}
 \item Any unitary matrix can be decomposed to a product of \emm{two-level unitary matrices}.
-\item Any two-level unitary matrix can be decomposed to a product of \emm{CNOT and controlled-unitary gates}.
+\item Any two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}.
 \item Any controlled-untary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
 \item Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$.
 \end{enumerate}
@@ -141,33 +142,8 @@ Since $U_i := V_i^{-1}$ is two-level unitary, this completes a proof.
 \end{proof}
 \end{frame}
 
+
 \begin{frame}{Decomposition to two-level unitary matrix 1/3}
-\begin{equation*}
-U=
-\begin{bmatrix}
-\emm{u_{1,1}}&u_{1,2}&u_{1,3}&u_{1,4}\\
-u_{2,1}&u_{2,2}&u_{2,3}&u_{2,4}\\
-u_{3,1}&u_{3,2}&u_{3,3}&u_{3,4}\\
-u_{4,1}&u_{4,2}&u_{4,3}&u_{4,4}
-\end{bmatrix}
-\end{equation*}
-If $u_{1,1}\ne 0$, we skip the first step.
-
-If $u_{1,1}= 0$, there exists $i\in\{2,3,\dotsc,d\}$ such that $u_{d,1}\ne 0$.
-Apply the two-level permutation matrix
-\begin{equation*}
-V=
-\begin{bmatrix}
-0&0&0&\emm{1}\\
-0&1&0&0\\
-0&0&1&0\\
-\emm{1}&0&0&0
-\end{bmatrix}
-\end{equation*}
-which swap the first row and the $d$-th row.
-\end{frame}
-
-\begin{frame}{Decomposition to two-level unitary matrix 2/3}
 \begin{equation*}
 U=
 \begin{bmatrix}
@@ -181,7 +157,7 @@ If $u_{2,1}= 0$, we skip this step.
 
 If $u_{2,1}\ne 0$, apply the two-level unitary matrix
 \begin{equation*}
-V=
+V_1=
 \frac1{|u_{1,1}|^2+|u_{2,1}|^2}
 \begin{bmatrix}
 u_{1,1}^*&u_{2,1}^*&0&0\\
@@ -192,9 +168,9 @@ u_{1,1}^*&u_{2,1}^*&0&0\\
 \end{equation*}
 \end{frame}
 
-\begin{frame}{Decomposition to two-level unitary matrix 2'/3}
+\begin{frame}{Decomposition to two-level unitary matrix 2/3}
 \begin{equation*}
-U=
+V_1U=
 \begin{bmatrix}
 u_{1,1}&u_{1,2}&u_{1,3}&u_{1,4}\\
 0&u_{2,2}&u_{2,3}&u_{2,4}\\
@@ -202,11 +178,14 @@ u_{1,1}&u_{1,2}&u_{1,3}&u_{1,4}\\
 u_{4,1}&u_{4,2}&u_{4,3}&u_{4,4}
 \end{bmatrix}
 \end{equation*}
-If $u_{2,1}= 0$, we skip this step.
+$u_{i,j}$s are not equal to those in the previous slide for $i\in\{1,2\}$.
 
-If $u_{2,1}\ne 0$, apply the two-level unitary matrix
+\vspace{1em}
+If $u_{3,1}= 0$, we skip this step.
+
+If $u_{3,1}\ne 0$, apply the two-level unitary matrix
 \begin{equation*}
-V=
+V_2=
 \frac1{|u_{1,1}|^2+|u_{3,1}|^2}
 \begin{bmatrix}
 u_{1,1}^*&0&u_{3,1}^*&0\\
@@ -219,7 +198,7 @@ u_{1,1}^*&0&u_{3,1}^*&0\\
 
 \begin{frame}{Decomposition to two-level unitary matrix 3/3}
 \begin{equation*}
-U=
+V_3V_2V_1U=
 \begin{bmatrix}
 u_{1,1}&u_{1,2}&u_{1,3}&u_{1,4}\\
 0&u_{2,2}&u_{2,3}&u_{2,4}\\
@@ -229,69 +208,37 @@ u_{1,1}&u_{1,2}&u_{1,3}&u_{1,4}\\
 =
 \begin{bmatrix}
 u_{1,1}&0&0&0\\
-0&\emm{u_{2,2}}&u_{2,3}&u_{2,4}\\
-0&u_{3,2}&u_{3,3}&u_{3,4}\\
+0&u_{2,2}&u_{2,3}&u_{2,4}\\
+0&\emm{u_{3,2}}&u_{3,3}&u_{3,4}\\
 0&u_{4,2}&u_{4,3}&u_{4,4}
 \end{bmatrix}
 \end{equation*}
 
+\vspace{1em}
+$u_{1,1}=1$ unless $u_{2,1},\,u_{3,1},\,u_{4,1}$ are originally 0.
+In this case, apply one-level unitary for making $u_{1,1}=1$.
+
 \vspace{2em}
 \centering
 \large
-Arbitrary $d\times d$ unitary matrix can be decomposed to product of at most $(d+1)d/2$ two-level unitary matrices.
+Arbitrary $d\times d$ unitary matrix can be decomposed to a product of at most \emm{$d(d-1)/2$ two-level unitary} matrices for $d\ge 2$.
 \end{frame}
 
 \begin{frame}{Universality of a quantum circuit}
 \begin{theorem}[Universality of finite gate set]
 For any unitary matrix $U\in L(\mathbb{C}^{2^n})$ and $\emm{\epsilon} >0$,
-there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,\mathsf{CNOT},\,\mathsf{Toffoli}$} gates computing $\widetilde{U}$
+there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,T,\,\mathsf{CNOT}$} gates computing $\widetilde{U}$
 satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
 \end{theorem}
 \begin{proof}
 \begin{enumerate}
 \setlength{\itemsep}{1em}
 \item Any unitary matrix can be decomposed to a product of \emm{two-level unitary matrices}. {\color{green}{Done}}
-\item Any two-level unitary matrix can be decomposed to a product of \emm{CNOT and controlled-unitary gates}.
+\item Any two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}.
 \item Any controlled-untary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
 \item Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$.
 \end{enumerate}
 \end{proof}
-\end{frame}
-
-\begin{frame}{Universality of a quantum circuit}
-\begin{lemma}
-Any $2^n\times 2^n$ two-level unitary matrix can be decomposed to a product of \emm{CNOT and controlled-unitary gates}.
-\end{lemma}
-\begin{proof}
-Assume that the two-level unitary matrix acts on a 2-dimentional subspace $\mathsf{span}(\{\ket{x}, \ket{y}\})$ for $x\ne y \in\{0,1\}^n$.
-
-\vspace{1em}
-Assume that for $i\in\{1,2,\dotsc,n\}$, $x_i = 1$ and $y_i = 0$.
-\vspace{1em}
-Apply at most $n-1$ CNOT gates such that
-\begin{align*}
-\ket{x}&\longmapsto \ket{\emm{y\oplus e_i}}\\
-\ket{y}&\longmapsto \ket{y}
-\end{align*}
-Then, apply \emm{``controlled unitary''} and reverse the permutation of the basis.
-\end{proof}
-\end{frame}
-
-\begin{frame}{Example of the first part}
-Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
-\[
-\Qcircuit @C=2em @R=2em {
-\lstick{\ket{0}} & \targ & \qw &\qw & \rstick{\ket{1}}\qw \\
-\lstick{\ket{0}} & \qw & \targ &\qw &\rstick{\ket{1}}\qw \\
-\lstick{\ket{1}} & \ctrl{-2} & \ctrl{-1} &\ctrl{2} &\rstick{\ket{1}}\qw \\
-\lstick{\ket{0}} & \qw & \qw &\qw &\rstick{\ket{0}}\qw \\
-\lstick{\ket{1}} & \qw & \qw &\targ &\rstick{\ket{0}}\qw
-}
-\]
-\begin{align*}
-\ket{00101}&\longmapsto \ket{11\emm{1}00}\\
-\ket{11000}&\longmapsto \ket{11\emm{0}00}
-\end{align*}
 \end{frame}
 
 \begin{frame}{Controlled unitary}
@@ -326,6 +273,69 @@ Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
 }
 \]
 \end{frame}
+
+\begin{frame}{Special case}
+\begin{equation*}
+\begin{bmatrix}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&\emm{u_{1,1}}&0&0&0&\emm{u_{1,2}}&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&1&0&0&0\\
+0&0&0&0&0&1&0&0\\
+0&0&\emm{u_{2,1}}&0&0&0&\emm{u_{2,2}}&0\\
+0&0&0&0&0&0&0&1\\
+\end{bmatrix}
+\end{equation*}
+
+\vspace{1em}
+\[
+\Qcircuit @C=2em @R=2em {
+& \ctrlo{1} & \qw \\
+& \ctrl{1} & \qw \\
+& \gate{U} & \qw \\
+}
+\]
+\end{frame}
+
+\begin{frame}{Universality of a quantum circuit}
+\begin{lemma}
+Any $2^n\times 2^n$ two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}.
+\end{lemma}
+\begin{proof}
+Assume that the two-level unitary matrix acts on a 2-dimentional subspace $\mathsf{span}(\{\ket{x}, \ket{y}\})$ for $x\ne y \in\{0,1\}^n$.
+
+\vspace{1em}
+Assume that for $i\in\{1,2,\dotsc,n\}$, $x_i = 1$ and $y_i = 0$.
+\vspace{1em}
+Apply at most $n-1$ CNOT gates such that
+\begin{align*}
+\ket{x}&\longmapsto \ket{\emm{y\oplus e_i}}\\
+\ket{y}&\longmapsto \ket{y}\\
+\forall z\ne x, y\qquad \exists \tilde{z}\ne x,y\qquad
+\ket{z}&\longmapsto \ket{\tilde{z}},
+\end{align*}
+Then, apply \emm{``controlled unitary''} and reverse the permutation of the basis.
+\end{proof}
+\end{frame}
+
+\begin{frame}{Example of the first part}
+Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
+\[
+\Qcircuit @C=2em @R=2em {
+\lstick{\ket{0}} & \targ & \qw &\qw & \rstick{\ket{1}}\qw \\
+\lstick{\ket{0}} & \qw & \targ &\qw &\rstick{\ket{1}}\qw \\
+\lstick{\ket{1}} & \ctrl{-2} & \ctrl{-1} &\ctrl{2} &\rstick{\ket{1}}\qw \\
+\lstick{\ket{0}} & \qw & \qw &\qw &\rstick{\ket{0}}\qw \\
+\lstick{\ket{1}} & \qw & \qw &\targ &\rstick{\ket{0}}\qw
+}
+\]
+\begin{align*}
+\ket{00101}&\longmapsto \ket{11\emm{1}00}\\
+\ket{11000}&\longmapsto \ket{11\emm{0}00}
+\end{align*}
+\end{frame}
+
 
 \begin{frame}{Idea of the last part}
 \vspace{-1.5em}
@@ -371,18 +381,49 @@ Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
 \begin{frame}{Universality of a quantum circuit}
 \begin{theorem}[Universality of finite gate set]
 For any unitary matrix $U\in L(\mathbb{C}^{2^n})$ and $\emm{\epsilon} >0$,
-there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,\mathsf{CNOT},\,\mathsf{Toffoli}$} gates computing $\widetilde{U}$
+there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,T,\,\mathsf{CNOT}$} gates computing $\widetilde{U}$
 satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
 \end{theorem}
 \begin{proof}
 \begin{enumerate}
 \setlength{\itemsep}{1em}
 \item Any unitary matrix can be decomposed to a product of \emm{two-level unitary matrices}. {\color{green}{Done}}
-\item Any two-level unitary matrix can be decomposed to a product of \emm{CNOT and controlled-unitary gates}. {\color{green}{Done}}
+\item Any two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}. {\color{green}{Done}}
 \item Any controlled-untary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
 \item Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$.
 \end{enumerate}
 \end{proof}
+\end{frame}
+
+\begin{frame}{Assignments (Deadline is Jan.\ 17)}
+\small
+\begin{enumerate}
+\setlength{\itemsep}{1em}
+\item Show a decomposition of
+\begin{equation*}
+\frac12\begin{bmatrix}
+1&1&1&1\\
+1&i&-1&-i\\
+1&-1&1&-1\\
+1&-i&-1&i
+\end{bmatrix}
+\end{equation*}
+into a product of two-level unitary matrices.
+\item Show a decomposition of two-level unitary
+\begin{equation*}
+\begin{bmatrix}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&a&0&0&0&0&c\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&0&0\\
+0&0&0&0&0&1&0&0\\
+0&0&0&0&0&0&1&0\\
+0&0&b&0&0&0&0&d\\
+\end{bmatrix}
+\end{equation*}
+into a product of controlled-unitary gates.
+\end{enumerate}
 \end{frame}
 
 
