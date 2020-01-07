@@ -126,6 +126,12 @@ satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
 0&0&0&0&0&0&0&0&1\\
 \end{bmatrix}
 \end{equation*}
+There exist $x\ne y\in\{0,1\}^n$ such that
+\begin{align*}
+\ket{x} &\longmapsto u_{1,1} \ket{x} + u_{1,2}\ket{y}\\
+\ket{y} &\longmapsto u_{2,1} \ket{x} + u_{2,2}\ket{y}
+\end{align*}
+and for any $z\in\{0,1\}^n\setminus\{x,y\}$, $\ket{z}\longmapsto\ket{z}$.
 \end{frame}
 
 \begin{frame}{Two-level unitary matrix}
@@ -158,14 +164,15 @@ If $u_{2,1}= 0$, we skip this step.
 If $u_{2,1}\ne 0$, apply the two-level unitary matrix
 \begin{equation*}
 V_1=
-\frac1{|u_{1,1}|^2+|u_{2,1}|^2}
+\frac1z
 \begin{bmatrix}
 u_{1,1}^*&u_{2,1}^*&0&0\\
-\emm{-u_{2,1}}&\emm{u_{1,1}}&0&0\\
-0&0&|u_{1,1}|^2+|u_{2,1}|^2&0\\
-0&0&0&|u_{1,1}|^2+|u_{2,1}|^2
+\emm{u_{2,1}}&\emm{-u_{1,1}}&0&0\\
+0&0&z&0\\
+0&0&0&z
 \end{bmatrix}
 \end{equation*}
+for $z:=\sqrt{|u_{1,1}|^2+|u_{2,1}|^2}$.
 \end{frame}
 
 \begin{frame}{Decomposition to two-level unitary matrix 2/3}
@@ -186,14 +193,15 @@ If $u_{3,1}= 0$, we skip this step.
 If $u_{3,1}\ne 0$, apply the two-level unitary matrix
 \begin{equation*}
 V_2=
-\frac1{|u_{1,1}|^2+|u_{3,1}|^2}
+\frac1z
 \begin{bmatrix}
 u_{1,1}^*&0&u_{3,1}^*&0\\
-0&|u_{1,1}|^2+|u_{3,1}|^2&0&0\\
-\emm{-u_{3,1}}&0&\emm{u_{1,1}}&0\\
-0&0&0&|u_{1,1}|^2+|u_{3,1}|^2
+0&z&0&0\\
+\emm{u_{3,1}}&0&\emm{-u_{1,1}}&0\\
+0&0&0&z
 \end{bmatrix}
 \end{equation*}
+for $z:=\sqrt{|u_{1,1}|^2+|u_{3,1}|^2}$.
 \end{frame}
 
 \begin{frame}{Decomposition to two-level unitary matrix 3/3}
