@@ -9,3 +9,4 @@
 * 12/17	Nonlocality and Tsirelson's bound [slide](/tex/06_nonlocality.pdf)
 * 12/20	No-signaling polytope and multiplayer XOR game [slide](/tex/07_GHZ.pdf)
 * 12/24	Quantum circuit [slide](/tex/08_Deutsch.pdf)
+* 1/7	Universality of quantum circuit [slide](/tex/09_Universality.pdf)
