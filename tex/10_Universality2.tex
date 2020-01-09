@@ -1,0 +1,302 @@
+\documentclass{beamer}
+%\usepackage{xspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+%\usepackage{svg}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\usepackage{psfrag}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{braket}
+\usepackage{qcircuit}
+\usepackage{tikz}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{graphs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{patchplots}
+
+\setbeamercovered{transparent}
+
+\usetheme{Pittsburgh}
+%\usetheme{default}
+
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}[frame number]
+%\usefonttheme{professionalfonts}
+
+%\usepackage{sansmathaccent}
+%\usepackage{bm}
+
+%\usepackage{unicode-math}
+%%\setmainfont[SlantedFont={Latin Modern Roman Slanted},SlantedFeatures={Color=000000},
+%%  SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]{XITS}
+%\setmathfont[math-style=ISO,sans-style=upright]{XITS Math}
+%\setmathfont[range={\mathcal,\mathbfcal}]{Latin Modern Math}
+
+\usepackage{sfmath}
+
+%\mathversion{sans}
+
+\newcommand{\Tr}{\mathsf{Tr}}
+
+\definecolor{redorange}{rgb}{1.0, .25, .25}
+\definecolor{citation}{rgb}{.1, 0.8, .35}
+\newcommand\emm[1]{\textcolor{redorange}{{#1}}}
+\newcommand\numc[1]{\textcolor{citation}{{\bf #1}}}
+
+%\newcommand\bm[1]{{\mbox{\boldmath $#1$}}}
+\newcommand\bm[1]{{\mathbf{#1}}}
+%\newcommand\bm[1]{{\bf #1}}
+%\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
+%\newcommand\bm[1]{{\textbf{\it #1}}}
+
+\title{Universality of quantum circuit}
+\author{Ryuhei Mori}
+%\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
+\institute{Tokyo Institute of Technology}
+%\date{21, Feb, 2019}
+
+
+
+\begin{document}
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+
+
+\begin{frame}{Whole quantum circuit}
+Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
+\[
+\Qcircuit @C=2em @R=2em {
+ & \targ & \qw &\qw & \ctrl{1} & \qw & \qw & \targ &\qw \\
+ & \qw & \targ &\qw & \ctrl{1} &\qw & \targ & \qw &\qw \\
+ & \ctrl{-2} & \ctrl{-1} &\ctrl{2} & \gate{U} &\ctrl{2} & \ctrl{-1} & \ctrl{-2} & \qw \\
+ & \qw & \qw &\qw & \ctrlo{-1} &\qw & \qw & \qw & \qw \\
+ & \qw & \qw &\targ & \ctrlo{-1} &\targ & \qw & \qw & \qw
+}
+\]
+\begin{align*}
+\ket{00101}&\longmapsto \ket{11\emm{1}00}\longmapsto \ket{00101}\\
+\ket{11000}&\longmapsto \ket{11\emm{0}00}\longmapsto \ket{11000}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Universality of a quantum circuit}
+\begin{theorem}[Universality of finite gate set]
+For any unitary matrix $U\in L(\mathbb{C}^{2^n})$ and $\emm{\epsilon} >0$,
+there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,T,\,\mathsf{CNOT}$} gates computing $\widetilde{U}$
+satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\setlength{\itemsep}{1em}
+\item Any unitary matrix can be decomposed to a product of \emm{two-level unitary matrices}. {\color{green}{Done}}
+\item Any two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}. {\color{green}{Done}}
+\item Any controlled-untary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
+\item Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$.
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Controlled-unitary}
+\begin{theorem}
+Any controlled-unitary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item Controlled-unitary with \emm{single controlled qubit}.
+\item Controlled-unitary with \emm{two controlled qubit}.
+\item Controlled-unitary with \emm{$n$ controlled qubit}.
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Decomposition of single qubit unitary}
+\begin{lemma}
+Any single qubit unitary $U$, there is single qubit unitary matrices $A,\,B,\,C$ such that
+$\emm{ABC=I}$ and $\emm{AXBXC=U}$.
+\end{lemma}
+
+\vspace{2em}
+From this lemma,
+\[
+\Qcircuit @C=2em @R=2em {
+& \ctrl{1} & \qw\\
+& \gate{U} & \qw\\
+}
+\quad = \quad
+\Qcircuit @C=2em @R=2em {
+& \qw      & \ctrl{1} & \qw      & \ctrl{1} & \qw & \qw\\
+& \gate{C} & \targ    & \gate{B} & \targ    & \gate{A} & \qw\\
+}
+\]
+\end{frame}
+
+\begin{frame}{Decomposition of single qubit unitary}
+\begin{lemma}
+Any single qubit unitary $U$, there is single qubit unitary matrices $A,\,B,\,C$ such that
+$\emm{ABC=I}$ and $\emm{AXBXC=U}$.
+\end{lemma}
+\begin{proof}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Controlled-unitary}
+\begin{theorem}
+Any controlled-unitary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item Controlled-unitary with \emm{single controlled qubit}. {\color{green}{Done}}
+\item Controlled-unitary with \emm{two controlled qubit}.
+\item Controlled-unitary with \emm{$n$ controlled qubit}.
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Decomposition of two qubit unitary}
+For $V$ satisfying $V^2=U$,
+
+\[
+\Qcircuit @C=2em @R=2em {
+& \ctrl{1} & \qw\\
+& \ctrl{1} & \qw\\
+& \gate{U} & \qw\\
+}
+\quad = \quad
+\Qcircuit @C=2em @R=2em {
+& \ctrl{2} & \ctrl{1} & \qw              & \ctrl{1} & \qw      & \qw\\
+& \qw      & \targ    & \ctrl{1}         & \targ    & \ctrl{1} & \qw\\
+& \gate{V} & \qw      & \gate{V^\dagger} & \qw      & \gate{V} & \qw\\
+}
+\]
+\end{frame}
+
+\begin{frame}{Controlled-unitary}
+\begin{theorem}
+Any controlled-unitary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item Controlled-unitary with \emm{single controlled qubit}. {\color{green}{Done}}
+\item Controlled-unitary with \emm{two controlled qubit}. {\color{green}{Done}}
+\item Controlled-unitary with \emm{$n$ controlled qubit}.
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Controlled-unitary}
+For $V$ satisfying $V^4=U$,
+\begin{align*}
+&\Qcircuit @C=2em @R=2em {
+& \ctrl{1} & \qw\\
+& \ctrl{1} & \qw\\
+& \ctrl{1} & \qw\\
+& \gate{U} & \qw\\
+}
+\quad =\\
+&\Qcircuit @C=1em @R=2em {
+& \ctrl{3} & \ctrl{1} & \qw              & \ctrl{1} & \qw      & \qw      & \qw              & \ctrl{2} & \qw      & \qw      & \qw              & \ctrl{2} & \qw      & \qw\\
+& \qw      & \targ    & \ctrl{2}         & \targ    & \ctrl{2} & \ctrl{1} & \qw              & \qw      & \qw      & \ctrl{1} & \qw              & \qw      & \qw      & \qw\\
+& \qw      & \qw      & \qw              & \qw      & \qw      & \targ    & \ctrl{1}         & \targ    & \ctrl{1} & \targ    & \ctrl{1}         & \targ    & \ctrl{1} & \qw\\
+& \gate{V} & \qw      & \gate{V^\dagger} & \qw      & \gate{V} & \qw      & \gate{V^\dagger} & \qw      & \gate{V} & \qw      & \gate{V^\dagger} & \qw      & \gate{V} & \qw\\
+}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Grey code}
+\begin{equation*}
+\mathtt{000}\mapsto
+\mathtt{00\emm{1}}\mapsto
+\mathtt{0\emm{1}1}\mapsto
+\mathtt{01\emm{0}}\mapsto
+\mathtt{\emm{1}10}\mapsto
+\mathtt{11\emm{1}}\mapsto
+\mathtt{1\emm{0}1}\mapsto
+\mathtt{10\emm{0}}
+\end{equation*}
+\begin{equation*}
+1\mapsto
+2\mapsto
+1\mapsto
+3\mapsto
+1\mapsto
+2\mapsto
+1
+\end{equation*}
+
+\vspace{2em}
+\begin{equation*}
+x_1 + x_2 + x_3 - (x_1\oplus x_2) - (x_2 \oplus x_3) - (x_3 \oplus x_1) + (x_1\oplus x_2\oplus x_3)
+= 4(x_1\wedge x_2\wedge x_3)
+\end{equation*}
+\end{frame}
+
+\begin{frame}{$n$ controlled qubits}
+\begin{theorem}
+For any single-qubit unitary $U$,
+\end{theorem}
+\begin{equation*}
+\sum_{S\subseteq\{1,2,\dotsc,n\}} (-1)^{|S|+1}\left(\bigoplus_{i\in S} x_i\right) = 2^{n-1} \bigwedge_{i=1}^n x_i
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Universality of a quantum circuit}
+\begin{theorem}[Universality of finite gate set]
+For any unitary matrix $U\in L(\mathbb{C}^{2^n})$ and $\emm{\epsilon} >0$,
+there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,T,\,\mathsf{CNOT}$} gates computing $\widetilde{U}$
+satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\setlength{\itemsep}{1em}
+\item Any unitary matrix can be decomposed to a product of \emm{two-level unitary matrices}. {\color{green}{Done}}
+\item Any two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}. {\color{green}{Done}}
+\item Any controlled-untary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}. {\color{green}{Done}}
+\item Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$.
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Universality of $X,Y,Z,H,S,T$}
+\end{frame}
+
+\begin{frame}{Assignments (Deadline is Jan.\ 17)}
+\small
+\begin{enumerate}
+\setlength{\itemsep}{1em}
+\item Show a decomposition of
+\begin{equation*}
+\frac12\begin{bmatrix}
+1&1&1&1\\
+1&i&-1&-i\\
+1&-1&1&-1\\
+1&-i&-1&i
+\end{bmatrix}
+\end{equation*}
+into a product of two-level unitary matrices.
+\item Show a decomposition of two-level unitary
+\begin{equation*}
+\begin{bmatrix}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&a&0&0&0&0&c\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&0&0\\
+0&0&0&0&0&1&0&0\\
+0&0&0&0&0&0&1&0\\
+0&0&b&0&0&0&0&d\\
+\end{bmatrix}
+\end{equation*}
+into a product of controlled-unitary gates.
+\end{enumerate}
+\end{frame}
+
+
+\end{document}
