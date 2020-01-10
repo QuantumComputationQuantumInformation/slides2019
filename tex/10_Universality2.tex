@@ -10,6 +10,7 @@
 \usepackage{braket}
 \usepackage{qcircuit}
 \usepackage{tikz}
+\usepackage{tikz-3dplot}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{graphs}
 \usetikzlibrary{datavisualization}
@@ -67,22 +68,6 @@
 
 
 
-\begin{frame}{Whole quantum circuit}
-Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
-\[
-\Qcircuit @C=2em @R=2em {
- & \targ & \qw &\qw & \ctrl{1} & \qw & \qw & \targ &\qw \\
- & \qw & \targ &\qw & \ctrl{1} &\qw & \targ & \qw &\qw \\
- & \ctrl{-2} & \ctrl{-1} &\ctrl{2} & \gate{U} &\ctrl{2} & \ctrl{-1} & \ctrl{-2} & \qw \\
- & \qw & \qw &\qw & \ctrlo{-1} &\qw & \qw & \qw & \qw \\
- & \qw & \qw &\targ & \ctrlo{-1} &\targ & \qw & \qw & \qw
-}
-\]
-\begin{align*}
-\ket{00101}&\longmapsto \ket{11\emm{1}00}\longmapsto \ket{00101}\\
-\ket{11000}&\longmapsto \ket{11\emm{0}00}\longmapsto \ket{11000}
-\end{align*}
-\end{frame}
 
 \begin{frame}{Universality of a quantum circuit}
 \begin{theorem}[Universality of finite gate set]
@@ -118,7 +103,7 @@ Any controlled-unitary gate can be decomposed to a product of \emm{CNOT and arbi
 \begin{frame}{Decomposition of single qubit unitary}
 \begin{lemma}
 Any single qubit unitary $U$, there is single qubit unitary matrices $A,\,B,\,C$ such that
-$\emm{ABC=I}$ and $\emm{AXBXC=U}$.
+$\emm{ABC=I}$ and $\emm{\mathsf{e}^{i\alpha}AXBXC=U}$.
 \end{lemma}
 
 \vspace{2em}
@@ -130,7 +115,7 @@ From this lemma,
 }
 \quad = \quad
 \Qcircuit @C=2em @R=2em {
-& \qw      & \ctrl{1} & \qw      & \ctrl{1} & \qw & \qw\\
+& \gate{\begin{bmatrix}1&0\\0&\mathsf{e}^{i\alpha}\end{bmatrix}}  & \ctrl{1} & \qw      & \ctrl{1} & \qw & \qw\\
 & \gate{C} & \targ    & \gate{B} & \targ    & \gate{A} & \qw\\
 }
 \]
@@ -138,10 +123,23 @@ From this lemma,
 
 \begin{frame}{Decomposition of single qubit unitary}
 \begin{lemma}
-Any single qubit unitary $U$, there is single qubit unitary matrices $A,\,B,\,C$ such that
-$\emm{ABC=I}$ and $\emm{AXBXC=U}$.
+Any single qubit unitary $U$, there is single qubit unitary matrices $A,\,B,\,C$ and $\alpha\in\mathbb{R}$ such that
+$\emm{ABC=I}$ and $\emm{\mathsf{e}^{i\alpha}AXBXC=U}$.
 \end{lemma}
 \begin{proof}
+For any $2\times 2$ unitary matrix, there exist $\alpha,\,\beta,\,\gamma,\,\delta\in\mathbb{R}$ such that
+\begin{equation*}
+U=\mathsf{e}^{i\alpha}R_Z(\beta)R_Y(\gamma)R_Z(\delta)
+\end{equation*}
+Let $A:= R_Z(\beta)R_Y(\gamma/2)$, $B:=R_Y(-\gamma/2)R_Z(-(\beta+\delta)/2)$, $C:=R_Z((\delta-\beta)/2)$.
+Then, $ABC=I$.
+Since $R_Y(\theta)X = XR_Y(-\theta)$ and $R_Z(\theta)X=XR_Z(-\theta)$,.
+\begin{align*}
+A\emm{X}B\emm{X}C &=
+R_Z(\beta)R_Y(\gamma/2)\emm{X}R_Y(-\gamma/2)R_Z(-(\beta+\delta)/2)\emm{X}R_Z((\delta-\beta)/2)\\
+&= R_Z(\beta)R_Y(\gamma/2)R_Y(\gamma/2)R_Z((\beta+\delta)/2)R_Z((\delta-\beta)/2)\\
+&= R_Z(\beta)R_Y(\gamma)R_Z(\delta) = \mathsf{e}^{-i\alpha}U.
+\end{align*}
 \end{proof}
 \end{frame}
 
@@ -264,9 +262,99 @@ satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
 \end{proof}
 \end{frame}
 
-\begin{frame}{Universality of $X,Y,Z,H,S,T$}
+\begin{frame}{Approximation of a single-qubit gate is sufficient}
+\begin{theorem}
+Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$.
+\end{theorem}
+\small
+%For $A\in L(\mathbb{C}^n, \mathbb{C}^m)$,
+%\begin{align*}
+%\|A\| := \max_{\ket{\psi}\in\mathbb{C}^n\colon \braket{\psi|\psi}=1}\sqrt{\bra{\psi}A^\dagger A\ket{\psi}}
+%\end{align*}
+%$\|A\|$ is the largest singular value of $A$.
+Assume that this theorem holds. For $A\in L(\mathbb{C}^d)$, Let $\|A\|$ be the \emm{spectral norm}, which satisfies  $\|UAV\| = \|A\|$ for any unitary matrices $U$ and $V$.
+Assume $\|U_i-V_i\|\le\epsilon$ for $i=1,\dotsc,m$.
+\begin{align*}
+&\|U_mU_{m-1}\dotsm U_1 - V_mV_{m-1}\dotsm V_1\|\\
+&=\left\|\sum_{i=1}^{m} (U_m\dotsm U_i V_{i-1}\dotsm V_1  - U_m\dotsm U_{i+1}V_{i}\dotsm V_1)\right\|\\
+&\le\sum_{i=1}^{m} \left\|U_m\dotsm U_i V_{i-1}\dotsm V_1  - U_m\dotsm U_{i+1}V_{i}\dotsm V_1\right\|\\
+&=\sum_{i=1}^{m} \left\|U_m\dotsm U_{i+1}(U_i-V_i)V_{i-1}\dotsm V_1\right\|
+=\sum_{i=1}^{m} \left\|U_i-V_i\right\|\le m\epsilon.
+\end{align*}
 \end{frame}
 
+\begin{frame}{Universality of $X,Y,Z,H,S,\emm{T}$}
+\centering
+
+\tdplotsetmaincoords{70}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=2]
+
+%\shade[ball color = lightgray, opacity = 0.5] (0,0,0) circle (1cm);
+
+\tdplotsetrotatedcoords{20}{80}{0}
+\draw[very thick, tdplot_rotated_coords] (0,0,0) circle (1);
+%\begin{scope}[canvas is zx plane at y=0]
+\draw[dashed, thick] (0,0,0) circle (1);
+%\end{scope}
+
+\draw[-stealth] (0,0,0) -- (2.00,0,0) node[below left] {$X$};
+\draw[-stealth] (0,0,0) -- (0,1.80,0) node[below right] {$Y$};
+\draw[-stealth] (0,0,0) -- (0,0,1.50) node[above] {$Z$};
+
+%\filldraw (0,0,0) circle (1pt) node[right] {$I/2$};
+\filldraw (1,0,0) circle (1pt);
+\filldraw (-1,0,0) circle (1pt);
+\filldraw (0,0,1) circle (1pt);
+\filldraw (0,0,-1) circle (1pt);
+\filldraw (0,1,0) circle (1pt);
+\filldraw (0,-1,0) circle (1pt);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Universality of $X,Y,Z,H,S,\emm{T}$}
+$T\cong R_Z(\pi/4)$.
+$HTH\cong R_X(\pi/4)$.
+\begin{align*}
+R_Z(\pi/4) R_X(\pi/4) &=
+\left[ \cos\frac{\pi}8I - i\sin\frac{\pi}8 Z\right]
+\left[ \cos\frac{\pi}8I - i\sin\frac{\pi}8 X\right]\\
+&= \cos^2\frac{\pi}8I - i\sin\frac{\pi}8\left[\cos\frac{\pi}8(X+Z)+\sin\frac{\pi}8 Y\right]\\
+&=: \cos\frac{\eta}2I - i\sin\frac{\eta}2\left(n_x X + n_Y Y + n_Z Z\right)\\
+&= R_{\widehat{n}}(\eta)
+\end{align*}
+where $\eta$ satisfying $\cos(\eta/2) = \cos^2 (\pi/8)$ and $\widehat{n}$ is a unit vector along with $(\cos\frac{\pi}8,\sin\frac{\pi}8,\cos\frac{\pi}8)$.
+Here, $\eta$ is an \emm{irrational multiple of $\pi$}.
+$HR_{\widehat{n}}(\eta)H =R_{\widehat{m}}(\eta)$ where $\widehat{m}$ is a unit vector along with $(\cos\frac{\pi}8,-\sin\frac{\pi}8,\cos\frac{\pi}8)$.
+
+\vspace{1em}
+$U=\mathsf{e}^{i\alpha} R_{\widehat{n}}(\beta) R_{\widehat{m}}(\gamma) R_{\widehat{n}}(\delta)$.
+\end{frame}
+
+\begin{frame}{Universality of a quantum circuit}
+\begin{theorem}[Universality of finite gate set]
+For any unitary matrix $U\in L(\mathbb{C}^{2^n})$ and $\emm{\epsilon} >0$,
+there is a quantum circuit with \emm{$X,\,Y,\,Z,\,H,\,S,\,T,\,\mathsf{CNOT}$} gates computing $\widetilde{U}$
+satisfying $\|U-\widetilde{U}\|<\emm{\epsilon}$.
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+\setlength{\itemsep}{1em}
+\item Any unitary matrix can be decomposed to a product of \emm{two-level unitary matrices}. {\color{green}{Done}}
+\item Any two-level unitary matrix can be decomposed to a product of \emm{controlled-unitary gates}. {\color{green}{Done}}
+\item Any controlled-untary gate can be decomposed to a product of \emm{CNOT and arbitrary single-qubit gates}. {\color{green}{Done}}
+\item Any single-qubit gate can be approximated by $X,\,Y,\,Z,\,H,\,S$ and $T$. {\color{green}{Done}}
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Solovay--Kitaev theorem}
+\begin{theorem}
+Let $\{U_1,\dotsc,U_k\}$ be a dense subset of $\mathsf{SU}(2)$.
+Then, any $U\in\mathsf{SU}(2)$ can be approxmiated with error $\epsilon$ by $\emm{[\log (1/\epsilon)]^c}$ multiplications of $\{U_1,\dotsc,U_k\}$.
+\end{theorem}
+\end{frame}
+
+\if0
 \begin{frame}{Assignments (Deadline is Jan.\ 17)}
 \small
 \begin{enumerate}
@@ -297,6 +385,7 @@ into a product of two-level unitary matrices.
 into a product of controlled-unitary gates.
 \end{enumerate}
 \end{frame}
+\fi
 
 
 \end{document}
