@@ -331,11 +331,11 @@ Then, apply \emm{``controlled unitary''} and reverse the permutation of the basi
 Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
 \[
 \Qcircuit @C=2em @R=2em {
-\lstick{\ket{0}} & \targ & \qw &\qw & \rstick{\ket{1}}\qw \\
-\lstick{\ket{0}} & \qw & \targ &\qw &\rstick{\ket{1}}\qw \\
-\lstick{\ket{1}} & \ctrl{-2} & \ctrl{-1} &\ctrl{2} &\rstick{\ket{1}}\qw \\
+\lstick{\ket{1}} & \qw & \qw &\targ & \rstick{\ket{0}}\qw \\
 \lstick{\ket{0}} & \qw & \qw &\qw &\rstick{\ket{0}}\qw \\
-\lstick{\ket{1}} & \qw & \qw &\targ &\rstick{\ket{0}}\qw
+\lstick{\ket{1}} & \ctrl{2} & \ctrl{1} &\ctrl{-2} &\rstick{\ket{1}}\qw \\
+\lstick{\ket{0}} & \qw & \targ &\qw &\rstick{\ket{1}}\qw \\
+\lstick{\ket{0}} & \targ & \qw &\qw &\rstick{\ket{1}}\qw
 }
 \]
 \begin{align*}
@@ -373,11 +373,11 @@ Finally, reverse the basis
 Let $x = \mathtt{00\emm{1}01},\, y = \mathtt{11\emm{0}00}$.
 \[
 \Qcircuit @C=2em @R=2em {
- & \targ & \qw &\qw & \ctrl{1} & \qw & \qw & \targ &\qw \\
- & \qw & \targ &\qw & \ctrl{1} &\qw & \targ & \qw &\qw \\
- & \ctrl{-2} & \ctrl{-1} &\ctrl{2} & \gate{U} &\ctrl{2} & \ctrl{-1} & \ctrl{-2} & \qw \\
- & \qw & \qw &\qw & \ctrlo{-1} &\qw & \qw & \qw & \qw \\
- & \qw & \qw &\targ & \ctrlo{-1} &\targ & \qw & \qw & \qw
+ & \qw & \qw &\targ & \ctrl{1} & \targ & \qw & \qw &\qw \\
+ & \qw & \qw &\qw & \ctrl{1} &\qw & \qw & \qw &\qw \\
+ & \ctrl{2} & \ctrl{1} &\ctrl{-2} & \gate{U} &\ctrl{-2} & \ctrl{1} & \ctrl{2} & \qw \\
+ & \qw & \targ &\qw & \ctrlo{-1} &\qw & \targ & \qw & \qw \\
+ & \targ & \qw &\qw & \ctrlo{-1} &\qw & \qw & \targ & \qw
 }
 \]
 \begin{align*}
