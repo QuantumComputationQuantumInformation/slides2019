@@ -1,0 +1,171 @@
+\documentclass{beamer}
+%\usepackage{xspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+%\usepackage{svg}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\usepackage{psfrag}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{braket}
+\usepackage{qcircuit}
+%\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{graphs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{patchplots}
+
+\setbeamercovered{transparent}
+
+\usetheme{Pittsburgh}
+%\usetheme{default}
+
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}[frame number]
+%\usefonttheme{professionalfonts}
+
+%\usepackage{sansmathaccent}
+%\usepackage{bm}
+
+%\usepackage{unicode-math}
+%%\setmainfont[SlantedFont={Latin Modern Roman Slanted},SlantedFeatures={Color=000000},
+%%  SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]{XITS}
+%\setmathfont[math-style=ISO,sans-style=upright]{XITS Math}
+%\setmathfont[range={\mathcal,\mathbfcal}]{Latin Modern Math}
+
+\usepackage{sfmath}
+
+%\mathversion{sans}
+
+\newcommand{\Tr}{\mathsf{Tr}}
+
+\definecolor{redorange}{rgb}{1.0, .25, .25}
+\definecolor{citation}{rgb}{.1, 0.8, .35}
+\newcommand\emm[1]{\textcolor{redorange}{{#1}}}
+\newcommand\numc[1]{\textcolor{citation}{{\bf #1}}}
+
+%\newcommand\bm[1]{{\mbox{\boldmath $#1$}}}
+\newcommand\bm[1]{{\mathbf{#1}}}
+%\newcommand\bm[1]{{\bf #1}}
+%\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
+%\newcommand\bm[1]{{\textbf{\it #1}}}
+
+\title{Solovay--Kitaev theorem}
+\author{Ryuhei Mori}
+%\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
+\institute{Tokyo Institute of Technology}
+%\date{21, Feb, 2019}
+
+
+
+\begin{document}
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+
+
+\begin{frame}{Solovay--Kitaev theorem}
+\begin{theorem}
+Let $\{U_1,\dotsc,U_k\}$ be a dense subset of $\mathsf{SU}(2)$.
+Then, any $U\in\mathsf{SU}(2)$ can be approxmiated with error $\epsilon$ by $\emm{[\log (1/\epsilon)]^c}$ multiplications of $\{U_1,\dotsc,U_k\}$.
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Solovay--Kitaev algorithm}
+\begin{algorithmic}
+\Function{Solovay--Kitaev}{$U$, $n$}
+\If {$n=0$}
+  \State \Return Basic approximation to $U$
+\EndIf
+\State $U_{n-1} \gets$ \Call{Solovay--Kitaev}{$U$, $n-1$}
+\State $V, W \gets$ \Call{GC--Decompose}{$UU_{n-1}^\dagger$}
+\State $V_{n-1} \gets$ \Call{Solovay--Kitaev}{$V$, $n-1$}
+\State $W_{n-1} \gets$ \Call{Solovay--Kitaev}{$W$, $n-1$}
+\State \Return $V_{n-1}W_{n-1}V_{n-1}^\dagger W_{n-1}^\dagger U_{n-1}$.
+\EndFunction
+\end{algorithmic}
+
+\vspace{1em}
+\begin{algorithmic}
+\Function{GC--Decompose}{$\Delta$}
+\State \Return ($V$, $W$) satisfying $VWV^\dagger W^\dagger = \Delta$ with $\|I - V\|,\,\|I-W\|\le c_{\mathsf{GC}}\sqrt{\|I-\Delta\|}$.
+\EndFunction
+\end{algorithmic}
+\end{frame}
+
+\begin{frame}{Analysis}
+\begin{theorem}
+If $\|I - V\|,\, \|I - W\|\le \epsilon$,
+$\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \delta$
+\begin{equation*}
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \delta\epsilon
+\end{equation*}
+\end{theorem}
+\small
+From this (surprising) theorem,
+\begin{align*}
+\ell_n &\le 5\ell_{n-1}\\
+\epsilon_n &\le c_{\mathsf{approx}} \epsilon_{n-1}^{3/2}
+\end{align*}
+Then,
+\begin{align*}
+\ell_n&\le 5^n \ell_0\\
+\log (1/[c_{\mathsf{approx}}^2 \epsilon_n]) &\ge (3/2)\log (1/[c_{\mathsf{approx}}^2 \epsilon_{n-1}])\\
+&\ge (3/2)^n\log (1/[c_{\mathsf{approx}}^2 \epsilon_{0}])\\
+&\ge (\ell_n/\ell_0)^{\frac{\log (3/2)}{\log 5}}\log (1/\epsilon_{0})
+\end{align*}
+if $\epsilon_0 < 1 / c_{\mathsf{approx}}^2$.
+This concludes $\ell_n = O\left((\log (1/\epsilon))^{\frac{\log 5}{\log (3/2)}}\right)$.
+\end{frame}
+
+\begin{frame}{Proof}
+\begin{theorem}
+If $\|I - V\|,\, \|I - W\|\le \epsilon$,
+$\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \delta$
+\begin{equation*}
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \delta\epsilon
+\end{equation*}
+\end{theorem}
+\end{frame}
+
+\if0
+\begin{frame}{Assignments (Deadline is Jan.\ 17)}
+\small
+\begin{enumerate}
+\setlength{\itemsep}{1em}
+\item Show a decomposition of
+\begin{equation*}
+\frac12\begin{bmatrix}
+1&1&1&1\\
+1&i&-1&-i\\
+1&-1&1&-1\\
+1&-i&-1&i
+\end{bmatrix}
+\end{equation*}
+into a product of two-level unitary matrices.
+\item Show a decomposition of two-level unitary
+\begin{equation*}
+\begin{bmatrix}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&a&0&0&0&0&c\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&0&0\\
+0&0&0&0&0&1&0&0\\
+0&0&0&0&0&0&1&0\\
+0&0&b&0&0&0&0&d\\
+\end{bmatrix}
+\end{equation*}
+into a product of controlled-unitary gates.
+\end{enumerate}
+\end{frame}
+\fi
+
+
+\end{document}
