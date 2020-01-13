@@ -73,8 +73,84 @@
 \begin{frame}{Solovay--Kitaev theorem}
 \begin{theorem}
 Let $\{U_1,\dotsc,U_k\}$ be a dense subset of $\mathsf{SU}(2)$.
-Then, any $U\in\mathsf{SU}(2)$ can be approxmiated with error $\epsilon$ by $\emm{[\log (1/\epsilon)]^c}$ multiplications of $\{U_1,\dotsc,U_k\}$.
+Then, any $U\in\mathsf{SU}(2)$ can be approxmiated with error $\epsilon$ by $\emm{[\log (1/\epsilon)]^c}$ multiplications of $\{U_1,\dotsc,U_k\}$ for $c=\log 5 / \log (3/2) \approx 3.97$.
 \end{theorem}
+\end{frame}
+
+\begin{frame}{Special unitary group}
+\begin{itemize}
+\setlength{\itemsep}{2em}
+\item $\mathsf{U}(n) := \text{the set of $n\times n$ unitary matrices}.$
+\item $\mathsf{SU}(n) := \text{the set of $n\times n$ unitary matrices $U$ with $\emm{\det(U)=1}$}.$
+\item $\mathsf{U}(n)$ and $\mathsf{SU}(n)$ are groups.
+\item For $U\in\mathsf{SU}(n)$ and $V\in\mathsf{U}(n)$, $VUV^\dagger\in\mathsf{SU}(n)$.
+\item For $V\in\mathsf{U}(n)$ and $W\in\mathsf{U}(n)$, $VWV^\dagger W^\dagger\in\mathsf{SU}(n)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Special unitary group and rotation}
+For a real unit vector $\hat{n}=[n_X\ n_Y\ n_Z]$, let
+\begin{equation*}
+R_{\hat{n}}(\theta):=\cos\frac{\theta}2I -i\sin\frac{\theta}2(n_XX+n_YY+n_ZZ).
+\end{equation*}
+For any $U\in\mathsf{U}(2)$, there exist $\alpha,\,\theta\in\mathbb{R}$ and a real unit three-dimensional vector $\hat{n}$ such that
+$U=\mathsf{e}^{i\alpha}R_{\hat{n}}(\theta)$.
+
+\vspace{2em}
+$U\in\mathsf{U}(2)$ is in $\mathsf{SU}(2)$ iff $\Tr(U)\in\mathbb{R}$ since two eigenvalues of $U\in\mathsf{SU}(2)$ are in the form $\{\mathsf{e}^{i\theta}, \mathsf{e}^{-i\theta}\}$.
+
+\vspace{2em}
+$U\in\mathsf{U}(2)$ is in $\mathsf{SU}(2)$ iff $\emm{U=R_{\hat{n}}(\theta)}$ for some $\theta\in\mathbb{R}$.
+\end{frame}
+
+\begin{frame}{Special unitary group and commutator}
+\small
+\begin{theorem}
+For any $U\in\mathsf{SU}(2)$, there exist $V,\,W\in\mathsf{U}(2)$ such that $U = VWV^\dagger W^\dagger$.
+\end{theorem}
+\begin{proof}
+
+\vspace{-2em}
+\begin{align*}
+&R_Z(\theta)R_X(\theta)R_Z(\theta)^\dagger R_X(\theta)^\dagger
+= R_Z(\theta)R_X(\theta)R_Z(-\theta)R_X(-\theta)\\
+&= R_Z(\theta)R_X(\theta)R_Z(-\theta)R_X(-\theta)\\
+&= \left[\cos\frac{\theta}2 I - i\sin\frac{\theta}2 Z\right]
+\left[\cos\frac{\theta}2 I - i\sin\frac{\theta}2 X\right]
+\left[\cos\frac{\theta}2 I + i\sin\frac{\theta}2 Z\right]
+\left[\cos\frac{\theta}2 I + i\sin\frac{\theta}2 X\right]\\
+&= \left[\cos^4\frac{\theta}2+2\cos^2\frac{\theta}2\sin^2\frac{\theta}2-\sin^4\frac{\theta}2\right] I + \dotsb\\
+%&= \left[\cos^2\frac{\theta}2(\cos^2\frac{\theta}2+2\sin^2\frac{\theta}2)-\sin^4\frac{\theta}2\right] I + \dotsb\\
+&= \left[1-2\sin^4\frac{\theta}2\right] I + \dotsb
+=R_{\widehat{n}_\theta}(\varphi)
+%&= \left[\cos^2\frac{\theta}2 I - i\sin\frac{\theta}2\cos\frac{\theta}2(Z+X) - \sin^2\frac{\theta}2 ZX\right]\\
+%&\cdot \left[\cos^2\frac{\theta}2 I + i\sin\frac{\theta}2\cos\frac{\theta}2(Z+X) - \sin^2\frac{\theta}2 ZX\right]
+%&= \left[\cos^2\frac{\theta}2 I - \sin^2\frac{\theta}2 ZX\right]^2 - i\sin\frac{\theta}2\cos\frac{\theta}2(Z+X) \right]\\
+\end{align*}
+$\cos\frac{\varphi}2 = 1-2\sin^4\frac{\theta}2$.
+%$\sin^2\frac{\varphi}2 = 4\sin^4\frac{\theta}2 - 4\sin^8\frac{\theta}2$.
+%$\sin\frac{\varphi}2 = 2\sin^2\frac{\theta}2\sqrt{1 - \sin^4\frac{\theta}2}$.
+For some $S\in \mathsf{U}(2)$ and $\varphi\in\mathbb{R}$, $U=SR_{\widehat{n}_\theta}(\varphi)S^\dagger$.
+For $V:= SR_Z(\theta)S^\dagger$ and $W:= SR_X(\theta)S^\dagger$,
+$U=VWV^\dagger W^\dagger$.
+\end{proof}
+\end{frame}
+
+\begin{frame}{Rotation matrix and distance}
+\begin{align*}
+\|I - R_{\widehat{n}}(\theta)\|
+&= \left\|\begin{bmatrix}1-\mathsf{e}^{i\theta/2}&0\\0&1-\mathsf{e}^{-i\theta/2}\end{bmatrix}\right\|\\
+&= \left|1-\mathsf{e}^{i\theta/2}\right|\\
+&= 2\left|\sin\frac{\theta}4\right|
+\end{align*}
+For $U\in \mathsf{SU}(2)$, $V,\,W\in\mathsf{SU}(2)$ satisfying $U=VWV^\dagger W^\dagger$ in the construction
+\begin{equation*}
+\|I - U\| = 2\left|\sin\frac{\varphi}4\right|
+= 2\sqrt{\frac{1-\cos\frac{\varphi}2}2}
+= 2 \sin^2\frac{\theta}2
+\approx 8 \sin^2\frac{\theta}4
+= 2\|I - V\|^2
+\end{equation*}
 \end{frame}
 
 \begin{frame}{Solovay--Kitaev algorithm}
@@ -100,15 +176,15 @@ Then, any $U\in\mathsf{SU}(2)$ can be approxmiated with error $\epsilon$ by $\em
 \end{frame}
 
 \begin{frame}{Analysis}
+\small
 \begin{theorem}
-If $\|I - V\|,\, \|I - W\|\le \epsilon$,
-$\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \delta$
+If $\|I - V\|,\, \|I - W\|\le \delta$,
+$\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \Delta$
 \begin{equation*}
-\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \delta\epsilon
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \Delta(\delta + \Delta)
 \end{equation*}
 \end{theorem}
-\small
-From this (surprising) theorem,
+From this (surprising) theorem for $\Delta=\epsilon_{n-1}$, $\delta=c_{\mathsf{GC}}\sqrt{\epsilon_{n-1}}$,
 \begin{align*}
 \ell_n &\le 5\ell_{n-1}\\
 \epsilon_n &\le c_{\mathsf{approx}} \epsilon_{n-1}^{3/2}
@@ -116,22 +192,71 @@ From this (surprising) theorem,
 Then,
 \begin{align*}
 \ell_n&\le 5^n \ell_0\\
-\log (1/[c_{\mathsf{approx}}^2 \epsilon_n]) &\ge (3/2)\log (1/[c_{\mathsf{approx}}^2 \epsilon_{n-1}])\\
-&\ge (3/2)^n\log (1/[c_{\mathsf{approx}}^2 \epsilon_{0}])\\
-&\ge (\ell_n/\ell_0)^{\frac{\log (3/2)}{\log 5}}\log (1/\epsilon_{0})
+c_{\mathsf{approx}}^2\epsilon_n &\le c_{\mathsf{approx}}^3 \epsilon_{n-1}^{3/2}=(c_{\mathsf{approx}}^2\epsilon_{n-1})^{3/2} \\
+&\le (c_{\mathsf{approx}}^2\epsilon_{0})^{(3/2)^n} 
+%\log (1/[c_{\mathsf{approx}}^2 \epsilon_n]) &\ge (3/2)\log (1/[c_{\mathsf{approx}}^2 \epsilon_{n-1}])\\
+%&\ge (3/2)^n\log (1/[c_{\mathsf{approx}}^2 \epsilon_{0}])\\
+%&\ge (\ell_n/\ell_0)^{\frac{\log (3/2)}{\log 5}}\log (1/\epsilon_{0})
 \end{align*}
-if $\epsilon_0 < 1 / c_{\mathsf{approx}}^2$.
-This concludes $\ell_n = O\left((\log (1/\epsilon))^{\frac{\log 5}{\log (3/2)}}\right)$.
+If $\epsilon_0 < 1 / c_{\mathsf{approx}}^2$, $\ell_n = O\left((\log (1/\epsilon))^{\frac{\log 5}{\log (3/2)}}\right)$.
 \end{frame}
 
 \begin{frame}{Proof}
+\small
 \begin{theorem}
-If $\|I - V\|,\, \|I - W\|\le \epsilon$,
-$\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \delta$
+If $\|I - V\|,\, \|I - W\|\le \delta$,
+$\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \Delta$
 \begin{equation*}
-\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \delta\epsilon
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \Delta\delta
 \end{equation*}
 \end{theorem}
+\begin{proof}
+\begin{align*}
+ \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger
+&= VWV^\dagger W^\dagger + 
+\Delta_VWV^\dagger W^\dagger + 
+V\Delta_WV^\dagger W^\dagger\\
+&\quad + VW\Delta_V^\dagger W^\dagger + VWV^\dagger\Delta_W^\dagger + O(\Delta^2)
+\end{align*}
+\begin{align*}
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\|
+&\le
+\|\Delta_VWV^\dagger W^\dagger + VW\Delta_V^\dagger W^\dagger\|\\
+&\quad+\|V\Delta_WV^\dagger W^\dagger + VWV^\dagger\Delta_W^\dagger\| + O(\Delta^2)
+\end{align*}
+\begin{align*}
+\Delta_VWV^\dagger W^\dagger + VW\Delta_V^\dagger W^\dagger
+=
+\Delta_VV^\dagger + V\Delta_V^\dagger +
+\Delta_V\delta_W V^\dagger + V\Delta_V^\dagger \delta_W^\dagger
+\end{align*}
+\end{proof}
+\end{frame}
+
+\begin{frame}{Commutator and controlled-unitary}
+\begin{theorem}
+For any $U\in\mathsf{SU}(2)$, controlled-$U$ gate with $n$ controlled qubits can be realized by $O(n^2)$ CNOT and arbitrary single-qubit gates without ancillas (working qubits).
+\end{theorem}
+\begin{proof}
+\small
+Induction on $n$.
+For the group commutator decomposition $U=VWV^\dagger W^\dagger$ using $V,\,W\in \mathsf{SU}(2)$,
+\[
+\Qcircuit @C=2em @R=1em {
+& \ctrl{6} & \qw      & \ctrl{6} & \qw     & \qw\\
+& \ctrl{5} & \qw      & \ctrl{5} & \qw     & \qw\\
+& \ctrl{4} & \qw      & \ctrl{4} & \qw     & \qw\\
+& \qw      & \ctrl{3} & \qw      & \ctrl{3}& \qw\\
+& \qw      & \ctrl{2} & \qw      & \ctrl{2}& \qw\\
+& \qw      & \ctrl{1} & \qw      & \ctrl{1}& \qw\\
+& \gate{W^\dagger} & \gate{V^\dagger} & \gate{W} & \gate{V}& \qw
+}
+\]
+$S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(n^2)$.
+\end{proof}
+\end{frame}
+
+\begin{frame}{Controlled-unitary for $U(2)$}
 \end{frame}
 
 \if0
