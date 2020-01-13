@@ -122,12 +122,12 @@ For any $U\in\mathsf{SU}(2)$, there exist $V,\,W\in\mathsf{U}(2)$ such that $U =
 &= \left[\cos^4\frac{\theta}2+2\cos^2\frac{\theta}2\sin^2\frac{\theta}2-\sin^4\frac{\theta}2\right] I + \dotsb\\
 %&= \left[\cos^2\frac{\theta}2(\cos^2\frac{\theta}2+2\sin^2\frac{\theta}2)-\sin^4\frac{\theta}2\right] I + \dotsb\\
 &= \left[1-2\sin^4\frac{\theta}2\right] I + \dotsb
-=R_{\widehat{n}_\theta}(\varphi)
+=R_{\widehat{n}_\theta}(\emm{\varphi})
 %&= \left[\cos^2\frac{\theta}2 I - i\sin\frac{\theta}2\cos\frac{\theta}2(Z+X) - \sin^2\frac{\theta}2 ZX\right]\\
 %&\cdot \left[\cos^2\frac{\theta}2 I + i\sin\frac{\theta}2\cos\frac{\theta}2(Z+X) - \sin^2\frac{\theta}2 ZX\right]
 %&= \left[\cos^2\frac{\theta}2 I - \sin^2\frac{\theta}2 ZX\right]^2 - i\sin\frac{\theta}2\cos\frac{\theta}2(Z+X) \right]\\
 \end{align*}
-$\cos\frac{\varphi}2 = 1-2\sin^4\frac{\theta}2$.
+\emm{$\cos\frac{\varphi}2 = 1-2\sin^4\frac{\theta}2$}.
 %$\sin^2\frac{\varphi}2 = 4\sin^4\frac{\theta}2 - 4\sin^8\frac{\theta}2$.
 %$\sin\frac{\varphi}2 = 2\sin^2\frac{\theta}2\sqrt{1 - \sin^4\frac{\theta}2}$.
 For some $S\in \mathsf{U}(2)$ and $\varphi\in\mathbb{R}$, $U=SR_{\widehat{n}_\theta}(\varphi)S^\dagger$.
@@ -151,6 +151,8 @@ For $U\in \mathsf{SU}(2)$, $V,\,W\in\mathsf{SU}(2)$ satisfying $U=VWV^\dagger W^
 \approx 8 \sin^2\frac{\theta}4
 = 2\|I - V\|^2
 \end{equation*}
+With some constant $c_{\mathsf{GC}} > 1/\sqrt{2}$, 
+$\|I-V\|\le \emm{c_{\mathsf{GC}} \sqrt{\|I-U\|}}$.
 \end{frame}
 
 \begin{frame}{Solovay--Kitaev algorithm}
@@ -181,10 +183,11 @@ For $U\in \mathsf{SU}(2)$, $V,\,W\in\mathsf{SU}(2)$ satisfying $U=VWV^\dagger W^
 If $\|I - V\|,\, \|I - W\|\le \delta$,
 $\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \Delta$
 \begin{equation*}
-\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \Delta(\delta + \Delta)
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{B}} \Delta(\delta + \Delta)
 \end{equation*}
 \end{theorem}
 From this (surprising) theorem for $\Delta=\epsilon_{n-1}$, $\delta=c_{\mathsf{GC}}\sqrt{\epsilon_{n-1}}$,
+for $c_{\mathsf{approx}} \approx c_B c_{\mathsf{GC}}$.
 \begin{align*}
 \ell_n &\le 5\ell_{n-1}\\
 \epsilon_n &\le c_{\mathsf{approx}} \epsilon_{n-1}^{3/2}
@@ -198,49 +201,69 @@ c_{\mathsf{approx}}^2\epsilon_n &\le c_{\mathsf{approx}}^3 \epsilon_{n-1}^{3/2}=
 %&\ge (3/2)^n\log (1/[c_{\mathsf{approx}}^2 \epsilon_{0}])\\
 %&\ge (\ell_n/\ell_0)^{\frac{\log (3/2)}{\log 5}}\log (1/\epsilon_{0})
 \end{align*}
-If $\epsilon_0 < 1 / c_{\mathsf{approx}}^2$, $\ell_n = O\left((\log (1/\epsilon))^{\frac{\log 5}{\log (3/2)}}\right)$.
+If $\epsilon_0 < 1 / c_{\mathsf{approx}}^2$, $\ell_n = O\left((\log (1/\epsilon))^{\emm{\frac{\log 5}{\log (3/2)}}}\right)$.
 \end{frame}
 
-\begin{frame}{Proof}
+\begin{frame}{Proof 1/2}
 \small
 \begin{theorem}
 If $\|I - V\|,\, \|I - W\|\le \delta$,
 $\|V-\widetilde{V}\|,\,\|W-\widetilde{W}\| \le \Delta$
 \begin{equation*}
-\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le c_{\mathsf{approx}} \Delta\delta
+\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\| \le \emm{8\Delta^2 + 8\Delta\delta} + 4\Delta\delta^2 + 4\Delta^3 + \Delta^4.
 \end{equation*}
 \end{theorem}
 \begin{proof}
+Let $\Delta_V := \widetilde{V} - V$ and $\Delta_W := \widetilde{W} - W$.
 \begin{align*}
  \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger
 &= VWV^\dagger W^\dagger + 
 \Delta_VWV^\dagger W^\dagger + 
 V\Delta_WV^\dagger W^\dagger\\
-&\quad + VW\Delta_V^\dagger W^\dagger + VWV^\dagger\Delta_W^\dagger + O(\Delta^2)
+&\quad + VW\Delta_V^\dagger W^\dagger + VWV^\dagger\Delta_W^\dagger + O(\Delta^2).
 \end{align*}
 \begin{align*}
-\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\|
-&\le
+&\|VWV^\dagger W^\dagger - \widetilde{V}\widetilde{W}\widetilde{V}^\dagger\widetilde{W}^\dagger\|
+\le
 \|\Delta_VWV^\dagger W^\dagger + VW\Delta_V^\dagger W^\dagger\|\\
-&\quad+\|V\Delta_WV^\dagger W^\dagger + VWV^\dagger\Delta_W^\dagger\| + O(\Delta^2)
-\end{align*}
-\begin{align*}
-\Delta_VWV^\dagger W^\dagger + VW\Delta_V^\dagger W^\dagger
-=
-\Delta_VV^\dagger + V\Delta_V^\dagger +
-\Delta_V\delta_W V^\dagger + V\Delta_V^\dagger \delta_W^\dagger
+&\quad+\|V\Delta_WV^\dagger W^\dagger + VWV^\dagger\Delta_W^\dagger\| +
+\binom{4}{2}\Delta^2 + \binom{4}{3}\Delta^3 + \Delta^4.
 \end{align*}
 \end{proof}
 \end{frame}
 
+\begin{frame}{Proof 2/2}
+\small
+\begin{proof}
+%Let $\delta_V := V - I$ and $\delta_W := W - I$.
+Let $\delta_W := W - I$.
+\begin{align*}
+\|\Delta_VWV^\dagger W^\dagger + VW\Delta_V^\dagger W^\dagger\|
+&= \|\Delta_VV^\dagger + V\Delta_V^\dagger + \Delta_V\delta_W V^\dagger + V\Delta_V^\dagger \delta_W^\dagger + \dotsb\|\\
+&\le \|\emm{\Delta_VV^\dagger + V\Delta_V^\dagger}\| + 4 \Delta \delta + 2\Delta\delta^2\\
+\end{align*}
+Since $V$ and $V+\Delta_V$ are unitary,
+\begin{align*}
+&(V+\Delta_V)(V+\Delta_V)^\dagger = I\\
+\iff& V V^\dagger + V \Delta_V^\dagger + \Delta_V V^\dagger + \Delta_V \Delta_V^\dagger = I\\
+\iff& V \Delta_V^\dagger + \Delta_V V^\dagger + \Delta_V \Delta_V^\dagger = 0
+\end{align*}
+\begin{align*}
+\|\Delta_VWV^\dagger W^\dagger + VW\Delta_V^\dagger W^\dagger\|\le \Delta^2 + 4 \Delta\delta + 2\Delta\delta^2.
+\end{align*}
+\end{proof}
+%$c_{\mathsf{approx}}\approx 8c_{\mathsf{GC}}$.
+$c_{\mathsf{B}}\approx 8$.
+\end{frame}
+
 \begin{frame}{Commutator and controlled-unitary}
 \begin{theorem}
-For any $U\in\mathsf{SU}(2)$, controlled-$U$ gate with $n$ controlled qubits can be realized by $O(n^2)$ CNOT and arbitrary single-qubit gates without ancillas (working qubits).
+For any $U\in\emm{\mathsf{SU}(2)}$, controlled-$U$ gate with $n$ controlled qubits can be realized by $O(n^2)$ CNOT and arbitrary single-qubit gates without ancillas (working qubits).
 \end{theorem}
 \begin{proof}
 \small
 Induction on $n$.
-For the group commutator decomposition $U=VWV^\dagger W^\dagger$ using $V,\,W\in \mathsf{SU}(2)$,
+For the \emm{group commutator decomposition} $U=VWV^\dagger W^\dagger$ using $V,\,W\in \mathsf{SU}(2)$,
 \[
 \Qcircuit @C=2em @R=1em {
 & \ctrl{6} & \qw      & \ctrl{6} & \qw     & \qw\\
@@ -252,45 +275,47 @@ For the group commutator decomposition $U=VWV^\dagger W^\dagger$ using $V,\,W\in
 & \gate{W^\dagger} & \gate{V^\dagger} & \gate{W} & \gate{V}& \qw
 }
 \]
-$S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(n^2)$.
+$S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
 \end{proof}
 \end{frame}
 
 \begin{frame}{Controlled-unitary for $U(2)$}
+\begin{theorem}
+For any $U\in\mathsf{U}(2)$, controlled-$U$ gate with $n$ controlled qubits can be realized by $O(n^2)$ CNOT and arbitrary single-qubit gates without ancillas (working qubits).
+\end{theorem}
+\begin{proof}
+\small
+Induction on $n$. For $V\in U(2)$ satisfying $V^2=U$,
+\[
+\Qcircuit @C=2em @R=1em {
+& \ctrl{6} & \qw      & \ctrl{6} & \qw     & \qw\\
+& \ctrl{5} & \qw      & \ctrl{5} & \qw     & \qw\\
+& \ctrl{4} & \qw      & \ctrl{4} & \qw     & \qw\\
+& \ctrl{3} & \ctrl{3} & \qw      & \ctrl{3}& \qw\\
+& \ctrl{2} & \ctrl{2} & \qw      & \ctrl{2}& \qw\\
+& \qw      & \ctrl{1} & \qw      & \ctrl{1}& \qw\\
+& \gate{V} & \gate{V^\dagger} & \gate{W} & \gate{V}& \qw
+}
+\]
+$S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
+\end{proof}
 \end{frame}
 
-\if0
-\begin{frame}{Assignments (Deadline is Jan.\ 17)}
+\begin{frame}{Assignments (Deadline is Jan.\ 24)}
 \small
 \begin{enumerate}
 \setlength{\itemsep}{1em}
-\item Show a decomposition of
+\item Show a group commutator decomposition of
 \begin{equation*}
-\frac12\begin{bmatrix}
-1&1&1&1\\
-1&i&-1&-i\\
-1&-1&1&-1\\
-1&-i&-1&i
-\end{bmatrix}
-\end{equation*}
-into a product of two-level unitary matrices.
-\item Show a decomposition of two-level unitary
-\begin{equation*}
+U =
 \begin{bmatrix}
-1&0&0&0&0&0&0&0\\
-0&1&0&0&0&0&0&0\\
-0&0&a&0&0&0&0&c\\
-0&0&0&1&0&0&0&0\\
-0&0&0&0&1&0&0&0\\
-0&0&0&0&0&1&0&0\\
-0&0&0&0&0&0&1&0\\
-0&0&b&0&0&0&0&d\\
+\mathsf{e}^{i\frac{\theta}2} & 0\\
+0 & \mathsf{e}^{-i\frac{\theta}2}
 \end{bmatrix}
 \end{equation*}
-into a product of controlled-unitary gates.
+i.e., show $V$ and $W$ in $\mathsf{SU}(2)$ satisfying $VWV^\dagger W^\dagger = U$.
 \end{enumerate}
 \end{frame}
-\fi
 
 
 \end{document}
