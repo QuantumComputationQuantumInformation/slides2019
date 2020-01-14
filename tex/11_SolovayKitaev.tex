@@ -72,7 +72,7 @@
 
 \begin{frame}{Solovay--Kitaev theorem}
 \begin{theorem}
-Let $\{U_1,\dotsc,U_k\}$ be a dense subset of $\mathsf{SU}(2)$.
+Assume that $\{U_1,\dotsc,U_k\}$ generates a dense subset of $\mathsf{SU}(2)$.
 Then, any $U\in\mathsf{SU}(2)$ can be approxmiated with error $\epsilon$ by $\emm{[\log (1/\epsilon)]^c}$ multiplications of $\{U_1,\dotsc,U_k\}$ for $c=\log 5 / \log (3/2) \approx 3.97$.
 \end{theorem}
 \end{frame}
@@ -100,7 +100,7 @@ $U=\mathsf{e}^{i\alpha}R_{\hat{n}}(\theta)$.
 $U\in\mathsf{U}(2)$ is in $\mathsf{SU}(2)$ iff $\Tr(U)\in\mathbb{R}$ since two eigenvalues of $U\in\mathsf{SU}(2)$ are in the form $\{\mathsf{e}^{i\theta}, \mathsf{e}^{-i\theta}\}$.
 
 \vspace{2em}
-$U\in\mathsf{U}(2)$ is in $\mathsf{SU}(2)$ iff $\emm{U=R_{\hat{n}}(\theta)}$ for some $\theta\in\mathbb{R}$.
+$U\in\mathsf{U}(2)$ is in $\mathsf{SU}(2)$ iff $\emm{U=R_{\hat{n}}(\theta)}$ for some $\theta\in\mathbb{R}$ and rear unit vector $\widehat{n}\in\mathbb{R}^3$.
 \end{frame}
 
 \begin{frame}{Special unitary group and commutator}
@@ -303,29 +303,27 @@ $S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
 \end{frame}
 \fi
 
-\if0
 \begin{frame}{Any normal matrix has a spectral decomposition}
 Induction on the dimension $n$. Spectral decomposition theorem obviously holds for $n=1$.
-$H$ has complex eigenvalue $\lambda$ and corresponding (normalized) eigenvector $\ket{\psi}$.
-Let $P=\ket{\psi}\bra{\psi}$ and $Q=I-P$.
+$M$ has complex eigenvalue $\lambda$.
+Let $P$ be a projection to the eigenspace for $\lambda$.
+Let $Q=I-P$.
 \begin{align*}
-H=(P+Q)H(P+Q)&=PHP+PHQ+QHP+QHQ
+M=(P+Q)M(P+Q)&=PMP+PMQ+QMP+QMQ
 \end{align*}
 \begin{align*}
-QHP=Q\lambda P=0
+PMP &= \lambda P\\
+QMP&=Q\lambda P=0
 \end{align*}
-$PHQ=(QHP)^\dagger = 0$ since $H$ is \emm{Hermitian}.
+Since $\emm{MM^\dagger}\ket{\psi}=\emm{M^\dagger M}\ket{\psi} = \lambda M^\dagger\ket{\psi}$,
+$QM^\dagger P = 0$.
 
 \vspace{1em}
-$PHP=\lambda P$.
+$QMQ(QMQ)^\dagger=QMQM^\dagger Q  =QM(I-P)M^\dagger Q = Q\emm{MM^\dagger} Q=Q\emm{M^\dagger M} Q = QM^\dagger (P+Q) MQ = QM^\dagger QMQ = (QMQ)^\dagger QMQ$.
+$QMQ$ is a linear map on linear subspace of dimension at most $n-1$.
 
-\vspace{1em}
-$QHQ$ is Hermitian since $H$ is \emm{Hermitian}.
-$QHQ$ is a linear map on linear subspace of dimension $n-1$.
-
-From the induction hypothesis, $QHQ$ has a spectral decomposition.
+From the induction hypothesis, $QMQ$ has a spectral decomposition.
 \end{frame}
-\fi
 
 \begin{frame}{Assignments (Deadline is Jan.\ 24)}
 \small

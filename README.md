@@ -11,3 +11,4 @@
 * 12/24	Quantum circuit [slide](/tex/08_Deutsch.pdf)
 * 1/7	Universality of quantum circuit [slide](/tex/09_Universality.pdf)
 * 1/10	Universality of quantum circuit [slide](/tex/10_Universality2.pdf)
+* 1/14	Solovay--Kitaev theorem [slide](/tex/11_SolovayKitaev.pdf)
