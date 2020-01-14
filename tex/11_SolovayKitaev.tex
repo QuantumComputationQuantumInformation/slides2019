@@ -279,6 +279,7 @@ $S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
 \end{proof}
 \end{frame}
 
+\if0
 \begin{frame}{Controlled-unitary for $U(2)$}
 \begin{theorem}
 For any $U\in\mathsf{U}(2)$, controlled-$U$ gate with $n$ controlled qubits can be realized by $O(n^2)$ CNOT and arbitrary single-qubit gates without ancillas (working qubits).
@@ -300,6 +301,31 @@ Induction on $n$. For $V\in U(2)$ satisfying $V^2=U$,
 $S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
 \end{proof}
 \end{frame}
+\fi
+
+\if0
+\begin{frame}{Any normal matrix has a spectral decomposition}
+Induction on the dimension $n$. Spectral decomposition theorem obviously holds for $n=1$.
+$H$ has complex eigenvalue $\lambda$ and corresponding (normalized) eigenvector $\ket{\psi}$.
+Let $P=\ket{\psi}\bra{\psi}$ and $Q=I-P$.
+\begin{align*}
+H=(P+Q)H(P+Q)&=PHP+PHQ+QHP+QHQ
+\end{align*}
+\begin{align*}
+QHP=Q\lambda P=0
+\end{align*}
+$PHQ=(QHP)^\dagger = 0$ since $H$ is \emm{Hermitian}.
+
+\vspace{1em}
+$PHP=\lambda P$.
+
+\vspace{1em}
+$QHQ$ is Hermitian since $H$ is \emm{Hermitian}.
+$QHQ$ is a linear map on linear subspace of dimension $n-1$.
+
+From the induction hypothesis, $QHQ$ has a spectral decomposition.
+\end{frame}
+\fi
 
 \begin{frame}{Assignments (Deadline is Jan.\ 24)}
 \small
