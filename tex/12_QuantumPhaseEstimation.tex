@@ -1,0 +1,478 @@
+\documentclass{beamer}
+%\usepackage{xspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+%\usepackage{svg}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\usepackage{psfrag}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{braket}
+\usepackage{qcircuit}
+%\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{graphs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{patchplots}
+
+\setbeamercovered{transparent}
+
+\usetheme{Pittsburgh}
+%\usetheme{default}
+
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}[frame number]
+%\usefonttheme{professionalfonts}
+
+%\usepackage{sansmathaccent}
+%\usepackage{bm}
+
+%\usepackage{unicode-math}
+%%\setmainfont[SlantedFont={Latin Modern Roman Slanted},SlantedFeatures={Color=000000},
+%%  SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]{XITS}
+%\setmathfont[math-style=ISO,sans-style=upright]{XITS Math}
+%\setmathfont[range={\mathcal,\mathbfcal}]{Latin Modern Math}
+
+\usepackage{sfmath}
+
+%\mathversion{sans}
+
+\newcommand{\Tr}{\mathsf{Tr}}
+
+\definecolor{redorange}{rgb}{1.0, .25, .25}
+\definecolor{citation}{rgb}{.1, 0.8, .35}
+\newcommand\emm[1]{\textcolor{redorange}{{#1}}}
+\newcommand\numc[1]{\textcolor{citation}{{\bf #1}}}
+
+%\newcommand\bm[1]{{\mbox{\boldmath $#1$}}}
+\newcommand\bm[1]{{\mathbf{#1}}}
+%\newcommand\bm[1]{{\bf #1}}
+%\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
+%\newcommand\bm[1]{{\textbf{\it #1}}}
+
+\title{Quantum phase estimation}
+\author{Ryuhei Mori}
+%\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
+\institute{Tokyo Institute of Technology}
+%\date{21, Feb, 2019}
+
+
+
+\begin{document}
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+
+\begin{frame}{Quantum algorithms}
+\begin{itemize}
+\setlength{\itemsep}{4em}
+\item \emm{Quantum phase estimation}: Integer factoring.
+\item Grover search, quantum walk: Unstructured search.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Hadamard test}
+\[
+\Qcircuit @C=2em @R=1em {
+\lstick{\ket{0}}   &\gate{H} & \ctrl{1} & \gate{H} & \meter\\
+\lstick{\ket{\psi}} & {/} \qw & \gate{U} & \qw      & \qw
+}
+\]
+
+\begin{align*}
+\ket{0}\ket{\psi}&\longmapsto \frac{\ket{0}+\ket{1}}{\sqrt{2}}\ket{\psi} \longmapsto
+\frac1{\sqrt{2}}\left(\ket{0}\ket{\psi}+\ket{1}U\ket{\psi}\right)\\
+&\longmapsto
+\frac1{\sqrt{2}}\left(\ket{+}\ket{\psi}+\ket{-}U\ket{\psi}\right)\\
+&=\frac1{2}\left(\ket{0}(\ket{\psi}+U\ket{\psi})+\ket{1}(\ket{\psi}-U\ket{\psi})\right).
+\end{align*}
+0 is measured with probability $\left\|\frac{\ket{\psi}+U\ket{\psi}}{2}\right\|^2 = \frac{1+\emm{\mathsf{Re}(\bra{\psi}U\ket{\psi})}}2$.
+
+1 is measured with probability $\left\|\frac{\ket{\psi}-U\ket{\psi}}{2}\right\|^2 = \frac{1-\emm{\mathsf{Re}(\bra{\psi}U\ket{\psi})}}2$.
+\end{frame}
+
+\begin{frame}{Hadamard test}
+\[
+\Qcircuit @C=2em @R=1em {
+\lstick{\ket{0}}   &\gate{H} & \ctrl{1} & \gate{S} & \gate{H} & \meter\\
+\lstick{\ket{\psi}} & {/} \qw      & \gate{U} & \qw & \qw      & \qw
+}
+\]
+
+\begin{align*}
+\ket{0}\ket{\psi}&\longmapsto \frac{\ket{0}+\ket{1}}{\sqrt{2}}\ket{\psi} \longmapsto
+\frac1{\sqrt{2}}\left(\ket{0}\ket{\psi}+\emm{i}\ket{1}U\ket{\psi}\right)\\
+&\longmapsto
+\frac1{\sqrt{2}}\left(\ket{+}\ket{\psi}+\emm{i}\ket{-}U\ket{\psi}\right)\\
+&=\frac1{2}\left(\ket{0}(\ket{\psi}+\emm{i}U\ket{\psi})+\ket{1}(\ket{\psi}-\emm{i}U\ket{\psi})\right).
+\end{align*}
+0 is measured with probability $\left\|\frac{\ket{\psi}+\emm{i}U\ket{\psi}}{2}\right\|^2 = \frac{1+\emm{\mathsf{Im}(\bra{\psi}U\ket{\psi})}}2$.
+
+1 is measured with probability $\left\|\frac{\ket{\psi}-\emm{i}U\ket{\psi}}{2}\right\|^2 = \frac{1-\emm{\mathsf{Im}(\bra{\psi}U\ket{\psi})}}2$.
+\end{frame}
+
+\begin{frame}{The number of measurements}
+\begin{equation*}
+\Pr\left(\left|\frac{\sum_i X_i}n - \mathbb{E}[X]\right| > \frac{\epsilon}{\sqrt{n}}\right)
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Example: Swap test}
+Let $\mathsf{SWAP}\ket{\psi}\ket{\varphi}=\ket{\varphi}\ket{\psi}$.
+\[
+\Qcircuit @C=2em @R=1em {
+\lstick{\ket{0}}   &\gate{H} & \ctrl{1} & \gate{H} & \meter\\
+\lstick{\ket{\psi}} &{/}\qw      & \multigate{1}{\mathsf{SWAP}} & \qw      & \qw\\
+\lstick{\ket{\varphi}} &{/}\qw      & \ghost{\mathsf{SWAP}} & \qw      & \qw
+}
+\]
+
+\vspace{2em}
+Then, $\mathsf{Re}(\bra{\psi}\bra{\varphi}\mathsf{SWAP}\ket{\psi}\ket{\varphi}) = \bra{\psi}\bra{\varphi}\mathsf{SWAP}\ket{\psi}\ket{\varphi} = |\braket{\psi|\varphi}|^2$.
+\end{frame}
+
+%\begin{frame}{Problems}
+%Eigenvector
+%\end{frame}
+
+\begin{frame}{Hadamard test for eigenvector}
+If $\ket{\psi_\theta}$ is an eigenvector of $U$ for eigenvalue $\mathsf{e}^{i\theta}$.
+
+\vspace{2em}
+\begin{align*}
+\mathsf{Re}(\bra{\psi_\theta}U\ket{\psi_\theta}) &= \mathsf{Re}(\mathsf{e}^{i\theta})
+= \cos(\theta)\\
+\mathsf{Im}(\bra{\psi_\theta}U\ket{\psi_\theta}) &= \mathsf{Im}(\mathsf{e}^{i\theta})
+= \sin(\theta)
+\end{align*}
+
+\vspace{2em}
+Hence, we can estimate $\theta$. But, this algorithm doesn't work when \emm{the eigenvector $\ket{\psi_\theta}$ is not given}.
+
+\end{frame}
+
+\begin{frame}{Quantum phase estimation}
+\[
+\Qcircuit @C=2em @R=1em {
+\lstick{\ket{0}}   &\gate{H} & \ctrl{3} & \qw&\qw &    \qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \ctrl{2} &\qw &   \qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \qw & \ctrl{1} &  \qw\\
+\lstick{\ket{\psi_\theta}} &{/}\qw      & \gate{U} & \gate{U^2} &\gate{U^4} &  \qw
+}
+\]
+
+\begin{align*}
+\ket{0}^n\ket{\psi_\theta} &\longmapsto \frac1{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} \ket{x}\ket{\psi_\theta}\\
+&\longmapsto \frac1{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} \mathsf{e}^{i\theta(x_0 + 2x_1 + 2^2 x_2 + \dotsm 2^{n} x_n)}\ket{x}\ket{\psi_\theta}\\
+&= \frac1{\sqrt{2^n}}\sum_{x\in\{0,1,2,\dotsc,2^n-1\}} \mathsf{e}^{i\theta x}\ket{x}\ket{\psi_\theta}\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{Quantum Fourier transform}
+\begin{align*}
+\begin{bmatrix}
+1\\0\\0\\0
+\end{bmatrix}
+,
+\begin{bmatrix}
+0\\1\\0\\0
+\end{bmatrix}
+,
+\begin{bmatrix}
+0\\0\\1\\0
+\end{bmatrix}
+,
+\begin{bmatrix}
+0\\0\\0\\1
+\end{bmatrix}
+\longleftrightarrow
+\frac1{2}
+\begin{bmatrix}
+1\\1\\1\\1
+\end{bmatrix}
+,
+\frac1{2}
+\begin{bmatrix}
+1\\\omega\\\omega^2\\\omega^3
+\end{bmatrix}
+,
+\frac1{2}
+\begin{bmatrix}
+1\\\omega^2\\\omega^{4}\\\omega^{6}
+\end{bmatrix}
+,
+\frac1{2}
+\begin{bmatrix}
+1\\\omega^3\\\omega^{6}\\\omega^{9}
+\end{bmatrix}
+\end{align*}
+\begin{align*}
+\ket{x} \longleftrightarrow \ket{\widehat{x}}:=\frac1{\sqrt{N}}\sum_{y=0}^{N-1} \omega_N^{xy} \ket{y}
+\end{align*}
+where $\omega_N:=\mathsf{e}^{i\frac{2\pi}{N}}$.
+\begin{align*}
+U_{\mathsf{QFT}} &:= \sum_{x=0}^{N-1}\ket{\widehat{x}}\bra{x}
+\end{align*}
+Hadamard operator is the quantum Fourier transform for $N=2$.
+\end{frame}
+
+\begin{frame}{Quantum phase estimation}
+\[
+\Qcircuit @C=2em @R=1em {
+\lstick{\ket{0}}   &\gate{H} & \ctrl{3} & \qw&\qw & \multigate{2}{\mathsf{IQFT}}& \rstick{\ket{\varphi_0}}  \qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \ctrl{2} &\qw & \ghost{IQFT} & \rstick{\ket{\varphi_1}}\qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \qw & \ctrl{1} & \ghost{IQFT}& \rstick{\ket{\varphi_2}}\qw\\
+\lstick{\ket{\psi_\theta}} &{/}\qw      & \gate{U} & \gate{U^2} &\gate{U^4} &\qw & \rstick{\ket{\psi_\theta}}\qw
+}
+\]
+
+\emm{Assume} $\theta = 2\pi \frac{\varphi}{2^n}$ for some \emm{integer} $\varphi\in\{0,1,\dotsc,2^n-1\}$.
+\begin{align*}
+&\frac1{\sqrt{2^n}}\sum_{x\in\{0,1,2,\dotsc,2^n-1\}} \mathsf{e}^{i\frac{2\pi}{2^n}\varphi x}\ket{x}\ket{\psi_\theta}\\
+=&\ket{\widehat{\varphi}}\ket{\psi_\theta}\\
+\longmapsto&\ket{\varphi}\ket{\psi_\theta}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Probability of the best approximation}
+\small
+Assume that the eigenvalue is $\mathsf{e}^{2\pi i\phi}$.
+Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$, i.e., \emm{$|\phi - \frac{\varphi}{2^n}|\le \frac1{2^{n+1}}$}.
+\begin{align*}
+\Pr(\varphi) &= \frac1{2^{2n}}\left|\left(\sum_{x=0}^{2^n-1} \mathsf{e}^{-i\frac{2\pi}{2^n}\varphi x}\bra{x}\right)\left(\sum_{x=0}^{2^n-1} \mathsf{e}^{i 2\pi\phi x}\ket{x}\right)\right|^2\\
+&= \frac1{2^{2n}}\left|\sum_{x=0}^{2^n-1} \mathsf{e}^{2\pi i\left(\phi - \frac{\varphi}{2^n}\right) x}\right|^2\\
+&= \frac1{2^{2n}}\left|\frac{1-\mathsf{e}^{2\pi i\left(2^n\phi - \varphi\right)}}{1-\mathsf{e}^{2\pi i\left(\phi - \frac{\varphi}{2^n}\right)}}\right|^2\\
+&= \frac1{2^{2n}}\frac{2\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{2\sin^2\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)}\\
+&\ge \frac1{2^{2n}}\frac{\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
+&\ge \frac1{2^{2n}}\frac{\left(2\left(2^n\phi - \varphi\right)\right)^2}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}
+= \frac{4}{\pi^2}\approx 0.405
+\end{align*}
+\end{frame}
+
+\if0
+\begin{frame}{Error probability}
+\begin{align*}
+\Pr\left(\left|\phi - \frac{\varphi}{2^n}\right| > \frac{c}{2^n}\right)
+=\sum_{} \frac1{2^{2n}}\frac{\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{\sin^2\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)}\\
+= \frac1{2^{2n}}\sum_{}\frac{1}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
+\end{align*}
+\end{frame}
+\fi
+
+\begin{frame}{Quantum phase estimation for superposition of eigenvectors}
+\begin{align*}
+\ket{\psi} := \sum_{i=1}^N \alpha_i \ket{\psi_{\theta_i}}
+\end{align*}
+\begin{align*}
+\ket{0}\left(\sum_{i=1}^N \alpha_i \ket{\psi_{\theta_i}}\right)
+&\longmapsto \sum_{i=1}^N \alpha_i \ket{\widehat{\varphi}_i}\ket{\psi_{\theta_i}}\\
+&\longmapsto \sum_{i=1}^N \alpha_i \ket{\varphi_i}\ket{\psi_{\theta_i}}
+\end{align*}
+Then, $\varphi_i$ is measured with probability $|\alpha_i|^2$.
+\end{frame}
+
+\begin{frame}{Quantum Fourier transform}
+\small
+\vspace{-1em}
+%\begin{align*}
+%\ket{\widehat{x}} := \frac1{\sqrt{N}} \sum_{z=0}^{N-1} \omega_N^{xz}\ket{z}
+%\end{align*}
+%Quantum Fourier transform
+\begin{align*}
+U_{\mathsf{QFT}(N)} := \sum_{x=0}^{N-1}\ket{\widehat{x}}\bra{x}.
+\end{align*}
+\begin{align*}
+U_{\mathsf{QFT}(2^n)} &= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\sum_{z=0}^{2^n-1}\omega_{2^n}^{xz}\ket{z}\bra{x}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\sum_{z\in\{0,1\}^n}\omega_{2^n}^{x(z_1+2z_2+\dotsb +2^{n-1}z_n)}\ket{z}\bra{x}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\sum_{z\in\{0,1\}^n}\left(\bigotimes_{i=1}^n\omega_{2^n}^{x2^{i-1}z_i}\ket{z_i}\right)\bra{x}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\bigotimes_{i=1}^n \left(\ket{0} + \omega_{2^n}^{x2^{i-1}}\ket{1}\right)\bra{x}\\
+&= \sum_{x=0}^{2^n-1}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x}\ket{1}}{\sqrt{2}}\bra{x}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{Quantum Fourier transform}
+\small
+\vspace{-1em}
+\begin{align*}
+&= \sum_{x=0}^{2^n-1}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x}\ket{1}}{\sqrt{2}}\bra{x}\\
+&= \sum_{x\in\{0,1\}^n}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x_1+2x_2+\dotsb+2^{n-1}x_n}\ket{1}}{\sqrt{2}}\bra{x}\\
+&= \sum_{x\in\{0,1\}^n}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x_1+2x_2+\dotsb+2^{n-i}x_{n-i+1}}\ket{1}}{\sqrt{2}}\bra{x}\\
+\end{align*}
+\[
+\hspace{-3em}
+\Qcircuit @C=.5em @R=1em {
+\lstick{\ket{x_1}} & \qw      & \qw        & \qw        & \ctrl{3}   & \qw      & \qw        & \ctrl{2}   & \qw      & \ctrl{1}   & \gate{H} & \rstick{\frac{\ket{0}+\omega_{2^1}^{x_1}\ket{1}}{\sqrt{2}}} \qw\\
+\lstick{\ket{x_2}} & \qw      & \qw        & \ctrl{2}   & \qw        & \qw      & \ctrl{1}   & \qw        & \gate{H} & \gate{R_2} & \qw      & \rstick{\frac{\ket{0}+\omega_{2^2}^{x_1+2x_2}\ket{1}}{\sqrt{2}}} \qw\\
+\lstick{\ket{x_3}} & \qw      & \ctrl{1}   & \qw        & \qw        & \gate{H} & \gate{R_2} & \gate{R_3} & \qw      & \qw        & \qw      & \rstick{\frac{\ket{0}+\omega_{2^3}^{x_1+2x_2+2^2x_3}\ket{1}}{\sqrt{2}}} \qw\\
+\lstick{\ket{x_4}} & \gate{H} & \gate{R_2} & \gate{R_3} & \gate{R_4} & \qw      & \qw        & \qw        & \qw      & \qw        & \qw      & \rstick{\frac{\ket{0}+\omega_{2^4}^{x_1+2x_2+2^2x_3+2^3x_4}\ket{1}}{\sqrt{2}}} \qw\\
+}
+\]
+\end{frame}
+
+\if0
+\begin{frame}{Quantum Fourier transform}
+\small
+\vspace{-1em}
+%\begin{align*}
+%\ket{\widehat{x}} := \frac1{\sqrt{N}} \sum_{z=0}^{N-1} \omega_N^{xz}\ket{z}
+%\end{align*}
+%Quantum Fourier transform
+\begin{align*}
+U_{\mathsf{QFT}(N)} := \sum_{x=0}^{N-1}\ket{\widehat{x}}\bra{x}.
+\end{align*}
+%If $N=2^n$,
+%\begin{align*}
+%&U_{\mathsf{QFT}(2^n)} = \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\sum_{z=0}^{2^n-1}\omega_{2^n}^{xz}\ket{z}\bra{x}\\
+%&= \frac1{\sqrt{2^{n}}}\sum_{z=0}^{2^{n}-1}\ket{z}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^n}^{2xz}\bra{2x} + \omega_{2^n}^{(2x+1)z}\bra{2x+1}\right)\\
+%&= \frac1{\sqrt{2^{n}}}\sum_{z=0}^{2^{n}-1}\ket{z}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} + \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\\
+%&= \frac1{\sqrt{2^{n}}}\sum_{z=0}^{2^{\emm{n-1}}-1}\Biggl[\ket{0}\ket{z}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} + \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\\
+%&\quad +\ket{1}\ket{z}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} - \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\Biggr]\\
+%%&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^n}^{xz}\ket{z} + \omega_{2^n}^{x(z+2^{n-1})}\ket{z+2^{n-1}}\right)\bra{x}\\
+%%&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^n}^{xz}\ket{z} + (-1)^x\omega_{2^n}^{xz}\ket{z+2^{n-1}}\right)\bra{x}\\
+%%&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^n}^{xz}\ket{z} + (-1)^x\omega_{2^n}^{xz}\ket{z+2^{n-1}}\right)\bra{x}\\
+%%&= U_{\mathsf{QFT}(2^{n-1})} R\otimes \ket{0}\bra{+} + U_{\mathsf{QFT}(2^{n-1})}R\left(\sum_{x=0}^{2^{n-1}-1} \omega_{2^n}^x\ket{x}\bra{x}\right)\otimes \ket{1}\bra{-}\\
+%\end{align*}
+\begin{align*}
+&U_{\mathsf{QFT}(2^n)} = \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\sum_{z=0}^{2^n-1}\omega_{2^n}^{xz}\ket{z}\bra{x}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^n}^{x2z}\ket{2z} + \omega_{2^n}^{x(2z+1)}\ket{2z+1}\right)\bra{x}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0} + \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\right)\bra{x}\\
+%&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^{n-1}-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0} + \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\right)\bra{x}(\bra{0}+\bra{1})\\
+%&= \frac1{\sqrt{2^{n-1}}}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0}\bra{+}\bra{x} + \omega_{2^{n-1}}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\bra{-}\bra{x}\right)\\
+%&= U_{\mathsf{QFT}(2^{n-1})} R\otimes \ket{0}\bra{+} + U_{\mathsf{QFT}(2^{n-1})}R\left(\sum_{x=0}^{2^{n-1}-1} \omega_{2^n}^x\ket{x}\bra{x}\right)\otimes \ket{1}\bra{-}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^{\emm{n-1}}-1}\Biggl[\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0} + \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\right)\bra{0}\bra{x}\\
+&\qquad + \left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0} - \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\right)\bra{1}\bra{x}\Biggr]
+\end{align*}
+\end{frame}
+\fi
+
+\if0
+\begin{frame}{Quantum Fourier transform}
+\small
+\begin{align*}
+&= \frac1{\sqrt{2^{n}}}\sum_{z=0}^{2^{\emm{n-1}}-1}\Biggl[\ket{0}\ket{z}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} + \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\\
+&\quad +\ket{1}\ket{z}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} - \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\Biggr]
+\end{align*}
+Let $S_n:=  \sum_{x\in\{0,1\}^n} \ket{x_1x_nx_{n-1}\dotsm x_2}\bra{x_nx_{n-1}\dotsm x_1}$.
+\begin{align*}
+&= \frac1{\sqrt{2^{n}}}S_n\sum_{z=0}^{2^{\emm{n-1}}-1}\Biggl[\ket{z}\ket{0}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} + \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\\
+&\quad +\ket{z}\ket{1}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{0} - \omega_{2^n}^z \omega_{2^{\emm{n-1}}}^{xz}\bra{x}\bra{1}\right)\Biggr]\\
+&= S_n \left[U_{\mathsf{QFT}(2^{n-1})}\otimes \ket{+}\bra{0} + D_{2^n}U_{\mathsf{QFT}(2^{n-1})}\otimes \ket{-}\bra{1} \right]
+\end{align*}
+where $D_{2^{n-1}}:=\sum_{x=0}^{2^{n-1}-1} \omega_{2^{n}}^x\ket{x}\bra{x}$.
+\end{frame}
+\fi
+
+\if0
+\begin{frame}{Quantum Fourier transform}
+\small
+\begin{align*}
+%&= \frac1{\sqrt{2^{n-1}}}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0}\bra{+}\bra{x} + \omega_{2^{n-1}}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\bra{-}\bra{x}\right)
+%&= U_{\mathsf{QFT}(2^{n-1})} R\otimes \ket{0}\bra{+} + U_{\mathsf{QFT}(2^{n-1})}R\left(\sum_{x=0}^{2^{n-1}-1} \omega_{2^n}^x\ket{x}\bra{x}\right)\otimes \ket{1}\bra{-}\\
+&= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^{\emm{n-1}}-1}\Biggl[\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0} + \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\right)\bra{0}\bra{x}\\
+&\qquad + \left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{z}\ket{0} - \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{z}\ket{1}\right)\bra{1}\bra{x}\Biggr]
+\end{align*}
+Let $S_n:=  \sum_{x\in\{0,1\}^n} \ket{x_{n-1}x_{n-2}\dotsm x_1x_n}\bra{x_nx_{n-1}\dotsm x_1}$.
+\begin{align*}
+&= \frac1{\sqrt{2^{n}}}S_n\sum_{x=0}^{2^{\emm{n-1}}-1}\Biggl[\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{0}\ket{z} + \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{1}\ket{z}\right)\bra{0}\bra{x}\\
+&\qquad + \left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}\ket{0}\ket{z} - \omega_{2^n}^x\omega_{2^{n-1}}^{xz}\ket{1}\ket{z}\right)\bra{1}\bra{x}\Biggr]\\
+&= S_n \left[\ket{0}\bra{+}\otimes U_{\mathsf{QFT}(2^{n-1})} + \ket{1}\bra{-}\otimes U_{\mathsf{QFT}(2^{n-1})}D_{2^{n-1}}\right]
+\end{align*}
+%\begin{align*}
+%&= \frac1{\sqrt{2^{n-1}}}\sum_{x=0}^{2^{\emm{n-1}}-1}\left(\sum_{z=0}^{2^{\emm{n-1}}-1}\omega_{2^{\emm{n-1}}}^{xz}R_n\ket{0}\ket{z}\bra{+}\bra{x} + \omega_{2^{n-1}}^x\omega_{2^{n-1}}^{xz}R_n\ket{1}\ket{z}\bra{-}\bra{x}\right)\\
+%&= R_n\left(\ket{0}\bra{+}\otimes U_{\mathsf{QFT}(2^{n-1})}\right) + R_n\left(\ket{1}\bra{-}\otimes U_{\mathsf{QFT}(2^{n-1})}D_{2^{n-1}}\right)
+%\end{align*}
+where $D_{2^{n-1}}:=\sum_{x=0}^{2^{n-1}-1} \omega_{2^{n}}^x\ket{x}\bra{x}$.
+%\begin{align*}
+%&= R_n\left(\ket{0}\bra{0}\otimes U_{\mathsf{QFT}(2^{n-1})}\right)(H\otimes I) + R_n\left(\ket{1}\bra{1}\otimes U_{\mathsf{QFT}(2^{n-1})}D_{2^{n-1}}\right)(H\otimes I)\\
+%&= R_n\left(I\otimes U_{\mathsf{QFT}(2^{n-1})}\right)(C)(H\otimes I)
+%\end{align*}
+\end{frame}
+
+\begin{frame}{Circuit of QFT}
+\small
+\begin{align*}
+U_{\mathsf{QFT}(2^n)} &= S_n \left[\ket{0}\bra{+}\otimes U_{\mathsf{QFT}(2^{n-1})} + \ket{1}\bra{-}\otimes U_{\mathsf{QFT}(2^{n-1})}D_{2^{n-1}}\right]\\
+&= S_n \left[\ket{0}\bra{0}\otimes U_{\mathsf{QFT}(2^{n-1})} + \ket{1}\bra{1}\otimes U_{\mathsf{QFT}(2^{n-1})}D_{2^{n-1}}\right][H\otimes I_{2^{n-1}}]\\
+&= S_n [I_2\otimes U_{\mathsf{QFT}(2^{n-1})}]\left[\ket{0}\bra{0}\otimes I_{2^{n-1}} + \ket{1}\bra{1}\otimes D_{2^{n-1}}\right][H\otimes I_{2^{n-1}}]\\
+\end{align*}
+\[
+\Qcircuit @C=2em @R=1em {
+& \qw      & \multigate{2}{D_{2^{n-1}}} & \multigate{2}{U_{\mathsf{QFT}(2^{n-1})}} & \multigate{3}{S_n} &  \qw\\
+& \qw      & \ghost{D_{2^{n-1}}}        & \ghost{U_{\mathsf{QFT}(2^{n-1})}}        & \ghost{S_n}        &  \qw\\
+& \qw      & \ghost{D_{2^{n-1}}}        & \ghost{U_{\mathsf{QFT}(2^{n-1})}}        & \ghost{S_n}        &  \qw\\
+& \gate{H} & \ctrl{-1}                  &                                      \qw & \ghost{S_n}        &  \qw\\
+}
+\]
+\end{frame}
+
+\begin{frame}{Circuit of QFT}
+\[
+\Qcircuit @C=1em @R=1em {
+& \qw      & \multigate{2}{D_{2^{n-1}}} & \qw      &\multigate{1}{D_{2^{n-2}}} & \multigate{1}{U_{\mathsf{QFT}(2^{n-2})}} & \multigate{2}{S_{n-1}} & \multigate{3}{S_n} &  \qw\\
+& \qw      & \ghost{D_{2^{n-1}}}        & \qw      &\ghost{D_{2^{n-2}}}        & \ghost{U_{\mathsf{QFT}(2^{n-2})}}        & \ghost{S_{n-1}}        & \ghost{S_n}        &  \qw\\
+& \qw      & \ghost{D_{2^{n-1}}}        & \gate{H} &\ctrl{-1}                  & \qw                                      & \ghost{S_{n-1}}        & \ghost{S_n}        &  \qw\\
+& \gate{H} & \ctrl{-1}                  & \qw      &                       \qw & \qw                                      & \qw                    & \ghost{S_n}        &  \qw\\
+}
+\]
+\end{frame}
+\fi
+
+\if0
+\begin{frame}{Quantum Fourier transform}
+\begin{align*}
+&\ket{\psi} := \sum_{x=0}^{2^n-1} \psi_x \ket{x} \longleftrightarrow \frac1{\sqrt{2^n}}\sum_{x=0}^{2^n-1} \psi_x \sum_{y=0}^{2^n-1} \omega_{2^n}^{xy} \ket{y}\\
+=&\, \frac1{\sqrt{2^n}}\sum_{x=0}^{2^{n-1}-1} \psi_{2x} \sum_{y=0}^{2^n-1} \omega_{2^n}^{2xy} \ket{y}
++ \frac1{\sqrt{2^n}}\sum_{x=0}^{2^{n-1}-1} \psi_{2x+1} \sum_{y=0}^{2^n-1} \omega_{2^n}^{(2x+1)y} \ket{y}\\
+=&\, \frac1{\sqrt{2^n}}\sum_{x=0}^{2^{n-1}-1} \psi_{2x} \sum_{y=0}^{2^n-1} \omega_{2^{n-1}}^{xy} \ket{y}
++ \frac{\omega_{2^n}^y}{\sqrt{2^n}}\sum_{x=0}^{2^{n-1}-1} \psi_{2x+1} \sum_{y=0}^{2^n-1} \omega_{2^{n-1}}^{xy} \ket{y}\\
+=& \frac1{\sqrt{2}} U_{n-1}\ket{\psi_{\mathsf{even}}} + \frac{\omega_{2^n}^y}{\sqrt{2}} U_{n-1}\ket{\psi_{\mathsf{odd}}}
+\end{align*}
+\end{frame}
+\fi
+
+%\begin{frame}{Example: Period finding}
+%\end{frame}
+
+\if0
+\begin{frame}{Controlled-unitary for $U(2)$}
+\begin{theorem}
+For any $U\in\mathsf{U}(2)$, controlled-$U$ gate with $n$ controlled qubits can be realized by $O(n^2)$ CNOT and arbitrary single-qubit gates without ancillas (working qubits).
+\end{theorem}
+\begin{proof}
+\small
+Induction on $n$. For $V\in U(2)$ satisfying $V^2=U$,
+\[
+\Qcircuit @C=2em @R=1em {
+& \ctrl{6} & \qw      & \ctrl{6} & \qw     & \qw\\
+& \ctrl{5} & \qw      & \ctrl{5} & \qw     & \qw\\
+& \ctrl{4} & \qw      & \ctrl{4} & \qw     & \qw\\
+& \ctrl{3} & \ctrl{3} & \qw      & \ctrl{3}& \qw\\
+& \ctrl{2} & \ctrl{2} & \qw      & \ctrl{2}& \qw\\
+& \qw      & \ctrl{1} & \qw      & \ctrl{1}& \qw\\
+& \gate{V} & \gate{V^\dagger} & \gate{W} & \gate{V}& \qw
+}
+\]
+$S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
+\end{proof}
+\end{frame}
+\fi
+
+
+\if0
+\begin{frame}{Assignments (Deadline is Jan.\ 24)}
+\small
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item If Hadamard test is applied for
+\item {[Very advanced]} By modifying levels of Solovay--Kitaev algorithm in the recursion, can we improve the exponent $c=\log 5 / \log(3/2)$ ?
+\end{enumerate}
+\end{frame}
+\fi
+
+\end{document}
