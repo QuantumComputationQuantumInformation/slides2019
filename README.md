@@ -12,3 +12,4 @@
 * 1/7	Universality of quantum circuit [slide](/tex/09_Universality.pdf)
 * 1/10	Universality of quantum circuit [slide](/tex/10_Universality2.pdf)
 * 1/14	Solovay--Kitaev theorem [slide](/tex/11_SolovayKitaev.pdf)
+* 1/21	Quantum phase estimation [slide](/tex/12_QuantumPhaseEstimation.pdf)
