@@ -117,6 +117,7 @@
 1 is measured with probability $\left\|\frac{\ket{\psi}-\emm{i}U\ket{\psi}}{2}\right\|^2 = \frac{1-\emm{\mathsf{Im}(\bra{\psi}U\ket{\psi})}}2$.
 \end{frame}
 
+\if0
 \begin{frame}{The number of measurements}
 \begin{equation*}
 \Pr\left(\left|\frac{\sum_i X_i}n - \mathbb{E}[X]\right| > \frac{\epsilon}{\sqrt{n}}\right)
@@ -134,8 +135,9 @@ Let $\mathsf{SWAP}\ket{\psi}\ket{\varphi}=\ket{\varphi}\ket{\psi}$.
 \]
 
 \vspace{2em}
-Then, $\mathsf{Re}(\bra{\psi}\bra{\varphi}\mathsf{SWAP}\ket{\psi}\ket{\varphi}) = \bra{\psi}\bra{\varphi}\mathsf{SWAP}\ket{\psi}\ket{\varphi} = |\braket{\psi|\varphi}|^2$.
+Then, $\mathsf{Re}(\bra{\psi}\bra{\varphi}\mathsf{SWAP}\ket{\psi}\ket{\varphi}) =  |\emm{\braket{\psi|\varphi}}|^2$.
 \end{frame}
+\fi
 
 %\begin{frame}{Problems}
 %Eigenvector
@@ -144,7 +146,7 @@ Then, $\mathsf{Re}(\bra{\psi}\bra{\varphi}\mathsf{SWAP}\ket{\psi}\ket{\varphi}) 
 \begin{frame}{Hadamard test for eigenvector}
 If $\ket{\psi_\theta}$ is an eigenvector of $U$ for eigenvalue $\mathsf{e}^{i\theta}$.
 
-\vspace{2em}
+\vspace{1em}
 \begin{align*}
 \mathsf{Re}(\bra{\psi_\theta}U\ket{\psi_\theta}) &= \mathsf{Re}(\mathsf{e}^{i\theta})
 = \cos(\theta)\\
@@ -152,8 +154,13 @@ If $\ket{\psi_\theta}$ is an eigenvector of $U$ for eigenvalue $\mathsf{e}^{i\th
 = \sin(\theta)
 \end{align*}
 
-\vspace{2em}
+\vspace{1em}
 Hence, we can estimate $\theta$. But, this algorithm doesn't work when \emm{the eigenvector $\ket{\psi_\theta}$ is not given}.
+For
+\begin{align*}
+\ket{\psi} := \sum_{j=1}^N \alpha_j \ket{\psi_{\theta_j}}
+\end{align*}
+$\bra{\psi}U\ket{\psi}=\sum_{j=1}^N |\alpha_j|^2 \mathsf{e}^{i\theta_j}$.
 
 \end{frame}
 
@@ -169,8 +176,8 @@ Hence, we can estimate $\theta$. But, this algorithm doesn't work when \emm{the 
 
 \begin{align*}
 \ket{0}^n\ket{\psi_\theta} &\longmapsto \frac1{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} \ket{x}\ket{\psi_\theta}\\
-&\longmapsto \frac1{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} \mathsf{e}^{i\theta(x_0 + 2x_1 + 2^2 x_2 + \dotsm 2^{n} x_n)}\ket{x}\ket{\psi_\theta}\\
-&= \frac1{\sqrt{2^n}}\sum_{x\in\{0,1,2,\dotsc,2^n-1\}} \mathsf{e}^{i\theta x}\ket{x}\ket{\psi_\theta}\\
+&\longmapsto \frac1{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} \mathsf{e}^{i\theta(x_1 + 2x_2 + 2^2 x_3 + \dotsm 2^{n-1} x_n)}\ket{x}\ket{\psi_\theta}\\
+&= \frac1{\sqrt{2^n}}\sum_{x\in\emm{\{0,1,2,\dotsc,2^n-1\}}} \mathsf{e}^{i\theta x}\ket{x}\ket{\psi_\theta}\\
 \end{align*}
 \end{frame}
 
@@ -213,11 +220,11 @@ Hence, we can estimate $\theta$. But, this algorithm doesn't work when \emm{the 
 \end{bmatrix}
 \end{align*}
 \begin{align*}
-\ket{x} \longleftrightarrow \ket{\widehat{x}}:=\frac1{\sqrt{N}}\sum_{y=0}^{N-1} \omega_N^{xy} \ket{y}
+\ket{x} \longleftrightarrow \emm{\ket{\widehat{x}}}:=\frac1{\sqrt{N}}\sum_{y=0}^{N-1} \omega_N^{xy} \ket{y}
 \end{align*}
 where $\omega_N:=\mathsf{e}^{i\frac{2\pi}{N}}$.
 \begin{align*}
-U_{\mathsf{QFT}} &:= \sum_{x=0}^{N-1}\ket{\widehat{x}}\bra{x}
+U_{\mathsf{QFT}} &:= \sum_{x=0}^{N-1}\emm{\ket{\widehat{x}}}\bra{x}
 \end{align*}
 Hadamard operator is the quantum Fourier transform for $N=2$.
 \end{frame}
@@ -232,6 +239,7 @@ Hadamard operator is the quantum Fourier transform for $N=2$.
 }
 \]
 
+\vspace{1em}
 \emm{Assume} $\theta = 2\pi \frac{\varphi}{2^n}$ for some \emm{integer} $\varphi\in\{0,1,\dotsc,2^n-1\}$.
 \begin{align*}
 &\frac1{\sqrt{2^n}}\sum_{x\in\{0,1,2,\dotsc,2^n-1\}} \mathsf{e}^{i\frac{2\pi}{2^n}\varphi x}\ket{x}\ket{\psi_\theta}\\
@@ -259,8 +267,8 @@ Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$
 \begin{frame}{Error probability}
 \begin{align*}
 \Pr\left(\left|\phi - \frac{\varphi}{2^n}\right| > \frac{c}{2^n}\right)
-=\sum_{} \frac1{2^{2n}}\frac{\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{\sin^2\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)}\\
-= \frac1{2^{2n}}\sum_{}\frac{1}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
+&=\sum_{} \frac1{2^{2n}}\frac{\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{\sin^2\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)}\\
+&= \frac1{2^{2n}}\sum_{}\frac{1}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
 \end{align*}
 \end{frame}
 \fi
@@ -274,7 +282,7 @@ Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$
 &\longmapsto \sum_{i=1}^N \alpha_i \ket{\widehat{\varphi}_i}\ket{\psi_{\theta_i}}\\
 &\longmapsto \sum_{i=1}^N \alpha_i \ket{\varphi_i}\ket{\psi_{\theta_i}}
 \end{align*}
-Then, $\varphi_i$ is measured with probability $|\alpha_i|^2$.
+Then, \emm{$\varphi_i$} is measured with probability $|\alpha_i|^2$.
 \end{frame}
 
 \begin{frame}{Quantum Fourier transform}
@@ -302,15 +310,30 @@ U_{\mathsf{QFT}(2^n)} &= \frac1{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}\sum_{z=0}^{2^n-1
 \begin{align*}
 &= \sum_{x=0}^{2^n-1}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x}\ket{1}}{\sqrt{2}}\bra{x}\\
 &= \sum_{x\in\{0,1\}^n}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x_1+2x_2+\dotsb+2^{n-1}x_n}\ket{1}}{\sqrt{2}}\bra{x}\\
-&= \sum_{x\in\{0,1\}^n}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x_1+2x_2+\dotsb+2^{n-i}x_{n-i+1}}\ket{1}}{\sqrt{2}}\bra{x}\\
+&= \sum_{x\in\{0,1\}^n}\bigotimes_{i=1}^n \frac{\ket{0} + \omega_{2^{n-i+1}}^{x_1+2x_2+\dotsb+2^{n-i}x_{n-i+1}}\ket{1}}{\sqrt{2}}\bra{x}
 \end{align*}
+Let $R_k:=\begin{bmatrix}1&0\\0&\omega_{2^k}\end{bmatrix}$.
 \[
-\hspace{-3em}
-\Qcircuit @C=.5em @R=1em {
+\hspace{-5em}
+\Qcircuit @C=.5em @R=.8em {
 \lstick{\ket{x_1}} & \qw      & \qw        & \qw        & \ctrl{3}   & \qw      & \qw        & \ctrl{2}   & \qw      & \ctrl{1}   & \gate{H} & \rstick{\frac{\ket{0}+\omega_{2^1}^{x_1}\ket{1}}{\sqrt{2}}} \qw\\
 \lstick{\ket{x_2}} & \qw      & \qw        & \ctrl{2}   & \qw        & \qw      & \ctrl{1}   & \qw        & \gate{H} & \gate{R_2} & \qw      & \rstick{\frac{\ket{0}+\omega_{2^2}^{x_1+2x_2}\ket{1}}{\sqrt{2}}} \qw\\
 \lstick{\ket{x_3}} & \qw      & \ctrl{1}   & \qw        & \qw        & \gate{H} & \gate{R_2} & \gate{R_3} & \qw      & \qw        & \qw      & \rstick{\frac{\ket{0}+\omega_{2^3}^{x_1+2x_2+2^2x_3}\ket{1}}{\sqrt{2}}} \qw\\
 \lstick{\ket{x_4}} & \gate{H} & \gate{R_2} & \gate{R_3} & \gate{R_4} & \qw      & \qw        & \qw        & \qw      & \qw        & \qw      & \rstick{\frac{\ket{0}+\omega_{2^4}^{x_1+2x_2+2^2x_3+2^3x_4}\ket{1}}{\sqrt{2}}} \qw\\
+}
+\]
+\end{frame}
+
+\begin{frame}{Whole quantum circuit of QFT}
+\small
+Let $R_k:=\begin{bmatrix}1&0\\0&\omega_{2^k}\end{bmatrix}$.
+\[
+\hspace{-0em}
+\Qcircuit @C=1.2em @R=.8em {
+\lstick{\ket{x_1}} & \qw      & \qw        & \qw        & \ctrl{3}   & \qw      & \qw        & \ctrl{2}   & \qw      & \ctrl{1}   & \gate{H} & \qswap     & \qw    & \qw\\
+\lstick{\ket{x_2}} & \qw      & \qw        & \ctrl{2}   & \qw        & \qw      & \ctrl{1}   & \qw        & \gate{H} & \gate{R_2} & \qw      & \qw\qwx    & \qswap    & \qw\\
+\lstick{\ket{x_3}} & \qw      & \ctrl{1}   & \qw        & \qw        & \gate{H} & \gate{R_2} & \gate{R_3} & \qw      & \qw        & \qw      & \qw\qwx    & \qswap\qwx    & \qw\\
+\lstick{\ket{x_4}} & \gate{H} & \gate{R_2} & \gate{R_3} & \gate{R_4} & \qw      & \qw        & \qw        & \qw      & \qw        & \qw      & \qswap\qwx & \qw    & \qw
 }
 \]
 \end{frame}
@@ -464,15 +487,12 @@ $S_n = 4 S_{n/2} = 4^{\log n}S_1 = O(\emm{n^2})$.
 \fi
 
 
-\if0
-\begin{frame}{Assignments (Deadline is Jan.\ 24)}
+\begin{frame}{Assignments (Deadline is Jan.\ 31)}
 \small
 \begin{enumerate}
 \setlength{\itemsep}{2em}
-\item If Hadamard test is applied for
-\item {[Very advanced]} By modifying levels of Solovay--Kitaev algorithm in the recursion, can we improve the exponent $c=\log 5 / \log(3/2)$ ?
+\item Show that the Fourier basis $\{\ket{\widehat{x}}\}_{x\in\{0,1,\dotsc,N-1\}}$ is orthonormal.
 \end{enumerate}
 \end{frame}
-\fi
 
 \end{document}
