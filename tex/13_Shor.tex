@@ -1,0 +1,259 @@
+\documentclass{beamer}
+%\usepackage{xspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+%\usepackage{svg}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\usepackage{psfrag}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{braket}
+\usepackage{qcircuit}
+%\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{graphs}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{patchplots}
+
+\setbeamercovered{transparent}
+
+\usetheme{Pittsburgh}
+%\usetheme{default}
+
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{footline}[frame number]
+%\usefonttheme{professionalfonts}
+
+%\usepackage{sansmathaccent}
+%\usepackage{bm}
+
+%\usepackage{unicode-math}
+%%\setmainfont[SlantedFont={Latin Modern Roman Slanted},SlantedFeatures={Color=000000},
+%%  SmallCapsFont={TeX Gyre Termes},SmallCapsFeatures={Letters=SmallCaps}]{XITS}
+%\setmathfont[math-style=ISO,sans-style=upright]{XITS Math}
+%\setmathfont[range={\mathcal,\mathbfcal}]{Latin Modern Math}
+
+\usepackage{sfmath}
+
+%\mathversion{sans}
+
+\newcommand{\Tr}{\mathsf{Tr}}
+
+\definecolor{redorange}{rgb}{1.0, .25, .25}
+\definecolor{citation}{rgb}{.1, 0.8, .35}
+\newcommand\emm[1]{\textcolor{redorange}{{#1}}}
+\newcommand\numc[1]{\textcolor{citation}{{\bf #1}}}
+
+%\newcommand\bm[1]{{\mbox{\boldmath $#1$}}}
+\newcommand\bm[1]{{\mathbf{#1}}}
+%\newcommand\bm[1]{{\bf #1}}
+%\newcommand\bm[1]{\ensuremath{\boldsymbol{#1}}}
+%\newcommand\bm[1]{{\textbf{\it #1}}}
+
+\title{Shor's algorithm}
+\author{Ryuhei Mori}
+%\institute{$\vcenter{\hbox{\includegraphics[width=30pt]{ELC_logo}}}$ Postdoctoral Fellow of ELC\\ $\vcenter{\hbox{\includegraphics[width=20pt]{titech_logo}}}$ Tokyo Institute of Technology}
+\institute{Tokyo Institute of Technology}
+%\date{21, Feb, 2019}
+
+
+
+\begin{document}
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+
+\begin{frame}{Integer factoring and primality test}
+\begin{itemize}
+\setlength{\itemsep}{3em}
+\item \textsc{PrimalityTest}:\\
+Input: $N\in\mathbb{N}$\\
+Output: YES if $N$ is a prime number, NO if $N$ is a composite number.
+\item \textsc{IntegerFactoring}:\\
+Input: $N\in\mathbb{N}$\\
+Output: $a\in\mathbb{N}$ satisfying $a\ne 1, N$ and $a$ divides $N$.
+\end{itemize}
+
+\vspace{2em}
+It is known that $\textsc{PrimalityTest}\in\mathsf{P}$.
+
+It is \emm{believed} that $\textsc{IntegerFactoring}\notin\mathsf{BPP}$.
+
+It is known that $\textsc{IntegerFactoring}\in\emm{\mathsf{BQP}}$.
+\end{frame}
+
+\begin{frame}{Nontrivial square root of $1$}
+\begin{equation*}
+x^2 = 1 \mod N
+\end{equation*}
+\begin{align*}
+&x^2 = 1 \mod N\\
+\iff& (x-1)(x+1) = 0 \mod N
+\end{align*}
+If $N$ is a prime number $x=\pm 1$ are only solution.
+
+\vspace{2em}
+If there exists a nontrivial square root of 1, then $N$ must be composite number.
+
+\vspace{2em}
+If we find a nontrivial square root $x$ of 1, we find a factor of $N$ by $\mathsf{gcd}(x\pm 1, N)$.
+\end{frame}
+
+\begin{frame}{Fermat test}
+\end{frame}
+
+\begin{frame}{Miller--Rabin primality test}
+\begin{algorithmic}
+\Function{Miller--Rabin}{$N$}
+\State Let $r$ and $d$ be integers satisfying $N=2^r(2d+1)+1$.
+\Loop
+\State $a\gets \text{a random integer in } [2,N-2]$.
+\State $x\gets a^{2d+1}$.
+\If{$x = 1$ \text{ or } $x = N-1$}
+\State \textbf{continue}
+\EndIf
+\EndLoop
+\State \Return YES
+\EndFunction
+\end{algorithmic}
+\end{frame}
+
+\begin{frame}{Why Miller--Rabin algorithm doesn't solve \textsc{IntegerFactoring}}
+\end{frame}
+
+\begin{frame}{Shor's algorithm}
+\begin{algorithmic}
+\Function{Shor}{$N$: An odd integer}
+\If{$N=a^b$ for some $a\in\{2,\dotsc,N-1\}$ and $b\ge 2$}
+\State \Return a
+\EndIf
+\Loop
+\State $a\gets \text{a random integer in } \{2,3,\dotsc,N-2\}$.
+\State $b\gets \mathsf{gcd}(a, N)$.
+\If{$b\ne 1$}
+\Return $b$
+\EndIf
+\State $r\gets \emm{\textsc{OrderFinding}(a, N)}$.
+\If{$r$ is odd}
+\textbf{continue}
+\EndIf
+\If{$a^{r/2}\ne N-1$}
+\State \Return $\mathsf{gcd}(a^{r/2}+1, N)$
+\EndIf
+\EndLoop
+\EndFunction
+\end{algorithmic}
+\end{frame}
+
+\begin{frame}{Eigenvalues of the unitary operator}
+Let $r$ be the order of $a$ modulo $n$, which is a smallest positive integer satisfying
+\begin{equation*}
+a^r = 1 \mod N.
+\end{equation*}
+For $a$ that is \emm{coprime with $N$}, define the unitary operator $U_a$ by
+\begin{align*}
+U_a\ket{x} =
+\begin{cases}
+\ket{ax \mod N}& \text{if $x<N$}\\
+\ket{x}& \text{Otherwise.}
+\end{cases}
+\end{align*}
+
+\begin{itemize}
+\setlength{\itemsep}{1em}
+\item $U^r = I$.  This means that all eigenvalues of $U$ are in the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ for $s\in\{0,1,2,\dotsc,r-1\}$.
+\item $U^t \ne I$ for all $t\in\{0,1,2,\dotsc,r-1\}$. This means that there exists an eigenvalue of the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ with $s$ coprime with $r$.
+\end{itemize}
+
+\vspace{1em}
+By quantum phase estimation for $U_a$, an approximation of $\frac{s}{r}$ can be computed efficiently.
+\end{frame}
+
+\begin{frame}{Eigenvectors of the unitary operator}
+For $s\in\{0,1,\dotsc,r-1\}$,
+\begin{align*}
+\ket{\psi_s}&:=\frac1{\sqrt{r}} \sum_{j=0}^{r-1} \mathsf{e}^{-2\pi i \frac{sj}{r}} \ket{a^j \mod N}.
+\end{align*}
+\begin{align*}
+U_a\ket{\psi_s}&=\frac1{\sqrt{r}} \sum_{j=0}^{r-1} \mathsf{e}^{-2\pi i \frac{sj}{r}} \ket{a^{\emm{j+1}} \mod N}\\
+&=\mathsf{e}^{2\pi i \frac{s}{r}}\frac1{\sqrt{r}} \sum_{j=0}^{r-1} \mathsf{e}^{-2\pi i \frac{sj}{r}} \ket{a^j \mod N}\\
+&=\mathsf{e}^{2\pi i \frac{s}{r}}\ket{\psi_s}.
+\end{align*}
+\end{frame}
+
+\begin{frame}{The uniform sperposition of the eigenvectors}
+For $s\in\{0,1,\dotsc,r-1\}$,
+\begin{align*}
+\ket{\psi_s}&:=\frac1{\sqrt{r}} \sum_{j=0}^{r-1} \mathsf{e}^{-2\pi i \frac{sj}{r}} \ket{a^j \mod N}.
+\end{align*}
+\begin{align*}
+\frac1{\sqrt{r}}\sum_{s=0}^{r-1}\ket{\psi_s}
+&=\frac1{r} \sum_{s=0}^{r-1}\sum_{j=0}^{r-1} \mathsf{e}^{-2\pi i \frac{sj}{r}} \ket{a^j \mod N}\\
+&=\sum_{j=0}^{r-1} \left(\frac1{r} \sum_{s=0}^{r-1}\mathsf{e}^{-2\pi i \frac{sj}{r}}\right) \ket{a^j \mod N}\\
+&=\ket{1}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Quantum phase estimation}
+\[
+\Qcircuit @C=2em @R=1em {
+\lstick{\ket{0}}   &\gate{H} & \ctrl{3} & \qw&\qw & \multigate{2}{\mathsf{IQFT}}& \rstick{\ket{\varphi_0}}  \qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \ctrl{2} &\qw & \ghost{IQFT} & \rstick{\ket{\varphi_1}}\qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \qw & \ctrl{1} & \ghost{IQFT}& \rstick{\ket{\varphi_2}}\qw\\
+\lstick{\ket{1}} &{/}\qw      & \gate{U} & \gate{U^2} &\gate{U^4} &\qw & \rstick{\ket{\psi_\theta}}\qw
+}
+\]
+
+\vspace{1em}
+\emm{Assume} $\theta = 2\pi \frac{\varphi}{2^n}$ for some \emm{integer} $\varphi\in\{0,1,\dotsc,2^n-1\}$.
+\begin{align*}
+&\frac1{\sqrt{2^n}}\sum_{x\in\{0,1,2,\dotsc,2^n-1\}} \mathsf{e}^{i\frac{2\pi}{2^n}\varphi x}\ket{x}\ket{\psi_\theta}\\
+=&\ket{\widehat{\varphi}}\ket{\psi_\theta}\\
+\longmapsto&\ket{\varphi}\ket{\psi_\theta}
+\end{align*}
+\end{frame}
+
+\if0
+\begin{frame}{Probability of the best approximation}
+\small
+Assume that the eigenvalue is $\mathsf{e}^{2\pi i\phi}$.
+Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$, i.e., \emm{$|\phi - \frac{\varphi}{2^n}|\le \frac1{2^{n+1}}$}.
+\begin{align*}
+\Pr(\varphi) &= \frac1{2^{2n}}\left|\left(\sum_{x=0}^{2^n-1} \mathsf{e}^{-i\frac{2\pi}{2^n}\varphi x}\bra{x}\right)\left(\sum_{x=0}^{2^n-1} \mathsf{e}^{i 2\pi\phi x}\ket{x}\right)\right|^2\\
+&= \frac1{2^{2n}}\left|\sum_{x=0}^{2^n-1} \mathsf{e}^{2\pi i\left(\phi - \frac{\varphi}{2^n}\right) x}\right|^2\\
+&= \frac1{2^{2n}}\left|\frac{1-\mathsf{e}^{2\pi i\left(2^n\phi - \varphi\right)}}{1-\mathsf{e}^{2\pi i\left(\phi - \frac{\varphi}{2^n}\right)}}\right|^2\\
+&= \frac1{2^{2n}}\frac{2\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{2\sin^2\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)}\\
+&\ge \frac1{2^{2n}}\frac{\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
+&\ge \frac1{2^{2n}}\frac{\left(2\left(2^n\phi - \varphi\right)\right)^2}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}
+= \frac{4}{\pi^2}\approx 0.405
+\end{align*}
+\end{frame}
+\fi
+
+\begin{frame}{Error probability}
+\begin{align*}
+\Pr\left(\left|\phi - \frac{\varphi}{2^n}\right| > \frac{c}{2^n}\right)
+&=\sum_{} \frac1{2^{2n}}\frac{\sin^2\left(\pi\left(2^n\phi - \varphi\right)\right)}{\sin^2\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)}\\
+&= \frac1{2^{2n}}\sum_{}\frac{1}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{Continued fraction}
+\end{frame}
+
+
+\begin{frame}{Assignments (Deadline is Jan.\ 31)}
+\small
+\begin{enumerate}
+\setlength{\itemsep}{2em}
+\item Show that the Fourier basis $\{\ket{\widehat{x}}\}_{x\in\{0,1,\dotsc,N-1\}}$ is orthonormal.
+\end{enumerate}
+\end{frame}
+
+\end{document}
