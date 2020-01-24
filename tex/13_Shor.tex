@@ -178,15 +178,15 @@ $z$ is a square root of 1 modulo $N$.
 \If{$x = 1$ \text{ or } $x = N-1$}
 \textbf{continue}
 \EndIf
-\Loop{\qquad $u$ times}
+\Loop{\qquad $u-1$ times}
 \State $x\gets x^2$
 \If{$x = N-1$}
 \textbf{break}
 \EndIf
-\If{$x = 1$}
+\EndLoop
+\If{$x \ne N-1$}
 \Return NO
 \EndIf
-\EndLoop
 \EndLoop
 \State \Return YES
 \EndFunction
@@ -209,7 +209,7 @@ NO!
 \hline
 $a^d$ & $a^{2d}$ & $a^{2^2d}$ & $\dotsm$ & $a^{2^u d}$\\
 \hline
-* & * & * & $\dotsm$ & $\ne1$\\
+* & * & * & $\dotsm$ & $\emm{\ne1}$\\
 \hline
 \end{tabular}
 \end{frame}
@@ -294,10 +294,10 @@ For $s\in\{0,1,\dotsc,r-1\}$,
 \begin{frame}{Quantum phase estimation}
 \[
 \Qcircuit @C=2em @R=1em {
-\lstick{\ket{0}}   &\gate{H} & \ctrl{3} & \qw&\qw & \multigate{2}{\mathsf{IQFT}}& \rstick{\ket{\varphi_0}}  \qw\\
-\lstick{\ket{0}}   &\gate{H} & \qw &  \ctrl{2} &\qw & \ghost{IQFT} & \rstick{\ket{\varphi_1}}\qw\\
-\lstick{\ket{0}}   &\gate{H} & \qw &  \qw & \ctrl{1} & \ghost{IQFT}& \rstick{\ket{\varphi_2}}\qw\\
-\lstick{\ket{1}} &{/}\qw      & \gate{U_a} & \gate{U_a^2} &\gate{U_a^4} &\qw & \rstick{\ket{\psi_\theta}}\qw
+\lstick{\ket{0}}   &\gate{H} & \ctrl{3} & \qw&\qw & \multigate{2}{\mathsf{IQFT}}&  \qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \ctrl{2} &\qw & \ghost{IQFT} & \qw\\
+\lstick{\ket{0}}   &\gate{H} & \qw &  \qw & \ctrl{1} & \ghost{IQFT}& \qw\\
+\lstick{\ket{1}} &{/}\qw      & \gate{U_a} & \gate{U_a^2} &\gate{U_a^4} &\qw & \qw
 }
 \]
 
@@ -359,10 +359,9 @@ Then, $s/r$ is a convergent of the continued fraction for $\theta$.
 
 
 \begin{frame}{Assignments (Deadline is Jan.\ 31)}
-\small
 \begin{enumerate}
 \setlength{\itemsep}{2em}
-\item Show all eigenvectors of $U_a$.
+\item Show all eigenvectors and corresponding eigenvalues of $U_a$.
 \end{enumerate}
 \end{frame}
 
