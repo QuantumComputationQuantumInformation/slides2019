@@ -71,7 +71,7 @@
 
 \begin{frame}{Integer factoring and primality test}
 \begin{itemize}
-\setlength{\itemsep}{3em}
+\setlength{\itemsep}{2em}
 \item \textsc{PrimalityTest}:\\
 Input: $N\in\mathbb{N}$\\
 Output: YES if $N$ is a prime number, NO if $N$ is a composite number.
@@ -80,12 +80,18 @@ Input: $N\in\mathbb{N}$\\
 Output: $a\in\mathbb{N}$ satisfying $a\ne 1, N$ and $a$ divides $N$.
 \end{itemize}
 
-\vspace{2em}
-It is known that $\textsc{PrimalityTest}\in\mathsf{P}$.
+\vspace{1em}
+\begin{center}
+\centering
+Does there exist an algorithm with time complexity $O((\log N)^c)$ ?
+\end{center}
+
+\vspace{1em}
+It is known that $\textsc{PrimalityTest}\in\mathsf{P}$ {\scriptsize [Agrawal, Kayal, Saxena, 2004]}.
 
 It is \emm{believed} that $\textsc{IntegerFactoring}\notin\mathsf{BPP}$.
 
-It is known that $\textsc{IntegerFactoring}\in\emm{\mathsf{BQP}}$.
+It is known that $\textsc{IntegerFactoring}\in\emm{\mathsf{BQP}}$. { [Shor 1994]}
 \end{frame}
 
 \begin{frame}{Nontrivial square root of $1$}
@@ -96,28 +102,91 @@ x^2 = 1 \mod N
 &x^2 = 1 \mod N\\
 \iff& (x-1)(x+1) = 0 \mod N
 \end{align*}
-If $N$ is a prime number $x=\pm 1$ are only solution.
+If $N$ is a prime number, $x=\pm 1$ are only solution.
 
 \vspace{2em}
-If there exists a nontrivial square root of 1, then $N$ must be composite number.
+If there exists a \emm{nontrivial square root of 1}, then $N$ must be composite number.
 
 \vspace{2em}
-If we find a nontrivial square root $x$ of 1, we find a factor of $N$ by $\mathsf{gcd}(x\pm 1, N)$.
+If we find a \emm{nontrivial square root $x$ of 1}, we can also find a nontrivial factor of $N$ by $\mathsf{gcd}(x\pm 1, N)$.
 \end{frame}
 
+\begin{frame}{Fermat little theorem}
+\begin{theorem}[Fermat little theorem]
+If $p$ is a prime number, any integer $a$ that is not a multiple of $p$,
+\begin{equation*}
+a^{\emm{p-1}}=1\mod p.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+For any integers $x$ and $y$,
+\begin{align*}
+(x+y)^p&=\sum_{i=0}^p\binom{p}{i} x^i y^{p-i}\\
+&=x^p + y^p \mod p.
+\end{align*}
+Hence, by the induction, we can show $a^p=a \mod p$ by $0^p=0$ and $a^p = ((a-1)+1)^p = (a-1)^p + 1 = a - 1 + 1 = a \mod p$.
+\end{proof}
+\end{frame}
+
+
 \begin{frame}{Fermat test}
+\begin{algorithmic}
+\Function{Fermat}{$N$}
+\Loop{\qquad $k$ times}
+\State $a\gets \text{a random integer in } [2,N-2]$
+\If{$a^{N-1}\ne 1 \mod N$}
+\State \Return NO
+\EndIf
+\EndLoop
+\State \Return YES
+\EndFunction
+\end{algorithmic}
+
+\vspace{3em}
+Carmichel numbers ($561 = 3\cdot 11\cdot 17,\, 1105 = 5\cdot 13\cdot 17, \cdots$) passes the Fermat test for \emm{all $a$ coprime with $N$}.
+\end{frame}
+
+\begin{frame}{Finding the nontirivial square root of 1}
+We assume that $a^{N-1} = 1 \mod N$ for some integer $a\in[2,N-2]$, 
+
+\vspace{2em}
+Let $u$ and $d$ be an integer and an odd integer, respectively, satisfying $N-1=2^ud$.
+
+\vspace{2em}
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+$a^d$ & $a^{2d}$ & $a^{2^2d}$ & $\cdots$ & $a^{2^{k-1} d}$ & $a^{2^k d}$ & $\cdots$ & $a^{2^u d}$\\
+\hline
+* & * & * & $\dotsm$ & \emm{$z\ne 1$} & $1$ & $\dotsm$ & $1$\\
+\hline
+\end{tabular}
+
+\vspace{2em}
+$z$ is a square root of 1 modulo $N$.
 \end{frame}
 
 \begin{frame}{Miller--Rabin primality test}
+\small
 \begin{algorithmic}
 \Function{Miller--Rabin}{$N$}
-\State Let $r$ and $d$ be integers satisfying $N=2^r(2d+1)+1$.
-\Loop
-\State $a\gets \text{a random integer in } [2,N-2]$.
-\State $x\gets a^{2d+1}$.
+\State Let $u$ and $d$ be an integer and an odd integer, respectively, satisfying $N=2^ud+1$
+\Loop\qquad $k$ times
+\State $a\gets \text{a random integer in } [2,N-2]$
+\State $x\gets a^{d}$
 \If{$x = 1$ \text{ or } $x = N-1$}
-\State \textbf{continue}
+\textbf{continue}
 \EndIf
+\Loop{\qquad $u$ times}
+\State $x\gets x^2$
+\If{$x = N-1$}
+\textbf{break}
+\EndIf
+\If{$x = 1$}
+\Return NO
+\EndIf
+\EndLoop
 \EndLoop
 \State \Return YES
 \EndFunction
@@ -125,16 +194,34 @@ If we find a nontrivial square root $x$ of 1, we find a factor of $N$ by $\maths
 \end{frame}
 
 \begin{frame}{Why Miller--Rabin algorithm doesn't solve \textsc{IntegerFactoring}}
+In fact, the Miller--Rabin test outputs NO with probability $1-1/4^{k}$ for composite $N$.
+
+\vspace{2em}
+The Miller--Rabin algorithm seems to find a nontrivial square root of 1, which means that we can also find a nontrivial factor of $N$, right ?
+
+\vspace{2em}
+\centering
+NO!
+
+\vspace{2em}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$a^d$ & $a^{2d}$ & $a^{2^2d}$ & $\dotsm$ & $a^{2^u d}$\\
+\hline
+* & * & * & $\dotsm$ & $\ne1$\\
+\hline
+\end{tabular}
 \end{frame}
 
 \begin{frame}{Shor's algorithm}
 \begin{algorithmic}
 \Function{Shor}{$N$: An odd integer}
-\If{$N=a^b$ for some $a\in\{2,\dotsc,N-1\}$ and $b\ge 2$}
+\If{$N=a^b$ for some $a\ge 1$ and $b\ge 2$}
 \State \Return a
 \EndIf
 \Loop
-\State $a\gets \text{a random integer in } \{2,3,\dotsc,N-2\}$.
+\State $a\gets \text{a random integer in } [2,N-2]$.
 \State $b\gets \mathsf{gcd}(a, N)$.
 \If{$b\ne 1$}
 \Return $b$
@@ -152,7 +239,7 @@ If we find a nontrivial square root $x$ of 1, we find a factor of $N$ by $\maths
 \end{frame}
 
 \begin{frame}{Eigenvalues of the unitary operator}
-Let $r$ be the order of $a$ modulo $n$, which is a smallest positive integer satisfying
+Let $r$ be the \emm{order} of $a$ modulo $n$, which is a smallest positive integer satisfying
 \begin{equation*}
 a^r = 1 \mod N.
 \end{equation*}
@@ -165,14 +252,18 @@ U_a\ket{x} =
 \end{cases}
 \end{align*}
 
-\begin{itemize}
-\setlength{\itemsep}{1em}
-\item $U^r = I$.  This means that all eigenvalues of $U$ are in the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ for $s\in\{0,1,2,\dotsc,r-1\}$.
-\item $U^t \ne I$ for all $t\in\{0,1,2,\dotsc,r-1\}$. This means that there exists an eigenvalue of the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ with $s$ coprime with $r$.
-\end{itemize}
+%\begin{itemize}
+%\setlength{\itemsep}{1em}
+%\item $U_a^r = I$.  This means that all eigenvalues of $U$ are in the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ for $s\in\{0,1,2,\dotsc,r-1\}$.
+%\item $U^t \ne I$ for all $t\in\{0,1,2,\dotsc,r-1\}$. This means that there exists an eigenvalue of the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ with $s$ coprime with $r$.
+%\end{itemize}
+Here, \emm{$U_a^r = I$}.  This means that all eigenvalues of $U_a$ are in the form $\mathsf{e}^{2\pi i \frac{s}{r}}$ for $s\in\{0,1,2,\dotsc,r-1\}$.
 
 \vspace{1em}
 By quantum phase estimation for $U_a$, an approximation of $\frac{s}{r}$ can be computed efficiently.
+
+\vspace{1em}
+From $0.b_nb_{n-1}\dotsm b_1\approx \frac{s}{r}$, we can extract the denominator $r$ if $s$ is comprime with $r$.
 \end{frame}
 
 \begin{frame}{Eigenvectors of the unitary operator}
@@ -196,7 +287,7 @@ For $s\in\{0,1,\dotsc,r-1\}$,
 \frac1{\sqrt{r}}\sum_{s=0}^{r-1}\ket{\psi_s}
 &=\frac1{r} \sum_{s=0}^{r-1}\sum_{j=0}^{r-1} \mathsf{e}^{-2\pi i \frac{sj}{r}} \ket{a^j \mod N}\\
 &=\sum_{j=0}^{r-1} \left(\frac1{r} \sum_{s=0}^{r-1}\mathsf{e}^{-2\pi i \frac{sj}{r}}\right) \ket{a^j \mod N}\\
-&=\ket{1}
+&=\emm{\ket{1}}
 \end{align*}
 \end{frame}
 
@@ -206,16 +297,23 @@ For $s\in\{0,1,\dotsc,r-1\}$,
 \lstick{\ket{0}}   &\gate{H} & \ctrl{3} & \qw&\qw & \multigate{2}{\mathsf{IQFT}}& \rstick{\ket{\varphi_0}}  \qw\\
 \lstick{\ket{0}}   &\gate{H} & \qw &  \ctrl{2} &\qw & \ghost{IQFT} & \rstick{\ket{\varphi_1}}\qw\\
 \lstick{\ket{0}}   &\gate{H} & \qw &  \qw & \ctrl{1} & \ghost{IQFT}& \rstick{\ket{\varphi_2}}\qw\\
-\lstick{\ket{1}} &{/}\qw      & \gate{U} & \gate{U^2} &\gate{U^4} &\qw & \rstick{\ket{\psi_\theta}}\qw
+\lstick{\ket{1}} &{/}\qw      & \gate{U_a} & \gate{U_a^2} &\gate{U_a^4} &\qw & \rstick{\ket{\psi_\theta}}\qw
 }
 \]
 
-\vspace{1em}
-\emm{Assume} $\theta = 2\pi \frac{\varphi}{2^n}$ for some \emm{integer} $\varphi\in\{0,1,\dotsc,2^n-1\}$.
+\vspace{2em}
+For uniformly chosen $s\in\{0,1,\dotsc,r-1\}$, we obtain an approximation of $s/r$.
+\end{frame}
+
+\begin{frame}{The probability that we can calculate $r$ from $s/r$}
+From the denominators $d_1$ and $d_2$ of $s_1/r$ and $s_2/r$, 
+we can calculate $r$ by $\mathsf{lcm}(d_1, d_2)$.
 \begin{align*}
-&\frac1{\sqrt{2^n}}\sum_{x\in\{0,1,2,\dotsc,2^n-1\}} \mathsf{e}^{i\frac{2\pi}{2^n}\varphi x}\ket{x}\ket{\psi_\theta}\\
-=&\ket{\widehat{\varphi}}\ket{\psi_\theta}\\
-\longmapsto&\ket{\varphi}\ket{\psi_\theta}
+\Pr(\mathsf{lcm}(d_1, d_2) \ne r) &= \Pr(\mathsf{gcd}(s_1,s_2,r) \ne 1)\\
+&\le \Pr(\mathsf{gcd}(s_1,s_2) \ne 1)\\
+&\le \sum_{p: \text{ prime}} \Pr(p\mid s_1, p\mid s_2)\\
+&\le \sum_{p: \text{ prime}} \frac1{p^2}\\
+&\le 0.4523
 \end{align*}
 \end{frame}
 
@@ -236,6 +334,7 @@ Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$
 \end{frame}
 \fi
 
+\if0
 \begin{frame}{Error probability}
 \begin{align*}
 \Pr\left(\left|\phi - \frac{\varphi}{2^n}\right| > \frac{c}{2^n}\right)
@@ -243,8 +342,19 @@ Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$
 &= \frac1{2^{2n}}\sum_{}\frac{1}{\left(\pi\left(\phi - \frac{\varphi}{2^n}\right)\right)^2}\\
 \end{align*}
 \end{frame}
+\fi
 
 \begin{frame}{Continued fraction}
+\begin{equation*}
+\theta=\cfrac{1}{a_1+\cfrac{1}{a_2+\cfrac{1}{a_3+\cfrac{1}{a_4+\dotsb}}}}
+\end{equation*}
+\begin{theorem}
+Suppose $s/r$ is a rational number satisfying
+\begin{equation*}
+\left|\frac{s}{r}-\theta\right|\le\frac1{2r^2}.
+\end{equation*}
+Then, $s/r$ is a convergent of the continued fraction for $\theta$.
+\end{theorem}
 \end{frame}
 
 
@@ -252,7 +362,7 @@ Let $\varphi\in\{0,1,\dotsc,2^n-1\}$ be the best $n$-bit approximation of $\phi$
 \small
 \begin{enumerate}
 \setlength{\itemsep}{2em}
-\item Show that the Fourier basis $\{\ket{\widehat{x}}\}_{x\in\{0,1,\dotsc,N-1\}}$ is orthonormal.
+\item Show all eigenvectors of $U_a$.
 \end{enumerate}
 \end{frame}
 
